@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CopilotDiffPersistence">
+    <option name="pendingDiffs">
+      <map>
+        <entry key="$PROJECT_DIR$/PetService.ts">
+          <value>
+            <PendingDiffInfo>
+              <option name="filePath" value="$PROJECT_DIR$/PetService.ts" />
+              <option name="originalContent" value="&#10;" />
+              <option name="updatedContent" value="public class PetService {&#10;    private final PetRepository repository;&#10;&#10;    public PetService(PetRepository repository) {&#10;        this.repository = repository;&#10;    }&#10;&#10;    public void save(Pet pet) {&#10;        repository.save(pet);&#10;    }&#10;&#10;    public Pet find(Long id) {&#10;        return repository.find(id);&#10;    }&#10;}" />
+            </PendingDiffInfo>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/copilot.yaml">
+          <value>
+            <PendingDiffInfo>
+              <option name="filePath" value="$PROJECT_DIR$/copilot.yaml" />
+              <option name="updatedContent" value="# Configuration file for GitHub Copilot or project-specific settings&#10;&#10;# Add your configuration options below&#10;# Example:&#10;# language: java&#10;# package: com.petclinic.pet&#10;&#10;" />
+            </PendingDiffInfo>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/petclinic/src/main/java/com/petclinic/clinic/ClinicRepository.java">
+          <value>
+            <PendingDiffInfo>
+              <option name="filePath" value="$PROJECT_DIR$/petclinic/src/main/java/com/petclinic/clinic/ClinicRepository.java" />
+              <option name="updatedContent" value="package com.petclinic.clinic;&#10;&#10;import org.springframework.data.jpa.repository.JpaRepository;&#10;import org.springframework.stereotype.Repository;&#10;&#10;@Repository&#10;public interface ClinicRepository extends JpaRepository&lt;Clinic, Long&gt; {&#10;}&#10;" />
+            </PendingDiffInfo>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/petclinic/src/main/java/com/petclinic/clinic/ClinicService.java">
+          <value>
+            <PendingDiffInfo>
+              <option name="filePath" value="$PROJECT_DIR$/petclinic/src/main/java/com/petclinic/clinic/ClinicService.java" />
+              <option name="updatedContent" value="package com.petclinic.clinic;&#10;&#10;import org.springframework.stereotype.Service;&#10;&#10;import java.util.List;&#10;import java.util.Optional;&#10;&#10;@Service&#10;public class ClinicService {&#10;&#10;    private final ClinicRepository clinicRepository;&#10;&#10;    public ClinicService(ClinicRepository clinicRepository) {&#10;        this.clinicRepository = clinicRepository;&#10;    }&#10;&#10;    public List&lt;Clinic&gt; findAllClinics() {&#10;        return clinicRepository.findAll();&#10;    }&#10;&#10;    public Optional&lt;Clinic&gt; findClinicById(Long id) {&#10;        return clinicRepository.findById(id);&#10;    }&#10;}&#10;" />
+            </PendingDiffInfo>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/petclinic/src/main/java/com/petclinic/pet/PetNotFoundException.java">
+          <value>
+            <PendingDiffInfo>
+              <option name="filePath" value="$PROJECT_DIR$/petclinic/src/main/java/com/petclinic/pet/PetNotFoundException.java" />
+              <option name="originalContent" value="&#10;" />
+              <option name="updatedContent" value="package com.petclinic.pet;&#10;&#10;public class PetNotFoundException extends RuntimeException {&#10;    public PetNotFoundException(String message) {&#10;        super(message);&#10;    }&#10;}&#10;" />
+            </PendingDiffInfo>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/petclinic/src/test/java/com/petclinic/clinic/ClinicServiceTest.java">
+          <value>
+            <PendingDiffInfo>
+              <option name="filePath" value="$PROJECT_DIR$/petclinic/src/test/java/com/petclinic/clinic/ClinicServiceTest.java" />
+              <option name="originalContent" value="&#10;&#10;@SpringBootTest&#10;@ActiveProfiles(&quot;test&quot;)&#10;@Transactional&#10;public class ClinicServiceTest {&#10;&#10;    @Autowired&#10;    private ClinicService clinicService;&#10;&#10;    @Autowired&#10;" />
+              <option name="updatedContent" value="package com.petclinic.clinic;&#10;&#10;import org.junit.jupiter.api.Test;&#10;import org.springframework.beans.factory.annotation.Autowired;&#10;import org.springframework.boot.test.context.SpringBootTest;&#10;import org.springframework.test.context.TestPropertySource;&#10;import org.springframework.transaction.annotation.Transactional;&#10;&#10;import java.util.List;&#10;import java.util.Optional;&#10;&#10;import static org.assertj.core.api.Assertions.assertThat;&#10;&#10;@SpringBootTest&#10;@TestPropertySource(locations = &quot;classpath:application-test.properties&quot;)&#10;@Transactional&#10;public class ClinicServiceTest {&#10;&#10;    @Autowired&#10;    private ClinicService clinicService;&#10;&#10;    @Autowired&#10;    private ClinicRepository clinicRepository;&#10;&#10;    @Test&#10;    public void shouldRetrieveAllClinics() {&#10;        // Given&#10;        Clinic clinic1 = new Clinic(&quot;City Vet&quot;, &quot;123 Main St&quot;, &quot;555-1234&quot;);&#10;        Clinic clinic2 = new Clinic(&quot;Pet Care Center&quot;, &quot;456 Oak Ave&quot;, &quot;555-5678&quot;);&#10;        clinicRepository.save(clinic1);&#10;        clinicRepository.save(clinic2);&#10;&#10;        // When&#10;        List&lt;Clinic&gt; clinics = clinicService.findAllClinics();&#10;&#10;        // Then&#10;        assertThat(clinics).hasSize(2);&#10;        assertThat(clinics).extracting(Clinic::getName)&#10;                .containsExactlyInAnyOrder(&quot;City Vet&quot;, &quot;Pet Care Center&quot;);&#10;    }&#10;&#10;    @Test&#10;    public void shouldFindClinicById() {&#10;        // Given&#10;        Clinic clinic = new Clinic(&quot;Animal Hospital&quot;, &quot;789 Pine St&quot;, &quot;555-9999&quot;);&#10;        Clinic savedClinic = clinicRepository.save(clinic);&#10;&#10;        // When&#10;        Optional&lt;Clinic&gt; foundClinic = clinicService.findClinicById(savedClinic.getId());&#10;&#10;        // Then&#10;        assertThat(foundClinic).isPresent();&#10;        assertThat(foundClinic.get().getName()).isEqualTo(&quot;Animal Hospital&quot;);&#10;        assertThat(foundClinic.get().getAddress()).isEqualTo(&quot;789 Pine St&quot;);&#10;        assertThat(foundClinic.get().getPhone()).isEqualTo(&quot;555-9999&quot;);&#10;    }&#10;&#10;    @Test&#10;    public void shouldReturnEmptyWhenClinicNotFound() {&#10;        // When&#10;        Optional&lt;Clinic&gt; foundClinic = clinicService.findClinicById(999L);&#10;&#10;        // Then&#10;        assertThat(foundClinic).isEmpty();&#10;    }&#10;}" />
+            </PendingDiffInfo>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/petclinic/src/test/java/com/petclinic/pet/PetRepositoryTest.java">
+          <value>
+            <PendingDiffInfo>
+              <option name="filePath" value="$PROJECT_DIR$/petclinic/src/test/java/com/petclinic/pet/PetRepositoryTest.java" />
+              <option name="originalContent" value="package com.petclinic.pet;&#10;&#10;import org.junit.jupiter.api.Test;&#10;import org.springframework.beans.factory.annotation.Autowired;&#10;import org.springframework.boot.test.context.SpringBootTest;&#10;import org.springframework.transaction.annotation.Transactional;&#10;&#10;import static org.assertj.core.api.Assertions.assertThat;&#10;&#10;@SpringBootTest&#10;@Transactional&#10;class PetRepositoryTest {&#10;&#10;    @Autowired&#10;    private PetRepository petRepository;&#10;&#10;    @Test&#10;    void shouldSaveAndFindPet() {&#10;        // given&#10;        Pett pet = new Pett(&quot;Max&quot;, &quot;John Doe&quot;);&#10;        petRepository.save(pet);&#10;&#10;        // when&#10;        Pett found = petRepository.findById(pet.getId()).orElse(null);&#10;&#10;        // then&#10;        assertThat(found).isNotNull();&#10;        assertThat(found.getName()).isEqualTo(&quot;Max&quot;);&#10;        assertThat(found.getOwnerName()).isEqualTo(&quot;John Doe&quot;);&#10;    &#10;&#10;        assertThat(found.getOwnerName()).isEqualTo(&quot;John Doe&quot;);&#10;    }&#10;}&#10;" />
+              <option name="updatedContent" value="package com.petclinic.pet;&#10;&#10;import org.junit.jupiter.api.Test;&#10;import org.springframework.beans.factory.annotation.Autowired;&#10;import org.springframework.boot.test.context.SpringBootTest;&#10;import org.springframework.transaction.annotation.Transactional;&#10;&#10;import static org.assertj.core.api.Assertions.assertThat;&#10;&#10;@SpringBootTest&#10;@Transactional&#10;class PetRepositoryTest {&#10;&#10;    @Autowired&#10;    private PetRepository petRepository;&#10;&#10;    @Test&#10;    void shouldSaveAndFindPet() {&#10;        // given&#10;        Pet pet = new Pet(&quot;Max&quot;, &quot;John Doe&quot;);&#10;        petRepository.save(pet);&#10;&#10;        // when&#10;        Pet found = petRepository.findById(pet.getId()).orElse(null);&#10;&#10;        // then&#10;        assertThat(found).isNotNull();&#10;        assertThat(found.getName()).isEqualTo(&quot;Max&quot;);&#10;        assertThat(found.getOwnerName()).isEqualTo(&quot;John Doe&quot;);&#10;    &#10;&#10;        assertThat(found.getOwnerName()).isEqualTo(&quot;John Doe&quot;);&#10;    }&#10;}" />
+            </PendingDiffInfo>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/petclinic/src/test/java/com/petclinic/pet/PetServiceTests.java">
+          <value>
+            <PendingDiffInfo>
+              <option name="filePath" value="$PROJECT_DIR$/petclinic/src/test/java/com/petclinic/pet/PetServiceTests.java" />
+              <option name="originalContent" value="package com.petclinic.pet;&#10;&#10;// ...existing code...&#10;class PetServiceTests {&#10;    // ...existing code...&#10;}&#10;&#10;" />
+              <option name="updatedContent" value="package com.petclinic.pet;&#10;&#10;// ...existing code...&#10;class PetServiceTests {&#10;    // ...existing code...&#10;}&#10;&#10;" />
+            </PendingDiffInfo>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/com/petclinic/pet/AAAPet.java">
+          <value>
+            <PendingDiffInfo>
+              <option name="filePath" value="$PROJECT_DIR$/src/main/java/com/petclinic/pet/AAAPet.java" />
+              <option name="originalContent" value="&#10;" />
+              <option name="updatedContent" value="&#10;" />
+            </PendingDiffInfo>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/com/petclinic/pet/Pet.java">
+          <value>
+            <PendingDiffInfo>
+              <option name="filePath" value="$PROJECT_DIR$/src/main/java/com/petclinic/pet/Pet.java" />
+            </PendingDiffInfo>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/com/petclinic/pet/PetController.java">
+          <value>
+            <PendingDiffInfo>
+              <option name="filePath" value="$PROJECT_DIR$/src/main/java/com/petclinic/pet/PetController.java" />
+              <option name="originalContent" value="&#10;" />
+              <option name="updatedContent" value="package com.petclinic.pet;&#10;&#10;import org.springframework.http.ResponseEntity;&#10;import org.springframework.web.bind.annotation.*;&#10;&#10;@RestController&#10;@RequestMapping(&quot;/api/pets&quot;)&#10;public class PetController {&#10;&#10;    private final PetService petService;&#10;&#10;    public PetController(PetService petService) {&#10;        this.petService = petService;&#10;    }&#10;&#10;    @GetMapping(&quot;/{id}&quot;)&#10;    public ResponseEntity&lt;Pet&gt; getPet(@PathVariable Long id) {&#10;        return ResponseEntity.ok(petService.findById(id));&#10;    }&#10;&#10;    @PostMapping&#10;    public ResponseEntity&lt;Pet&gt; createPet(@RequestBody Pet pet) {&#10;        return ResponseEntity.ok(petService.save(pet));&#10;    }&#10;}" />
+            </PendingDiffInfo>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/com/petclinic/pet/PetRepository.java">
+          <value>
+            <PendingDiffInfo>
+              <option name="filePath" value="$PROJECT_DIR$/src/main/java/com/petclinic/pet/PetRepository.java" />
+              <option name="updatedContent" value="package com.petclinic.pet;&#10;&#10;import org.springframework.data.jpa.repository.JpaRepository;&#10;&#10;public interface PetRepository extends JpaRepository&lt;Pet, Long&gt; {&#10;}&#10;" />
+            </PendingDiffInfo>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/main/java/com/petclinic/pet/PetService.java">
+          <value>
+            <PendingDiffInfo>
+              <option name="filePath" value="$PROJECT_DIR$/src/main/java/com/petclinic/pet/PetService.java" />
+              <option name="originalContent" value="&#10;&#10;&#10;" />
+              <option name="updatedContent" value="package com.petclinic.pet;&#10;&#10;import org.springframework.stereotype.Service;&#10;import org.springframework.transaction.annotation.Transactional;&#10;&#10;@Service&#10;public class PetService {&#10;    &#10;    private final PetRepository petRepository;&#10;&#10;    public PetService(PetRepository petRepository) {&#10;        this.petRepository = petRepository;&#10;    }&#10;&#10;    public Pet findById(Long id) {&#10;        return petRepository.findById(id)&#10;            .orElseThrow(() -&gt; new RuntimeException(&quot;Pet not found&quot;));&#10;    }&#10;&#10;    @Transactional&#10;    public Pet save(Pet pet) {&#10;        return petRepository.save(pet);&#10;    }&#10;}" />
+            </PendingDiffInfo>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/test/java/com/petclinic/pet/PetControllerIntegrationTest.java">
+          <value>
+            <PendingDiffInfo>
+              <option name="filePath" value="$PROJECT_DIR$/src/test/java/com/petclinic/pet/PetControllerIntegrationTest.java" />
+              <option name="updatedContent" value="package com.petclinic.pet;&#10;&#10;import org.junit.jupiter.api.Test;&#10;import org.springframework.beans.factory.annotation.Autowired;&#10;import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;&#10;import org.springframework.boot.test.context.SpringBootTest;&#10;import org.springframework.http.MediaType;&#10;import org.springframework.test.web.servlet.MockMvc;&#10;import com.fasterxml.jackson.databind.ObjectMapper;&#10;&#10;import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;&#10;import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;&#10;&#10;@SpringBootTest&#10;@AutoConfigureMockMvc&#10;class PetControllerIntegrationTest {&#10;&#10;    @Autowired&#10;    private MockMvc mockMvc;&#10;&#10;    @Autowired&#10;    private ObjectMapper objectMapper;&#10;&#10;    @Autowired&#10;    private PetService petService;&#10;&#10;    @Test&#10;    void shouldCreateAndRetrievePet() throws Exception {&#10;        Pet pet = new Pet();&#10;        pet.setName(&quot;Buddy&quot;);&#10;        pet.setOwnerName(&quot;Alice&quot;);&#10;&#10;        // Create pet&#10;        String createdPetJson = mockMvc.perform(post(&quot;/api/pets&quot;)&#10;                .contentType(MediaType.APPLICATION_JSON)&#10;                .content(objectMapper.writeValueAsString(pet)))&#10;            .andExpect(status().isOk())&#10;            .andExpect(jsonPath(&quot;$.name&quot;).value(&quot;Buddy&quot;))&#10;            .andExpect(jsonPath(&quot;$.ownerName&quot;).value(&quot;Alice&quot;))&#10;            .andReturn().getResponse().getContentAsString();&#10;&#10;        Pet createdPet = objectMapper.readValue(createdPetJson, Pet.class);&#10;&#10;        // Retrieve pet&#10;        mockMvc.perform(get(&quot;/api/pets/&quot; + createdPet.getId()))&#10;            .andExpect(status().isOk())&#10;            .andExpect(jsonPath(&quot;$.name&quot;).value(&quot;Buddy&quot;))&#10;            .andExpect(jsonPath(&quot;$.ownerName&quot;).value(&quot;Alice&quot;));&#10;    }&#10;&#10;    @Test&#10;    void shouldReturn404WhenPetNotFound() throws Exception {&#10;        mockMvc.perform(get(&quot;/api/pets/999&quot;))&#10;            .andExpect(status().isInternalServerError());&#10;    }&#10;}&#10;" />
+            </PendingDiffInfo>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/test/java/com/petclinic/pet/PetControllerTests.java">
+          <value>
+            <PendingDiffInfo>
+              <option name="filePath" value="$PROJECT_DIR$/src/test/java/com/petclinic/pet/PetControllerTests.java" />
+              <option name="updatedContent" value="package com.petclinic.pet;&#10;&#10;// ...existing code...&#10;class PetControllerTests {&#10;    // ...existing code...&#10;}&#10;" />
+            </PendingDiffInfo>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/test/java/com/petclinic/pet/PetServiceIntegrationTest.java">
+          <value>
+            <PendingDiffInfo>
+              <option name="filePath" value="$PROJECT_DIR$/src/test/java/com/petclinic/pet/PetServiceIntegrationTest.java" />
+              <option name="updatedContent" value="package com.petclinic.pet;&#10;&#10;import org.junit.jupiter.api.Test;&#10;import org.springframework.beans.factory.annotation.Autowired;&#10;import org.springframework.boot.test.context.SpringBootTest;&#10;import org.springframework.transaction.annotation.Transactional;&#10;&#10;import static org.assertj.core.api.Assertions.assertThat;&#10;import static org.junit.jupiter.api.Assertions.assertThrows;&#10;&#10;@SpringBootTest&#10;@Transactional&#10;class PetServiceIntegrationTest {&#10;&#10;    @Autowired&#10;    private PetService petService;&#10;&#10;    @Test&#10;    void shouldSaveAndFindPet() {&#10;        Pet pet = new Pet();&#10;        pet.setName(&quot;Max&quot;);&#10;        pet.setOwnerName(&quot;John&quot;);&#10;&#10;        Pet savedPet = petService.save(pet);&#10;        assertThat(savedPet.getId()).isNotNull();&#10;&#10;        Pet foundPet = petService.findById(savedPet.getId());&#10;        assertThat(foundPet.getName()).isEqualTo(&quot;Max&quot;);&#10;        assertThat(foundPet.getOwnerName()).isEqualTo(&quot;John&quot;);&#10;    }&#10;&#10;    @Test&#10;    void shouldThrowExceptionWhenPetNotFound() {&#10;        assertThrows(RuntimeException.class, () -&gt; petService.findById(999L));&#10;    }&#10;}&#10;" />
+            </PendingDiffInfo>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/src/test/java/com/petclinic/pet/PetServiceTests.java">
+          <value>
+            <PendingDiffInfo>
+              <option name="filePath" value="$PROJECT_DIR$/src/test/java/com/petclinic/pet/PetServiceTests.java" />
+              <option name="updatedContent" value="package com.petclinic.pet;&#10;&#10;// ...existing code...&#10;class PetServiceTests {&#10;    // ...existing code...&#10;}&#10;" />
+            </PendingDiffInfo>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>
