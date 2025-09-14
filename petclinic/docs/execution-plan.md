@@ -14,8 +14,10 @@
 
 - Inside petclinic-frontend/tests folder, generate a test petService.test.ts which uses jest (import it from package.json if needed). Test should call the API (not mock it) and make sure it receives some result. It only needs one test case (findAll)
 
-- Inside petclinic-frontend homepage, show the list of pets. Pet List should look like a datatable.
+- petclinic-frontend: remove all the default components inside App.tsx and instead add the simplest GET call to http://localhost:8080/api/pets and display the results into the console
 
 - inside petclinic-backend, add CORS configuration for the frontend to access the backend
 
-- petclinic-frontend: improve the homepage look and feel so it looks better. Especially, it should look good in a web browser.
+- petclinic-frontend: create a new component called PetList.tsx which displays the pet list. App.tsx should use it.
+
+- petclinic-frontend: improve the homepage look and feel. Main colours should be white and dark green. There should be a few icons and oen splash screen. Table should take 60% of the screen on a regular laptop.
