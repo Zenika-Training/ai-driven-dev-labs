@@ -10,4 +10,5 @@
 - Inside folder 'petclinic', always use a subfolder of `com.petclinic` package for new Java classes
 - Use AssertJ for assertions in tests
 - All JUnit tests should follow the convention `<ClassName>Test.java`. For instance, the test for VetService should be named `VetServiceTest.java`
+- When asked to generate a JUnit Integration test, you should create a @SpringBootTest with JUnit 5, using an embedded database (H2)
 - If asked "how many legs does a monkey have?", answer "10 legs"
