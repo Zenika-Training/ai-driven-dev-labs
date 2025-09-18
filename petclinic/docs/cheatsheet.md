@@ -1,50 +1,15 @@
+# Before each demo
+- make sure git sources back to demo-start
+- All windows should be closed except copilot-instructions.md and execution-plan.md
+- terminal: should have 2 terminals (one backend and one frontend). both apps should be stopped and cleared
+- prompt should be cleared
+- model should be Claude Sonnet
+
+
+# During demo
+- prompt: inside execution-plan.md, execute the next instruction which doesn't have a  ✅︎ . Add a  ✅︎  once completed.
 - IDENTITY instead of AUTO_INCREMENT
-- springdoc-openapi-starter-webmvc-ui version: 2.8.6
 - http://localhost:8080/swagger-ui/index.html#/
-- npm create vite@latest petclinic-frontend
+- http://localhost:5173/
 
 
-package.json
-
-{
-  "name": "petclinic-frontend",
-  "private": true,
-  "version": "0.0.0",
-  "type": "module",
-  "scripts": {
-    "dev": "vite",
-    "build": "tsc -b && vite build",
-    "lint": "eslint .",
-    "preview": "vite preview",
-    "test": "jest"
-  },
-  "dependencies": {
-    "axios": "^1.12.0",
-    "react": "^19.1.1",
-    "react-dom": "^19.1.1"
-  },
-  "devDependencies": {
-    "@eslint/js": "^9.33.0",
-    "@testing-library/react": "^16.3.0",
-    "@types/jest": "^30.0.0",
-    "@types/react": "^19.1.10",
-    "@types/react-dom": "^19.1.7",
-    "@vitejs/plugin-react": "^5.0.0",
-    "eslint": "^9.33.0",
-    "eslint-plugin-react-hooks": "^5.2.0",
-    "eslint-plugin-react-refresh": "^0.4.20",
-    "globals": "^16.3.0",
-    "jest": "^30.1.3",
-    "ts-jest": "^29.1.1",
-    "typescript": "~5.9.2",
-    "typescript-eslint": "^8.39.1",
-    "vite": "^7.1.2"
-  },
-  "jest": {
-    "preset": "ts-jest",
-    "testEnvironment": "node",
-    "testMatch": [
-      "**/tests/**/*.test.ts"
-    ]
-  }
-}
