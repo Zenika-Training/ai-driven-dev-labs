@@ -15,6 +15,9 @@
     - When mapping relationships, please do not state explicit attributes unless really needed
     - Do not use bidirectional relationships unless really needed
 
+- For Controllers
+    - use URL such as /api/v1/ENTITY (eg: /api/v1/pet)
+
 - JUnit tests
     - Use AssertJ for assertions in tests
     - All JUnit tests should follow the convention `<ClassName>Test.java`. For instance, the test for VetService should be named `VetServiceTest.java`
