@@ -2,7 +2,7 @@
 
 - Packages 
     - should be split by domain, not layer (we use DDD style)
-    - Inside folder 'petclinic', always use a subfolder of `com.petclinic` package for new Java classes
+    - Inside folder 'petclinic-backend', always use a subfolder of `com.petclinic` package for new Java classes
 
 - Database
     - schema should be defined in data.sql
