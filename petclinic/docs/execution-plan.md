@@ -4,7 +4,7 @@
 
 # Time to run the application and connect to swagger-ui
 
-- Add a business rule: we should have Pet uniqueness per owner. A single owner cannot have 2 pets with the same name
+- Add a business rule inside PetService: we should have Pet uniqueness per owner. A single owner cannot have 2 pets with the same name
 
 - Test generation: generate a JUnit Integration test for PetService 
 
@@ -14,4 +14,4 @@
 
 - petclinic-frontend: create a new component called PetList.tsx which displays the pet list. App.tsx should use it.
 
-- petclinic-frontend: improve the homepage look and feel. Main colours should be white and dark green. There should be a few icons and oen splash screen. Table should take 60% of the screen on a regular laptop.
+- petclinic-frontend: improve the homepage look and feel. Main colours should be white and dark green. There should be a few icons and oen splash screen. Datatable should look sleek and have a dark green header. datatable width should take 60% of the screen on a regular laptop.
