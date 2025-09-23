@@ -7,9 +7,7 @@
 
 
 # During demo
-- prompt: inside execution-plan.md, execute the next instruction which doesn't have a  ✅︎ . Add a  ✅︎  once completed.
+- prompt: inside the attached execution plan file, execute the next instruction which doesn't have a  ✅︎ . If the instruction is asking you to generate code, you should do it. Add a  ✅︎  once completed.
 - IDENTITY instead of AUTO_INCREMENT
 - http://localhost:8080/swagger-ui/index.html#/
 - http://localhost:5173/
-
-

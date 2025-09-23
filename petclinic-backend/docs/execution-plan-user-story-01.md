@@ -6,7 +6,7 @@
 
 - Add a business rule inside PetService: we should have Pet uniqueness per owner. A single owner cannot have 2 pets with the same name
 
-- Test generation: generate a JUnit Integration test for PetService 
+- Test generation: generate a JUnit Integration test for PetService
 
 # Moving to the frontend
 
