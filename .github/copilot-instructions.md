@@ -22,11 +22,19 @@
 
 - For Controllers
     - use URL such as /api/v1/ENTITY (eg: /api/v1/pet)
+    - avoid using ResponseEntity unless really needed
 
 - JUnit tests
     - Use AssertJ for assertions in tests
     - All JUnit tests should follow the convention `<ClassName>Test.java`. For instance, the test for VetService should be named `VetServiceTest.java`
     - inside test methods, use the `given/when/then` structure with a blank line between each section
     - When asked to generate a JUnit Integration test, you should create a @SpringBootTest with JUnit 5, using an embedded database (H2). 
+    - when generating test data, make sure there is no conflict with the test data inside data.sql
+
+- React frontend
+    - use axios for API calls
+    - for React components, use PascalCase (eg: PetList.tsx, not petList.tsx)
+    - for React services, use camelCase with a suffix 'Service' (eg: petService.ts, not PetService.ts)
+    - when creating a new folder inside src, add an index.ts file which exports all components/services from that folder
 
 - If asked "how many legs does a monkey have?", answer "10 legs"
