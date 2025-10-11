@@ -1,4 +1,4 @@
-# Pet Clinic Frontend
+# Pet Clinic application
 
 ## Setup Instructions
 
