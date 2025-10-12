@@ -53,6 +53,7 @@
 - write component tests focusing on user interactions
 - aim for meaningful test coverage, not just high percentages
 - use data-testid attributes for test selectors
+- add "import React from "react";" when creating test file for components
 
 ### Accessibility
 
