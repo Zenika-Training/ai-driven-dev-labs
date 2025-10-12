@@ -12,8 +12,6 @@
 
 - petclinic-frontend: create a new component called PetList.tsx which displays the pet list. App.tsx should use it.
 
-- petclinic-frontend: setup frontend tests infrastructure. Install jest-environment-jsdom, @testing-library/jest-dom, and identity-obj-proxy. Update package.json jest config to use jsdom environment, support .tsx files, and mock CSS imports. Create tests/setup.ts for test configuration.
-
 - petclinic-frontend: add tests for PetList.tsx and petService.ts
 
 - petclinic-frontend: improve the homepage look and feel. Main colours should be white and dark green. There should be a few icons and oen splash screen. Datatable should look sleek and have a dark green header. datatable width should take 60% of the screen on a regular laptop.
