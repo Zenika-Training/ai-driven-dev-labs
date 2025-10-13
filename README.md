@@ -7,6 +7,8 @@
 1. **Install development tools:**
    - Install VSCode
    - Install an AI coding assistant of your choice (Copilot, Claude Code, Cursor…)
+      > If you are using [GitHub Copilot](.github/copilot-instructions.md), instructions are inside `.github/copilot-instructions.md`  
+      > If you are using Claude Code, instructions are inside [Claude.md](Claude.md)
    - Ask Timothee for a license if you don't have one
 
 2. **Clone the repository:**
