@@ -19,33 +19,12 @@
 - use TypeScript interfaces for props and state
 - place component-specific styles in the same directory as the component
 
-### State Management
-
-- use React hooks (useState, useEffect, useContext) for local state
-- avoid prop drilling - use Context API for shared state across multiple levels
-- keep state as close to where it's needed as possible
-- use useReducer for complex state logic
-
 ### API Integration
 
 - all API calls must be in service files, never directly in components
 - handle loading states and errors consistently across all API calls
 - use async/await syntax for cleaner asynchronous code
 - implement proper error boundaries for error handling
-
-### Code Organization
-
-- organize files by feature/domain rather than by type (components, services, etc.)
-- keep related files close together
-- limit file length to 300 lines - split larger files into smaller modules
-- use barrel exports (index.ts) to simplify imports
-
-### Performance
-
-- use React.memo() for expensive components that render frequently
-- implement lazy loading for routes and heavy components
-- avoid inline function definitions in JSX when possible
-- optimize re-renders by using useMemo and useCallback appropriately
 
 ### Testing
 
@@ -54,13 +33,6 @@
 - aim for meaningful test coverage, not just high percentages
 - use data-testid attributes for test selectors
 - add "import React from "react";" when creating test file for components
-
-### Accessibility
-
-- use semantic HTML elements
-- ensure all interactive elements are keyboard accessible
-- provide appropriate ARIA labels where needed
-- maintain sufficient color contrast ratios
 
 ### Code Quality
 
