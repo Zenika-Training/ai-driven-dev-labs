@@ -2,7 +2,7 @@
 
 # Packages 
     - should be split by domain, not layer (we use DDD style)
-    - Inside folder 'petclinic-backend', always use a subfolder of `com.petclinic` package for new Java classes
+    - Inside folder 'greenfield-backend' or 'brownfield-backend', always use a subfolder of `com.petclinic` package for new Java classes
 
 # Backend Coding practices
     - as much as possible, functions should be single responsibility. If a function is doing more than one thing, split it into several functions

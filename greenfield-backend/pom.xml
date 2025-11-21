@@ -10,10 +10,10 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.petclinic</groupId>
-	<artifactId>petclinic-backend</artifactId>
+	<artifactId>greenfield-backend</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>petclinic</name>
-	<description>Demo project for Spring Boot</description>
+	<name>greenfield-backend</name>
+	<description>Greefield project</description>
 	<url />
 	<licenses>
 		<license />
