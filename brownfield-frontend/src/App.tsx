@@ -1,14 +1,15 @@
-import './App.css'
+import { Header } from './components';
+import { PetList } from './pet';
 
 function App() {
-
   return (
-    <>
-      <p className="read-the-docs">
-        Welcome to the Petclinic application!
-      </p>
-    </>
-  )
+    <div className="min-h-screen bg-gray-50">
+      <Header />
+      <main>
+        <PetList />
+      </main>
+    </div>
+  );
 }
 
-export default App
+export default App;
