@@ -1,4 +1,4 @@
-- In a dedicated package, create a new Entity class named Pet. It should have 3 attributes (id, name and ownerName). Define its schema and test data inside data.sql
+- In greefield-backend, in a dedicated package, create a new Entity class named Pet. It should have 3 attributes (id, name and ownerName). Define its schema and test data inside data.sql
 
 - Create a PetRepository with a findByName method which returns a single result. Create a PetService and a PetController.
 
