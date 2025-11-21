@@ -10,7 +10,7 @@
 
 ## Database
 - schema should be defined in data.sql
-- as of now, only use H2 (test environment is enough)
+- as of now, only use HSQL (test environment is enough)
 
 ## For JPA entities
 - there should be no setters by default 
