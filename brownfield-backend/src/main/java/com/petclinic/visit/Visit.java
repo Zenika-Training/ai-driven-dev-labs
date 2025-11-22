@@ -1,6 +1,7 @@
 package com.petclinic.visit;
 
 import com.petclinic.pet.Pet;
+import com.petclinic.vet.Vet;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -23,20 +24,25 @@ public class Visit {
     @ManyToOne
     private Pet pet;
 
+    @ManyToOne
+    private Vet vet;
+
     public Visit() {
     }
 
-    public Visit(Long id, LocalDateTime dateTime, String clinic, Pet pet) {
+    public Visit(Long id, LocalDateTime dateTime, String clinic, Pet pet, Vet vet) {
         this.id = id;
         this.dateTime = dateTime;
         this.clinic = clinic;
         this.pet = pet;
+        this.vet = vet;
     }
 
-    public Visit(LocalDateTime dateTime, String clinic, Pet pet) {
+    public Visit(LocalDateTime dateTime, String clinic, Pet pet, Vet vet) {
         this.dateTime = dateTime;
         this.clinic = clinic;
         this.pet = pet;
+        this.vet = vet;
     }
 
     public Long getId() {
@@ -53,5 +59,9 @@ public class Visit {
 
     public Pet getPet() {
         return pet;
+    }
+
+    public Vet getVet() {
+        return vet;
     }
 }

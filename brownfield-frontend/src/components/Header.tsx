@@ -1,15 +1,16 @@
 import React from 'react';
-import { Cat, Home, Calendar } from 'lucide-react';
+import { Cat, Home, Calendar, Stethoscope } from 'lucide-react';
 
-type View = 'petList' | 'petDetail' | 'visitList';
+type View = 'petList' | 'petDetail' | 'visitList' | 'vetList';
 
 interface HeaderProps {
   currentView: View;
   onNavigateToPetList: () => void;
   onNavigateToVisitList: () => void;
+  onNavigateToVetList: () => void;
 }
 
-const Header: React.FC<HeaderProps> = ({ currentView, onNavigateToPetList, onNavigateToVisitList }) => {
+const Header: React.FC<HeaderProps> = ({ currentView, onNavigateToPetList, onNavigateToVisitList, onNavigateToVetList }) => {
   return (
     <header className="bg-green-700 text-white shadow-md">
       <div className="container mx-auto px-6 py-4">
@@ -48,6 +49,17 @@ const Header: React.FC<HeaderProps> = ({ currentView, onNavigateToPetList, onNav
             >
               <Calendar className="w-5 h-5" />
               <span>Visits</span>
+            </button>
+            <button 
+              className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${
+                currentView === 'vetList'
+                  ? 'bg-green-900'
+                  : 'bg-green-800 hover:bg-green-900'
+              }`}
+              onClick={onNavigateToVetList}
+            >
+              <Stethoscope className="w-5 h-5" />
+              <span>Vets</span>
             </button>
           </nav>
         </div>

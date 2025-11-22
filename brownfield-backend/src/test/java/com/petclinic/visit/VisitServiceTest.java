@@ -97,6 +97,9 @@ class VisitServiceTest {
         assertThat(visit.getDateTime()).isNotNull();
         assertThat(visit.getClinic()).isNotEmpty();
         assertThat(visit.getPet().getId()).isEqualTo(1L);
+        assertThat(visit.getVet()).isNotNull();
+        assertThat(visit.getVet().getName()).isNotEmpty();
+        assertThat(visit.getVet().getSpecialty()).isNotEmpty();
     }
 
     @Test

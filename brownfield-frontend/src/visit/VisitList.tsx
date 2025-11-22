@@ -66,6 +66,8 @@ const VisitList: React.FC<VisitListProps> = ({ onPetSelect }) => {
                 <th className="px-6 py-4 text-left text-sm font-semibold">Clinic</th>
                 <th className="px-6 py-4 text-left text-sm font-semibold">Pet Name</th>
                 <th className="px-6 py-4 text-left text-sm font-semibold">Owner Name</th>
+                <th className="px-6 py-4 text-left text-sm font-semibold">Veterinarian</th>
+                <th className="px-6 py-4 text-left text-sm font-semibold">Specialty</th>
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
@@ -80,6 +82,16 @@ const VisitList: React.FC<VisitListProps> = ({ onPetSelect }) => {
                   <td className="px-6 py-4 text-sm text-gray-900">{visit.clinic}</td>
                   <td className="px-6 py-4 text-sm text-gray-900">{visit.pet?.name || 'N/A'}</td>
                   <td className="px-6 py-4 text-sm text-gray-900">{visit.pet?.ownerName || 'N/A'}</td>
+                  <td className="px-6 py-4 text-sm text-gray-900">{visit.vet?.name || 'N/A'}</td>
+                  <td className="px-6 py-4 text-sm">
+                    {visit.vet?.specialty ? (
+                      <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                        {visit.vet.specialty}
+                      </span>
+                    ) : (
+                      <span className="text-gray-900">N/A</span>
+                    )}
+                  </td>
                 </tr>
               ))}
             </tbody>

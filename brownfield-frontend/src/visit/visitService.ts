@@ -6,11 +6,18 @@ export interface Pet {
   ownerName: string;
 }
 
+export interface Vet {
+  id: number;
+  name: string;
+  specialty: string;
+}
+
 export interface Visit {
   id?: number;
   dateTime: string;
   clinic: string;
   pet: Pet;
+  vet?: Vet;
 }
 
 export const visitService = {
