@@ -1,7 +1,15 @@
 import React from 'react';
-import { Cat, Home, Heart, Menu } from 'lucide-react';
+import { Cat, Home, Calendar } from 'lucide-react';
 
-const Header: React.FC = () => {
+type View = 'petList' | 'petDetail' | 'visitList';
+
+interface HeaderProps {
+  currentView: View;
+  onNavigateToPetList: () => void;
+  onNavigateToVisitList: () => void;
+}
+
+const Header: React.FC<HeaderProps> = ({ currentView, onNavigateToPetList, onNavigateToVisitList }) => {
   return (
     <header className="bg-green-700 text-white shadow-md">
       <div className="container mx-auto px-6 py-4">
@@ -19,17 +27,27 @@ const Header: React.FC = () => {
 
           {/* Navigation Buttons */}
           <nav className="flex items-center gap-2">
-            <button className="flex items-center gap-2 px-4 py-2 rounded-lg bg-green-800 hover:bg-green-900 transition-colors">
+            <button 
+              className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${
+                currentView === 'petList' || currentView === 'petDetail'
+                  ? 'bg-green-900'
+                  : 'bg-green-800 hover:bg-green-900'
+              }`}
+              onClick={onNavigateToPetList}
+            >
               <Home className="w-5 h-5" />
-              <span>Home</span>
+              <span>Pets</span>
             </button>
-            <button className="flex items-center gap-2 px-4 py-2 rounded-lg bg-green-800 hover:bg-green-900 transition-colors">
-              <Heart className="w-5 h-5" />
-              <span>Pet List</span>
-            </button>
-            <button className="flex items-center gap-2 px-4 py-2 rounded-lg bg-green-800 hover:bg-green-900 transition-colors">
-              <Menu className="w-5 h-5" />
-              <span>More</span>
+            <button 
+              className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${
+                currentView === 'visitList'
+                  ? 'bg-green-900'
+                  : 'bg-green-800 hover:bg-green-900'
+              }`}
+              onClick={onNavigateToVisitList}
+            >
+              <Calendar className="w-5 h-5" />
+              <span>Visits</span>
             </button>
           </nav>
         </div>

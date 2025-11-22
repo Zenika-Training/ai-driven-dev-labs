@@ -67,13 +67,13 @@ class VisitServiceTest {
         // then
         assertThat(visits).isNotEmpty();
         assertThat(visits).hasSize(2);
-        assertThat(visits).allMatch(visit -> visit.getPetId().equals(1L));
+        assertThat(visits).allMatch(visit -> visit.getPet().getId().equals(1L));
     }
 
     @Test
     void shouldReturnEmptyListWhenNoVisitsForPet() {
         // given
-        Pet newPet = new Pet("TestPet", "TestOwner", null);
+        Pet newPet = new Pet("TestPet", "TestOwner");
         Pet savedPet = petService.save(newPet);
 
         // when
@@ -96,7 +96,7 @@ class VisitServiceTest {
         assertThat(visit.getId()).isNotNull();
         assertThat(visit.getDateTime()).isNotNull();
         assertThat(visit.getClinic()).isNotEmpty();
-        assertThat(visit.getPetId()).isEqualTo(1L);
+        assertThat(visit.getPet().getId()).isEqualTo(1L);
     }
 
     @Test

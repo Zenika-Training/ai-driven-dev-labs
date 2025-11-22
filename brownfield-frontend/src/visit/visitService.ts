@@ -1,10 +1,16 @@
 const API_BASE_URL = 'http://localhost:8080/api/v1/visit';
 
+export interface Pet {
+  id: number;
+  name: string;
+  ownerName: string;
+}
+
 export interface Visit {
   id?: number;
   dateTime: string;
   clinic: string;
-  petId: number;
+  pet: Pet;
 }
 
 export const visitService = {
