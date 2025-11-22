@@ -4,9 +4,10 @@ import type { Visit } from './index';
 
 interface VisitListProps {
   onPetSelect?: (petId: number) => void;
+  onVisitClick?: (visit: Visit) => void;
 }
 
-const VisitList: React.FC<VisitListProps> = ({ onPetSelect }) => {
+const VisitList: React.FC<VisitListProps> = ({ onPetSelect, onVisitClick }) => {
   const [visits, setVisits] = useState<Visit[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -74,8 +75,8 @@ const VisitList: React.FC<VisitListProps> = ({ onPetSelect }) => {
               {visits.map((visit) => (
                 <tr 
                   key={visit.id} 
-                  className={`hover:bg-gray-50 ${onPetSelect ? 'cursor-pointer' : ''}`}
-                  onClick={() => onPetSelect && visit.pet && onPetSelect(visit.pet.id)}
+                  className={`hover:bg-gray-50 ${onVisitClick ? 'cursor-pointer' : ''}`}
+                  onClick={() => onVisitClick && onVisitClick(visit)}
                 >
                   <td className="px-6 py-4 text-sm text-gray-900">{visit.id}</td>
                   <td className="px-6 py-4 text-sm text-gray-900">{formatDateTime(visit.dateTime)}</td>

@@ -1,15 +1,17 @@
 import { useState } from 'react';
 import { Header } from './components';
 import { PetList, PetDetail } from './pet';
-import { VisitList } from './visit';
+import { VisitList, VisitDetail } from './visit';
 import { VetList } from './vet';
 import type { Pet } from './pet';
+import type { Visit } from './visit';
 
-type View = 'petList' | 'petDetail' | 'visitList' | 'vetList';
+type View = 'petList' | 'petDetail' | 'visitList' | 'visitDetail' | 'vetList';
 
 function App() {
   const [currentView, setCurrentView] = useState<View>('petList');
   const [selectedPet, setSelectedPet] = useState<Pet | null>(null);
+  const [selectedVisit, setSelectedVisit] = useState<Visit | null>(null);
 
   const handlePetSelect = (pet: Pet) => {
     setSelectedPet(pet);
@@ -31,6 +33,16 @@ function App() {
     setSelectedPet(null);
   };
 
+  const handleVisitClick = (visit: Visit) => {
+    setSelectedVisit(visit);
+    setCurrentView('visitDetail');
+  };
+
+  const handleNavigateToVisitListFromDetail = () => {
+    setCurrentView('visitList');
+    setSelectedVisit(null);
+  };
+
   const handlePetSelectFromVisit = (_petId: number) => {
     // This would require fetching the pet by ID, for now we just navigate to pet list
     setCurrentView('petList');
@@ -47,8 +59,10 @@ function App() {
       <main>
         {currentView === 'petDetail' && selectedPet ? (
           <PetDetail pet={selectedPet} onBack={handleNavigateToPetList} />
+        ) : currentView === 'visitDetail' && selectedVisit ? (
+          <VisitDetail visit={selectedVisit} onBack={handleNavigateToVisitListFromDetail} />
         ) : currentView === 'visitList' ? (
-          <VisitList onPetSelect={handlePetSelectFromVisit} />
+          <VisitList onPetSelect={handlePetSelectFromVisit} onVisitClick={handleVisitClick} />
         ) : currentView === 'vetList' ? (
           <VetList />
         ) : (

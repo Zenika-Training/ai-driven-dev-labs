@@ -1,7 +1,7 @@
 import React from 'react';
 import { Cat, Home, Calendar, Stethoscope } from 'lucide-react';
 
-type View = 'petList' | 'petDetail' | 'visitList' | 'vetList';
+type View = 'petList' | 'petDetail' | 'visitList' | 'visitDetail' | 'vetList';
 
 interface HeaderProps {
   currentView: View;
@@ -41,7 +41,7 @@ const Header: React.FC<HeaderProps> = ({ currentView, onNavigateToPetList, onNav
             </button>
             <button 
               className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${
-                currentView === 'visitList'
+                currentView === 'visitList' || currentView === 'visitDetail'
                   ? 'bg-green-900'
                   : 'bg-green-800 hover:bg-green-900'
               }`}
