@@ -74,6 +74,11 @@ const VisitDetail: React.FC<VisitDetailProps> = ({ visit, onBack }) => {
           <p className="text-gray-600">Not assigned</p>
         )}
       </div>
+
+      <div className="bg-white rounded-lg shadow p-6">
+        <h3 className="text-2xl font-bold text-gray-900 mb-4">Consultation Summary</h3>
+        <p className="text-gray-800 leading-relaxed whitespace-pre-line">{visit.summary}</p>
+      </div>
     </div>
   );
 };

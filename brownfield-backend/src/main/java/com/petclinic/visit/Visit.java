@@ -21,6 +21,8 @@ public class Visit {
 
     private String clinic;
 
+    private String summary;
+
     @ManyToOne
     private Pet pet;
 
@@ -30,17 +32,19 @@ public class Visit {
     public Visit() {
     }
 
-    public Visit(Long id, LocalDateTime dateTime, String clinic, Pet pet, Vet vet) {
+    public Visit(Long id, LocalDateTime dateTime, String clinic, String summary, Pet pet, Vet vet) {
         this.id = id;
         this.dateTime = dateTime;
         this.clinic = clinic;
+        this.summary = summary;
         this.pet = pet;
         this.vet = vet;
     }
 
-    public Visit(LocalDateTime dateTime, String clinic, Pet pet, Vet vet) {
+    public Visit(LocalDateTime dateTime, String clinic, String summary, Pet pet, Vet vet) {
         this.dateTime = dateTime;
         this.clinic = clinic;
+        this.summary = summary;
         this.pet = pet;
         this.vet = vet;
     }
@@ -55,6 +59,10 @@ public class Visit {
 
     public String getClinic() {
         return clinic;
+    }
+
+    public String getSummary() {
+        return summary;
     }
 
     public Pet getPet() {

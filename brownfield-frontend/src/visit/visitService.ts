@@ -16,6 +16,7 @@ export interface Visit {
   id?: number;
   dateTime: string;
   clinic: string;
+  summary: string;
   pet: Pet;
   vet?: Vet;
 }
