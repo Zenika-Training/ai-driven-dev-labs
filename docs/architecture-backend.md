@@ -19,6 +19,11 @@
 - When mapping relationships, please do not state explicit attributes unless really needed
 - Do not use bidirectional relationships unless really needed
 - imports should be jakarta.persistence.* (not javax.persistence.*)
+- Whenever possible, use @OneToMany rather than @ManyToOne
+- Annotations such as @OneToMany should be minimalistic. Do not use mappedBy, cascade etc unless explicitly stated.
+
+## For Repository
+- When using Spring Data JPA, there is no need for @Repository annotation as it is not mandatory
 
 ## For Controllers
 - use URL such as /api/v1/ENTITY (eg: /api/v1/pet)

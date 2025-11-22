@@ -18,7 +18,7 @@ class PetServiceTest {
     @Test
     void shouldSaveNewPet() {
         // given
-        Pet pet = new Pet("Buddy", "Alice");
+        Pet pet = new Pet("Buddy", "Alice", null);
 
         // when
         Pet savedPet = petService.save(pet);
@@ -31,10 +31,10 @@ class PetServiceTest {
 
     @Test
     void shouldThrowExceptionWhenOwnerHasDuplicatePetName() {
-        // given
-        Pet firstPet = new Pet("Max", "Bob");
+        // given    
+        Pet firstPet = new Pet("Max", "Bob", null);
         petService.save(firstPet);
-        Pet duplicatePet = new Pet("Max", "Bob");
+        Pet duplicatePet = new Pet("Max", "Bob", null);
 
         // when & then
         assertThatThrownBy(() -> petService.save(duplicatePet))
@@ -45,8 +45,8 @@ class PetServiceTest {
     @Test
     void shouldAllowDifferentOwnersToHavePetsWithSameName() {
         // given
-        Pet pet1 = new Pet("Charlie", "Carol");
-        Pet pet2 = new Pet("Charlie", "Dave");
+        Pet pet1 = new Pet("Charlie", "Carol", null);
+        Pet pet2 = new Pet("Charlie", "Dave", null);
 
         // when
         Pet savedPet1 = petService.save(pet1);
@@ -61,8 +61,8 @@ class PetServiceTest {
     @Test
     void shouldAllowSameOwnerToHavePetsWithDifferentNames() {
         // given
-        Pet pet1 = new Pet("Rex", "Eve");
-        Pet pet2 = new Pet("Luna", "Eve");
+        Pet pet1 = new Pet("Rex", "Eve", null);
+        Pet pet2 = new Pet("Luna", "Eve", null);
 
         // when
         Pet savedPet1 = petService.save(pet1);
@@ -78,8 +78,8 @@ class PetServiceTest {
     @Test
     void shouldFindAllPets() {
         // given
-        Pet pet1 = new Pet("Milo", "Frank");
-        Pet pet2 = new Pet("Bella", "Grace");
+        Pet pet1 = new Pet("Milo", "Frank", null);
+        Pet pet2 = new Pet("Bella", "Grace", null);
         petService.save(pet1);
         petService.save(pet2);
 
@@ -93,7 +93,7 @@ class PetServiceTest {
     @Test
     void shouldFindPetById() {
         // given
-        Pet pet = new Pet("Oscar", "Helen");
+        Pet pet = new Pet("Oscar", "Helen", null);
         Pet savedPet = petService.save(pet);
 
         // when
@@ -108,7 +108,7 @@ class PetServiceTest {
     @Test
     void shouldFindPetByName() {
         // given
-        Pet pet = new Pet("Daisy", "Ivan");
+        Pet pet = new Pet("Daisy", "Ivan", null);
         petService.save(pet);
 
         // when
@@ -122,7 +122,7 @@ class PetServiceTest {
     @Test
     void shouldDeletePet() {
         // given
-        Pet pet = new Pet("Rocky", "Jack");
+        Pet pet = new Pet("Rocky", "Jack", null);
         Pet savedPet = petService.save(pet);
 
         // when

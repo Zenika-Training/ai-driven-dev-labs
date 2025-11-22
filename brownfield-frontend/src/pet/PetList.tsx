@@ -2,7 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { petService } from './index';
 import type { Pet } from './index';
 
-const PetList: React.FC = () => {
+interface PetListProps {
+  onPetSelect: (pet: Pet) => void;
+}
+
+const PetList: React.FC<PetListProps> = ({ onPetSelect }) => {
   const [pets, setPets] = useState<Pet[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -53,7 +57,11 @@ const PetList: React.FC = () => {
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
               {pets.map((pet) => (
-                <tr key={pet.id} className="hover:bg-gray-50">
+                <tr 
+                  key={pet.id} 
+                  className="hover:bg-gray-50 cursor-pointer"
+                  onClick={() => onPetSelect(pet)}
+                >
                   <td className="px-6 py-4 text-sm text-gray-900">{pet.id}</td>
                   <td className="px-6 py-4 text-sm text-gray-900">{pet.name}</td>
                   <td className="px-6 py-4 text-sm text-gray-900">{pet.ownerName}</td>
