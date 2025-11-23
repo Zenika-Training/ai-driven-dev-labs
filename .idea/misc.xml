@@ -6,6 +6,8 @@
       <list>
         <option value="$PROJECT_DIR$/petclinic/pom.xml" />
         <option value="$PROJECT_DIR$/spring-petclinic/pom.xml" />
+        <option value="$PROJECT_DIR$/brownfield-backend/pom.xml" />
+        <option value="$PROJECT_DIR$/greenfield-backend/pom.xml" />
       </list>
     </option>
   </component>
