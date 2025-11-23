@@ -27,3 +27,6 @@
    - Start looping over the instructions
    - Every time you are prompting, always ask:
      > "inside the attached execution plan file, execute the next instruction which doesn't have a  ✅︎ . If the instruction is asking you to generate code, you should do it. Add a  ✅︎  once completed.You should execute one instruction only!"
+
+2. **Where Copilot might need your nelp:**
+   - Inside data.sql: IDENTITY instead of AUTO_INCREMENT
