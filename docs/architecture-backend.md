@@ -8,8 +8,12 @@
     - as much as possible, functions should be single responsibility. If a function is doing more than one thing, split it into several functions
     - for Repository/Service/Controller, use method action words such as `find`, `save`, `delete`. Do not use 'create' or `remove`
 
+# Refactoring
+- When refactoring code, don't forget to refactor the JUnit tests
+
 ## Database
 - schema should be defined in data.sql
+- when having a data creation script inside data.sql, always make sure that data is populated in the right order, so we do not assign null values into columns which are "not null".
 - as of now, only use HSQL (test environment is enough)
 
 ## For JPA entities
