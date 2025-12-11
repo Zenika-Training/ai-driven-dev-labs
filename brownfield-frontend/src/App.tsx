@@ -3,10 +3,11 @@ import { Header } from './components';
 import { PetList, PetDetail } from './pet';
 import { VisitList, VisitDetail } from './visit';
 import { VetList } from './vet';
+import { InvoiceList } from './invoice';
 import type { Pet } from './pet';
 import type { Visit } from './visit';
 
-type View = 'petList' | 'petDetail' | 'visitList' | 'visitDetail' | 'vetList';
+type View = 'petList' | 'petDetail' | 'visitList' | 'visitDetail' | 'vetList' | 'invoiceList';
 
 function App() {
   const [currentView, setCurrentView] = useState<View>('petList');
@@ -33,6 +34,11 @@ function App() {
     setSelectedPet(null);
   };
 
+  const handleNavigateToInvoiceList = () => {
+    setCurrentView('invoiceList');
+    setSelectedPet(null);
+  };
+
   const handleVisitClick = (visit: Visit) => {
     setSelectedVisit(visit);
     setCurrentView('visitDetail');
@@ -50,23 +56,40 @@ function App() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <Header 
+            <Header 
         currentView={currentView}
         onNavigateToPetList={handleNavigateToPetList}
         onNavigateToVisitList={handleNavigateToVisitList}
         onNavigateToVetList={handleNavigateToVetList}
+        onNavigateToInvoiceList={handleNavigateToInvoiceList}
       />
-      <main>
-        {currentView === 'petDetail' && selectedPet ? (
-          <PetDetail pet={selectedPet} onBack={handleNavigateToPetList} />
-        ) : currentView === 'visitDetail' && selectedVisit ? (
-          <VisitDetail visit={selectedVisit} onBack={handleNavigateToVisitListFromDetail} />
-        ) : currentView === 'visitList' ? (
-          <VisitList onPetSelect={handlePetSelectFromVisit} onVisitClick={handleVisitClick} />
-        ) : currentView === 'vetList' ? (
-          <VetList />
-        ) : (
+      <main className="bg-gray-100 min-h-[calc(100vh-80px)]">
+        {currentView === 'petList' && (
           <PetList onPetSelect={handlePetSelect} />
+        )}
+        {currentView === 'petDetail' && selectedPet && (
+          <PetDetail 
+            pet={selectedPet} 
+            onBack={handleNavigateToPetList}
+          />
+        )}
+        {currentView === 'visitList' && (
+          <VisitList 
+            onPetSelect={handlePetSelectFromVisit}
+            onVisitClick={handleVisitClick}
+          />
+        )}
+        {currentView === 'visitDetail' && selectedVisit && (
+          <VisitDetail 
+            visit={selectedVisit}
+            onBack={handleNavigateToVisitListFromDetail}
+          />
+        )}
+        {currentView === 'vetList' && (
+          <VetList />
+        )}
+        {currentView === 'invoiceList' && (
+          <InvoiceList />
         )}
       </main>
     </div>

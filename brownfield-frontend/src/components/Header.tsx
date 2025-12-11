@@ -1,16 +1,17 @@
 import React from 'react';
-import { Cat, Home, Calendar, Stethoscope } from 'lucide-react';
+import { Cat, Home, Calendar, Stethoscope, FileText } from 'lucide-react';
 
-type View = 'petList' | 'petDetail' | 'visitList' | 'visitDetail' | 'vetList';
+type View = 'petList' | 'petDetail' | 'visitList' | 'visitDetail' | 'vetList' | 'invoiceList';
 
 interface HeaderProps {
   currentView: View;
   onNavigateToPetList: () => void;
   onNavigateToVisitList: () => void;
   onNavigateToVetList: () => void;
+  onNavigateToInvoiceList: () => void;
 }
 
-const Header: React.FC<HeaderProps> = ({ currentView, onNavigateToPetList, onNavigateToVisitList, onNavigateToVetList }) => {
+const Header: React.FC<HeaderProps> = ({ currentView, onNavigateToPetList, onNavigateToVisitList, onNavigateToVetList, onNavigateToInvoiceList }) => {
   return (
     <header className="bg-green-700 text-white shadow-md">
       <div className="container mx-auto px-6 py-4">
@@ -60,6 +61,18 @@ const Header: React.FC<HeaderProps> = ({ currentView, onNavigateToPetList, onNav
             >
               <Stethoscope className="w-5 h-5" />
               <span>Vets</span>
+            </button>
+
+            <button 
+              className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${
+                currentView === 'invoiceList'
+                  ? 'bg-green-900'
+                  : 'bg-green-800 hover:bg-green-900'
+              }`}
+              onClick={onNavigateToInvoiceList}
+            >
+              <FileText className="w-5 h-5" />
+              <span>Invoices</span>
             </button>
           </nav>
         </div>

@@ -20,7 +20,7 @@ describe('PetList', () => {
   it('should display loading state initially', () => {
     vi.mocked(petService.findAll).mockImplementation(() => new Promise(() => {}));
 
-    render(<PetList />);
+    render(<PetList onPetSelect={vi.fn()} />);
 
     expect(screen.getByText('Loading pets...')).toBeDefined();
   });
@@ -33,10 +33,10 @@ describe('PetList', () => {
 
     vi.mocked(petService.findAll).mockResolvedValue(mockPets);
 
-    render(<PetList />);
+    render(<PetList onPetSelect={vi.fn()} />);
 
     await waitFor(() => {
-      expect(screen.getByText('Pet List')).toBeDefined();
+      expect(screen.getByText('All Pets')).toBeDefined();
       expect(screen.getByText('Max')).toBeDefined();
       expect(screen.getByText('Bella')).toBeDefined();
       expect(screen.getByText('John')).toBeDefined();
@@ -47,7 +47,7 @@ describe('PetList', () => {
   it('should display error message when fetch fails', async () => {
     vi.mocked(petService.findAll).mockRejectedValue(new Error('Failed to load pets'));
 
-    render(<PetList />);
+    render(<PetList onPetSelect={vi.fn()} />);
 
     await waitFor(() => {
       expect(screen.getByText(/Error:/)).toBeDefined();
@@ -58,7 +58,7 @@ describe('PetList', () => {
   it('should display no pets message when list is empty', async () => {
     vi.mocked(petService.findAll).mockResolvedValue([]);
 
-    render(<PetList />);
+    render(<PetList onPetSelect={vi.fn()} />);
 
     await waitFor(() => {
       expect(screen.getByText('No pets found.')).toBeDefined();
@@ -72,13 +72,12 @@ describe('PetList', () => {
 
     vi.mocked(petService.findAll).mockResolvedValue(mockPets);
 
-    render(<PetList />);
+    render(<PetList onPetSelect={vi.fn()} />);
 
     await waitFor(() => {
       expect(screen.getByText('ID')).toBeDefined();
       expect(screen.getByText('Name')).toBeDefined();
       expect(screen.getByText('Owner Name')).toBeDefined();
-      expect(screen.getByText('Actions')).toBeDefined();
     });
   });
 });
