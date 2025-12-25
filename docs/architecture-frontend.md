@@ -28,15 +28,13 @@
 
 ### Testing
 
-- write unit tests for utility functions and services
 - write component tests focusing on user interactions
-- aim for meaningful test coverage, not just high percentages
+- no need to test API services unless they have some business logic
 - use data-testid attributes for test selectors
 - add "import React from "react";" when creating test file for components
 
 ### Code Quality
 
-- enable and follow ESLint rules
 - use TypeScript strict mode
 - avoid 'any' types - be explicit with types
 - document complex logic with comments
