@@ -43,50 +43,50 @@ const InvoiceList: React.FC = () => {
   };
 
   if (loading) {
-    return <div className="text-center py-8 text-gray-600">Loading invoices...</div>;
+    return <div className="text-center py-8">Loading invoices...</div>;
   }
 
   if (error) {
-    return <div className="text-center py-8 text-red-600">Error: {error}</div>;
+    return <div className="text-center py-8">Error: {error}</div>;
   }
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h2 className="text-2xl font-bold mb-6 text-gray-800">Invoices</h2>
-      <div className="bg-white shadow-md rounded-lg overflow-hidden">
-        <table className="min-w-full divide-y divide-gray-200">
-          <thead className="bg-gray-50">
+      <h2 className="text-2xl font-bold mb-6">Invoices</h2>
+      <div className="border rounded-lg overflow-hidden">
+        <table className="min-w-full divide-y">
+          <thead>
             <tr>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Invoice #</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Clinic</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Pet</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+              <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Invoice #</th>
+              <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Date</th>
+              <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Amount</th>
+              <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Clinic</th>
+              <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Pet</th>
+              <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Actions</th>
             </tr>
           </thead>
-          <tbody className="bg-white divide-y divide-gray-200">
+          <tbody className="divide-y">
             {invoices.map((invoice) => (
               <tr key={invoice.id} className="hover:bg-gray-50">
-                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                   {invoice.invoiceNumber}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                <td className="px-6 py-4 whitespace-nowrap text-sm">
                   {formatDate(invoice.invoiceDate)}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                <td className="px-6 py-4 whitespace-nowrap text-sm">
                   ${invoice.amount.toFixed(2)}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                <td className="px-6 py-4 whitespace-nowrap text-sm">
                   {invoice.visit?.clinic}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                <td className="px-6 py-4 whitespace-nowrap text-sm">
                   {invoice.visit?.pet?.name}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                   <button
                     onClick={() => handleDownload(invoice.id)}
-                    className="text-indigo-600 hover:text-indigo-900 bg-indigo-50 px-3 py-1 rounded-md transition-colors"
+                    className="underline hover:no-underline px-3 py-1 rounded-md transition-colors"
                   >
                     Download PDF
                   </button>

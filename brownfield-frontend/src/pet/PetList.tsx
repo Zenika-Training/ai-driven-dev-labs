@@ -29,42 +29,42 @@ const PetList: React.FC<PetListProps> = ({ onPetSelect }) => {
   };
 
   if (loading) {
-    return <div className="text-center py-8 text-gray-600">Loading pets...</div>;
+    return <div className="text-center py-8">Loading pets...</div>;
   }
 
   if (error) {
-    return <div className="text-center py-8 text-red-600">Error: {error}</div>;
+    return <div className="text-center py-8">Error: {error}</div>;
   }
 
   return (
     <div className="container mx-auto px-6 py-8">
       <div className="mb-6">
-        <h2 className="text-3xl font-bold text-gray-900 mb-2">All Pets</h2>
-        <p className="text-gray-600">Manage and view all pets in the directory</p>
+        <h2 className="text-3xl font-bold mb-2">All Pets</h2>
+        <p>Manage and view all pets in the directory</p>
       </div>
       
       {pets.length === 0 ? (
-        <p className="text-gray-600">No pets found.</p>
+        <p>No pets found.</p>
       ) : (
-        <div className="bg-white rounded-lg shadow overflow-hidden">
-          <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-green-600 text-white">
+        <div className="border rounded-lg overflow-hidden">
+          <table className="min-w-full divide-y">
+            <thead>
               <tr>
                 <th className="px-6 py-4 text-left text-sm font-semibold">ID</th>
                 <th className="px-6 py-4 text-left text-sm font-semibold">Name</th>
                 <th className="px-6 py-4 text-left text-sm font-semibold">Owner Name</th>
               </tr>
             </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
+            <tbody className="divide-y">
               {pets.map((pet) => (
                 <tr 
                   key={pet.id} 
-                  className="hover:bg-gray-50 cursor-pointer"
+                  className="cursor-pointer hover:bg-gray-50"
                   onClick={() => onPetSelect(pet)}
                 >
-                  <td className="px-6 py-4 text-sm text-gray-900">{pet.id}</td>
-                  <td className="px-6 py-4 text-sm text-gray-900">{pet.name}</td>
-                  <td className="px-6 py-4 text-sm text-gray-900">{pet.ownerName}</td>
+                  <td className="px-6 py-4 text-sm">{pet.id}</td>
+                  <td className="px-6 py-4 text-sm">{pet.name}</td>
+                  <td className="px-6 py-4 text-sm">{pet.ownerName}</td>
                 </tr>
               ))}
             </tbody>

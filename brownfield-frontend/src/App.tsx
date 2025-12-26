@@ -55,7 +55,7 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen">
             <Header 
         currentView={currentView}
         onNavigateToPetList={handleNavigateToPetList}
@@ -63,7 +63,7 @@ function App() {
         onNavigateToVetList={handleNavigateToVetList}
         onNavigateToInvoiceList={handleNavigateToInvoiceList}
       />
-      <main className="bg-gray-100 min-h-[calc(100vh-80px)]">
+      <main className="min-h-[calc(100vh-80px)]">
         {currentView === 'petList' && (
           <PetList onPetSelect={handlePetSelect} />
         )}

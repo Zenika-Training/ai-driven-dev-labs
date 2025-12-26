@@ -44,44 +44,44 @@ const PetDetail: React.FC<PetDetailProps> = ({ pet, onBack }) => {
     <div className="container mx-auto px-6 py-8">
       <button
         onClick={onBack}
-        className="mb-6 px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition-colors"
+        className="mb-6 px-4 py-2 border rounded transition-colors"
       >
         ← Back to Pets
       </button>
 
-      <div className="mb-6 bg-white rounded-lg shadow p-6">
-        <h2 className="text-3xl font-bold text-gray-900 mb-2">{pet.name}</h2>
-        <p className="text-gray-600">Owner: {pet.ownerName}</p>
-        <p className="text-gray-600">Pet ID: {pet.id}</p>
+      <div className="mb-6 border rounded-lg p-6">
+        <h2 className="text-3xl font-bold mb-2">{pet.name}</h2>
+        <p>Owner: {pet.ownerName}</p>
+        <p>Pet ID: {pet.id}</p>
       </div>
 
       <div className="mb-4">
-        <h3 className="text-2xl font-bold text-gray-900 mb-2">Visit History</h3>
-        <p className="text-gray-600">All visits for this pet</p>
+        <h3 className="text-2xl font-bold mb-2">Visit History</h3>
+        <p>All visits for this pet</p>
       </div>
 
       {loading ? (
-        <div className="text-center py-8 text-gray-600">Loading visit history...</div>
+        <div className="text-center py-8">Loading visit history...</div>
       ) : error ? (
-        <div className="text-center py-8 text-red-600">Error: {error}</div>
+        <div className="text-center py-8">Error: {error}</div>
       ) : visits.length === 0 ? (
-        <div className="bg-white rounded-lg shadow p-6">
-          <p className="text-gray-600 text-center">No visits recorded yet for {pet.name}.</p>
+        <div className="border rounded-lg p-6">
+          <p className="text-center">No visits recorded yet for {pet.name}.</p>
         </div>
       ) : (
-        <div className="bg-white rounded-lg shadow overflow-hidden">
-          <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-green-600 text-white">
+        <div className="border rounded-lg overflow-hidden">
+          <table className="min-w-full divide-y">
+            <thead>
               <tr>
                 <th className="px-6 py-4 text-left text-sm font-semibold">Date & Time</th>
                 <th className="px-6 py-4 text-left text-sm font-semibold">Clinic</th>
               </tr>
             </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
+            <tbody className="divide-y">
               {visits.map((visit) => (
                 <tr key={visit.id} className="hover:bg-gray-50">
-                  <td className="px-6 py-4 text-sm text-gray-900">{formatDateTime(visit.dateTime)}</td>
-                  <td className="px-6 py-4 text-sm text-gray-900">{visit.clinic}</td>
+                  <td className="px-6 py-4 text-sm">{formatDateTime(visit.dateTime)}</td>
+                  <td className="px-6 py-4 text-sm">{visit.clinic}</td>
                 </tr>
               ))}
             </tbody>
