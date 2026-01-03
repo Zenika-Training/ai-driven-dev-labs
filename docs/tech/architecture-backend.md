@@ -9,7 +9,9 @@
     - for Repository/Service/Controller, use method action words such as `find`, `save`, `delete`. Do not use 'create' or `remove`
 
 # Refactoring
-- When refactoring code, don't forget to refactor the JUnit tests
+- When refactoring code, you **MUST** update the existing JUnit tests to ensure they pass and reflect the changes. Never leave tests in a broken state.
+- If the refactoring introduces any new behavior, you **MUST** add new tests to cover it.
+
 
 ## Database
 - schema should be defined in data.sql
