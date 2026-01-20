@@ -1,135 +1,128 @@
-# AI Coding Agents Guide
+# Documentation AI Agents Guide
 
-## Overview
+## Purpose
 
-This guide provides concise instructions for AI coding assistants working on the brownfield frontend. For detailed information, refer to the comprehensive documentation in the `docs/` folder.
+This guide is specifically for AI agents working on **documentation** in this folder. For coding guidelines, see [`../agents.md`](../agents.md).
 
-## Quick Reference
+## Documentation Rules
 
-### Key Principles
-- **Domain Organization**: Organize by business domain (pet, vet, visit, invoice)
-- **Component-Based**: Build reusable, focused React components
-- **Service Layer**: Keep API logic separate from components
-- **Type Safety**: Use TypeScript strict mode throughout
+### File Size Limit
+- **Maximum 500 lines per markdown file**
+- If a file exceeds this limit, split it into multiple focused documents
 
-### Naming Conventions
-- **Components**: PascalCase (e.g., `PetList.tsx`, `VetDetail.tsx`)
-- **Services**: camelCase with `Service` suffix (e.g., `petService.ts`)
-- **Constants**: UPPER_SNAKE_CASE (e.g., `API_BASE_URL`)
-- **Domain Folders**: Include `index.ts` exporting all public members
+### Code in Documentation
+- **Link to source code** instead of duplicating it
+- Use relative paths: `[ComponentName.tsx](../src/domain/ComponentName.tsx)`
+- Include minimal code snippets only for **best practices** and **common patterns**
+- Show examples that illustrate concepts, not full implementations
 
-### Core Rules
-- All API calls in service files, never in components
-- Handle loading and error states consistently
-- Use `async/await` syntax; avoid `any` types
-- Remove `console.log` statements before committing
-- Keep components small and focused (<200 lines)
+### Structure Requirements
+Each documentation file should have:
+1. Clear title and purpose
+2. Focused sections (one topic per section)
+3. Cross-references to related docs
+4. Links to source code for implementations
 
-### Styling
-- Use Tailwind CSS utility classes
-- Container: `className="container mx-auto px-6 py-8"`
-- Buttons: `className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"`
+## Documentation Files
 
-### Testing
-- Write component tests focusing on user interactions
-- Use `data-testid` attributes for test selectors
-- Add `import React from 'react';` in test files
+### architecture.md
+- Component patterns, state management, React architecture
+- **Link to**: Key components, service files, hooks
+- **Avoid**: Full component implementations
 
-## Detailed Documentation
+### api-reference.md
+- Service layer methods, API integration patterns
+- **Include**: Method signatures, usage examples
+- **Link to**: Service files, component examples
+- **Avoid**: Full service implementations
 
-For comprehensive guides, refer to:
-- **[docs/architecture.md](docs/architecture.md)** - Component architecture, patterns, state management
-- **[docs/api-reference.md](docs/api-reference.md)** - Service layer and API integration details
-- **[docs/data-models.md](docs/data-models.md)** - TypeScript interfaces and type definitions
-- **[docs/ui-design.md](docs/ui-design.md)** - UI patterns, Tailwind conventions, accessibility
-- **[docs/development-guide.md](docs/development-guide.md)** - Setup, testing, build workflows
+### data-models.md
+- TypeScript interfaces and type definitions
+- **Include**: Interface definitions, type relationships
+- **Link to**: Service files where interfaces are defined
+- **Avoid**: Duplicating interface definitions
 
-## Quick Start
+### ui-design.md
+- UI patterns, Tailwind conventions, styling
+- **Include**: Example class names, pattern descriptions
+- **Link to**: Component examples
+- **Avoid**: Full component HTML
 
-```bash
-# Install and run
-npm install
-npm run dev
+### development-guide.md
+- Setup, workflows, testing, building
+- **Include**: Commands, troubleshooting steps
+- **Link to**: Config files, test examples
 
-# Test and lint
-npm run test
-npm run lint
+## Writing Best Practices
 
-# Build
-npm run build
-
-# Development server: http://localhost:5173
-# Backend API: http://localhost:8080/api/v1
+### Use Tables for Structure
+Good for methods, properties, endpoints:
+```markdown
+| Method | Description | Returns |
+|--------|-------------|---------|
+| `findAll()` | Get all items | `Promise<Item[]>` |
 ```
 
-## Code Templates
+### Link to Source Code
+```markdown
+**Service:** [`petService.ts`](../src/pet/petService.ts)
+**Component:** [`PetDetail.tsx`](../src/pet/PetDetail.tsx)
+```
 
-**Component:**
+### Minimal Code Examples
+Show patterns, not implementations:
+```markdown
+**Component Pattern:**
 ```tsx
-import React, { useEffect, useState } from 'react';
-
-interface ComponentProps {
-  prop1: string;
-}
-
-const ComponentName: React.FC<ComponentProps> = ({ prop1 }) => {
+const Component: React.FC<Props> = ({ prop }) => {
   const [data, setData] = useState<Type[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    loadData();
-  }, []);
-
-  const loadData = async () => {
-    try {
-      setLoading(true);
-      const result = await service.findAll();
-      setData(result);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Error');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error}</div>;
-
-  return (
-    <div className="container mx-auto px-6 py-8">
-      {/* Component content */}
-    </div>
-  );
-};
-
-export default ComponentName;
-```
-
-**Service:**
-```typescript
-const API_BASE_URL = 'http://localhost:8080/api/v1';
-
-export interface Entity {
-  id?: number;
-  field: string;
-}
-
-export const entityService = {
-  async findAll(): Promise<Entity[]> {
-    const response = await fetch(`${API_BASE_URL}/entity`);
-    if (!response.ok) throw new Error('Failed to fetch');
-    return response.json();
-  },
-  
-  async save(entity: Entity): Promise<Entity> {
-    const response = await fetch(`${API_BASE_URL}/entity`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(entity)
-    });
-    if (!response.ok) throw new Error('Failed to save');
-    return response.json();
-  }
+  // Load and render data
 };
 ```
+
+### Cross-Reference Related Docs
+```markdown
+See also: [Data Models](data-models.md), [Architecture](architecture.md)
+```
+
+## Maintenance Workflow
+
+### When Adding New Features
+1. Update relevant documentation file
+2. Add link to new source files
+3. Keep within 500-line limit
+4. Update cross-references
+
+### When Refactoring
+1. Update links if files moved
+2. Revise descriptions if behavior changed
+3. Verify cross-references are valid
+
+### Quality Checklist
+Before committing:
+- [ ] File is under 500 lines
+- [ ] Code examples are minimal
+- [ ] Links to source code instead of duplication
+- [ ] Cross-references are current
+- [ ] No duplicate content across files
+- [ ] TypeScript types are linked, not duplicated
+
+## Tailwind CSS Documentation
+
+When documenting UI patterns:
+- Show class name combinations
+- Explain responsive patterns (sm:, md:, lg:)
+- Link to component examples
+- Don't duplicate full component markup
+
+**Example:**
+```markdown
+**Button Pattern:** `className="px-4 py-2 bg-blue-500 rounded"`
+See: [`Button.tsx`](../src/components/Button.tsx)
+```
+
+## Related Documentation
+
+- [`../agents.md`](../agents.md) - Coding guidelines for this application
+- [architecture.md](architecture.md) - Component architecture
+- [development-guide.md](development-guide.md) - Development workflows

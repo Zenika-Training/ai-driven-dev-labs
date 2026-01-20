@@ -1,114 +1,107 @@
-# AI Coding Agents Guide
+# Documentation AI Agents Guide
 
-## Overview
+## Purpose
 
-This guide provides concise instructions for AI coding assistants working on the brownfield backend. For detailed information, refer to the comprehensive documentation in the `docs/` folder.
+This guide is specifically for AI agents working on **documentation** in this folder. For coding guidelines, see [`../agents.md`](../agents.md).
 
-## Quick Reference
+## Documentation Rules
 
-### Key Principles
-- **Domain-Driven Design**: Organize code by business domain, not technical layers
-- **Package Structure**: Use `com.petclinic.{domain}` for all Java classes
-- **Single Responsibility**: Keep functions focused on one task
+### File Size Limit
+- **Maximum 500 lines per markdown file**
+- If a file exceeds this limit, split it into multiple focused documents
 
-### Coding Conventions
+### Code in Documentation
+- **Link to source code** instead of duplicating it
+- Use relative paths: `[ClassName.java](../src/main/java/com/petclinic/domain/ClassName.java)`
+- Include minimal code snippets only for **best practices** and **common patterns**
+- Show examples that illustrate concepts, not full implementations
 
-**Entities (JPA)**
-- No setters; three constructors (empty, all params, all except ID)
-- Use `jakarta.persistence.*` imports (not `javax.persistence.*`)
-- Minimal annotations; prefer `@OneToMany` over `@ManyToOne`
+### Structure Requirements
+Each documentation file should have:
+1. Clear title and purpose
+2. Focused sections (one topic per section)
+3. Cross-references to related docs
+4. Links to source code for implementations
 
-**Repositories**
-- Extend `JpaRepository<Entity, Long>`; no `@Repository` annotation needed
-- Action verbs: `find`, `save`, `delete` (not `create`, `remove`)
+## Documentation Files
 
-**Services**
-- Use `@Service` annotation with constructor-based dependency injection
-- Action verbs: `find`, `save`, `delete`; single responsibility principle
+### architecture.md
+- High-level design patterns and principles
+- **Link to**: Package structure, key classes
+- **Avoid**: Detailed code implementation
 
-**Controllers**
-- URL pattern: `/api/v1/{entity}`; avoid `ResponseEntity` unless necessary
-- Keep controllers thin - delegate to services
+### api-reference.md
+- API endpoints, request/response formats
+- **Include**: Endpoint tables, example requests
+- **Link to**: Controller and service classes
+- **Avoid**: Full implementation (refer to source)
 
-**Testing**
-- Use JUnit 5 with AssertJ; naming: `{ClassName}Test.java`
-- Structure: Given-When-Then with blank lines between sections
+### data-models.md
+- Entity schemas, relationships
+- **Include**: ER diagrams, field descriptions
+- **Link to**: Entity classes, schema files
+- **Avoid**: Full JPA code (link to source)
 
-### Database
-- Schema in `src/main/resources/data.sql`; use HSQLDB (in-memory)
-- Insert data in correct order (respect foreign key constraints)
+### development-guide.md
+- Setup, workflows, testing, debugging
+- **Include**: Commands, troubleshooting steps
+- **Link to**: Config files, test examples
 
-## Detailed Documentation
+## Writing Best Practices
 
-For comprehensive guides, refer to:
-- **[docs/architecture.md](docs/architecture.md)** - DDD architecture, layers, design patterns
-- **[docs/api-reference.md](docs/api-reference.md)** - Complete REST API endpoint specifications
-- **[docs/data-models.md](docs/data-models.md)** - Entity schemas, relationships, database details
-- **[docs/development-guide.md](docs/development-guide.md)** - Setup, testing, build workflows, troubleshooting
-
-## Quick Start
-
-```bash
-# Build and run
-./mvnw spring-boot:run
-
-# Run tests
-./mvnw test
-
-# API Documentation
-# http://localhost:8080/swagger-ui.html
+### Use Tables for Structure
+Good for endpoints, methods, properties:
+```markdown
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/v1/pet` | Get all pets |
 ```
 
-## Code Templates
-
-**Entity:**
-```java
-@Entity
-public class Entity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String field;
-    
-    public Entity() {}
-    public Entity(Long id, String field) { /* ... */ }
-    public Entity(String field) { /* ... */ }
-    // Getters only
-}
+### Link to Source Code
+```markdown
+**Controller:** [`PetController.java`](../src/main/java/com/petclinic/pet/PetController.java)
 ```
 
-**Service:**
+### Minimal Code Examples
+Show patterns, not implementations:
+```markdown
+**Service Pattern:**
 ```java
 @Service
 public class EntityService {
     private final EntityRepository repository;
-    
-    public EntityService(EntityRepository repository) {
-        this.repository = repository;
-    }
-    
-    public List<Entity> findAll() { return repository.findAll(); }
-    public Entity save(Entity entity) { return repository.save(entity); }
+    // Delegate to repository
 }
 ```
 
-**Controller:**
-```java
-@RestController
-@RequestMapping("/api/v1/entity")
-public class EntityController {
-    private final EntityService service;
-    
-    public EntityController(EntityService service) {
-        this.service = service;
-    }
-    
-    @GetMapping
-    public List<Entity> findAll() { return service.findAll(); }
-    
-    @PostMapping
-    public Entity save(@RequestBody Entity entity) {
-        return service.save(entity);
-    }
-}
+### Cross-Reference Related Docs
+```markdown
+See also: [Data Models](data-models.md), [Architecture](architecture.md)
 ```
+
+## Maintenance Workflow
+
+### When Adding New Features
+1. Update relevant documentation file
+2. Add link to new source files
+3. Keep within 500-line limit
+4. Update cross-references
+
+### When Refactoring
+1. Update links if files moved
+2. Revise descriptions if behavior changed
+3. Verify cross-references are valid
+
+### Quality Checklist
+Before committing:
+- [ ] File is under 500 lines
+- [ ] Code examples are minimal
+- [ ] Links to source code instead of duplication
+- [ ] Cross-references are current
+- [ ] No duplicate content across files
+
+## Related Documentation
+
+- [`../agents.md`](../agents.md) - Coding guidelines for this application
+- [architecture.md](architecture.md) - System architecture
+- [development-guide.md](development-guide.md) - Development workflows
