@@ -2,136 +2,82 @@
 
 ## Overview
 
-This guide provides instructions for AI coding assistants working on the brownfield backend codebase. Follow these conventions to maintain code quality and consistency.
+This guide provides concise instructions for AI coding assistants working on the brownfield backend. For detailed information, refer to the comprehensive documentation in the `docs/` folder.
 
-## Architecture Principles
+## Quick Reference
 
+### Key Principles
 - **Domain-Driven Design**: Organize code by business domain, not technical layers
 - **Package Structure**: Use `com.petclinic.{domain}` for all Java classes
 - **Single Responsibility**: Keep functions focused on one task
 
-## Coding Conventions
+### Coding Conventions
 
-### Entities (JPA)
-
-- No setters (immutable-friendly design)
-- Three constructors: empty, all parameters, all parameters except ID
+**Entities (JPA)**
+- No setters; three constructors (empty, all params, all except ID)
 - Use `jakarta.persistence.*` imports (not `javax.persistence.*`)
-- Minimal annotations: avoid `@Column` and `@Table` unless necessary
-- Prefer `@OneToMany` over `@ManyToOne` relationships
-- Keep relationship annotations minimal (no `mappedBy`, `cascade` unless needed)
+- Minimal annotations; prefer `@OneToMany` over `@ManyToOne`
 
-### Repositories
-
-- Extend `JpaRepository<Entity, Long>`
-- No `@Repository` annotation needed (Spring Data JPA provides it)
-- Use action verbs: `find`, `save`, `delete` (not `create`, `remove`)
-
-### Services
-
-- Use `@Service` annotation
-- Constructor-based dependency injection
+**Repositories**
+- Extend `JpaRepository<Entity, Long>`; no `@Repository` annotation needed
 - Action verbs: `find`, `save`, `delete` (not `create`, `remove`)
-- Single responsibility principle
 
-### Controllers
+**Services**
+- Use `@Service` annotation with constructor-based dependency injection
+- Action verbs: `find`, `save`, `delete`; single responsibility principle
 
-- Use `@RestController` and `@RequestMapping`
-- URL pattern: `/api/v1/{entity}` (e.g., `/api/v1/pet`)
-- Avoid `ResponseEntity` unless necessary
+**Controllers**
+- URL pattern: `/api/v1/{entity}`; avoid `ResponseEntity` unless necessary
 - Keep controllers thin - delegate to services
 
-### Testing
-
-- Use JUnit 5 with AssertJ for assertions
-- Follow naming: `{ClassName}Test.java` (e.g., `VetServiceTest.java`)
+**Testing**
+- Use JUnit 5 with AssertJ; naming: `{ClassName}Test.java`
 - Structure: Given-When-Then with blank lines between sections
-- Integration tests: Use `@SpringBootTest` with embedded database
-- Ensure test data doesn't conflict with `data.sql`
 
-## Database
-
-- Schema defined in `src/main/resources/data.sql`
-- Use HSQLDB (in-memory)
+### Database
+- Schema in `src/main/resources/data.sql`; use HSQLDB (in-memory)
 - Insert data in correct order (respect foreign key constraints)
-- Avoid null values in NOT NULL columns
 
-## Refactoring Rules
+## Detailed Documentation
 
-- **MUST** update existing tests when refactoring
-- **MUST** add new tests for new behavior
-- Never leave tests broken after refactoring
+For comprehensive guides, refer to:
+- **[docs/architecture.md](docs/architecture.md)** - DDD architecture, layers, design patterns
+- **[docs/api-reference.md](docs/api-reference.md)** - Complete REST API endpoint specifications
+- **[docs/data-models.md](docs/data-models.md)** - Entity schemas, relationships, database details
+- **[docs/development-guide.md](docs/development-guide.md)** - Setup, testing, build workflows, troubleshooting
 
-## Common Tasks
-
-### Adding a New Entity
-
-1. Create entity class in new domain package
-2. Create repository interface
-3. Create service class
-4. Create controller class
-5. Update `data.sql` with schema and test data
-6. Write unit tests for service logic
-
-### Running the Application
+## Quick Start
 
 ```bash
+# Build and run
 ./mvnw spring-boot:run
-```
 
-### Running Tests
-
-```bash
+# Run tests
 ./mvnw test
+
+# API Documentation
+# http://localhost:8080/swagger-ui.html
 ```
 
-### Building
+## Code Templates
 
-```bash
-./mvnw clean package
-```
-
-## API Documentation
-
-- Swagger UI: `http://localhost:8080/swagger-ui.html`
-- OpenAPI JSON: `http://localhost:8080/v3/api-docs`
-
-## Best Practices
-
-- Follow existing code patterns in the codebase
-- Keep methods focused and single-purpose
-- Use meaningful variable and method names
-- Write tests before making changes (when applicable)
-- Ensure all tests pass before committing
-
-## Documentation
-
-- `docs/architecture.md`: Detailed architecture information
-- `docs/data-models.md`: Entity and database schema details
-- `docs/api-reference.md`: Complete API endpoint documentation
-- `docs/development-guide.md`: Setup and development workflows
-
-## Quick Reference
-
-**Entity Pattern:**
+**Entity:**
 ```java
 @Entity
 public class Entity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
     private String field;
     
     public Entity() {}
     public Entity(Long id, String field) { /* ... */ }
     public Entity(String field) { /* ... */ }
-    
     // Getters only
 }
 ```
 
-**Service Pattern:**
+**Service:**
 ```java
 @Service
 public class EntityService {
@@ -143,11 +89,10 @@ public class EntityService {
     
     public List<Entity> findAll() { return repository.findAll(); }
     public Entity save(Entity entity) { return repository.save(entity); }
-    public void delete(Long id) { repository.deleteById(id); }
 }
 ```
 
-**Controller Pattern:**
+**Controller:**
 ```java
 @RestController
 @RequestMapping("/api/v1/entity")
