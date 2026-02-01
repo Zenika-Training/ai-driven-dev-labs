@@ -1,6 +1,6 @@
 - Step 1: In greenfield-backend, in a dedicated package, create a new Entity class named Pet. It should have 3 attributes (id, name and ownerName). Define its schema and test data inside data.sql
 
-- Step 2: Create a PetRepository with a findByName method which returns a single result. Create a PetService and a PetController.
+- Step 2: Create a PetRepository with a findByName method which returns a single result. Create a PetService and a PetController (both should expose finders and should NOT have any create/update/delete methods)
 
 # Time to run the application and connect to swagger-ui
 
