@@ -10,6 +10,7 @@ async def lifespan(app: FastAPI):
     await Tortoise.init(
         db_url="sqlite://:memory:",
         modules={"models": []},
+        _enable_global_fallback=True,
     )
     yield
     await Tortoise.close_connections()
