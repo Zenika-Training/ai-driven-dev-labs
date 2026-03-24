@@ -2,7 +2,7 @@
 
 # Packages
 - Source code must live under `src`.
-- Split code by layer: `repository`, `service`, `router`.
+- Split code by layer: `repositories`, `services`, `routers`, `models`, `schemas`.
 - Keep clear naming so each feature has matching files across layers when needed.
 - Example structure:
   - `src/repositories/pet_repository.py`
@@ -21,7 +21,7 @@
 
 # Dependency Management
 - Configure dependencies directly inside files with FastAPI `Depends` where needed.
-- Do not use a dedicated dependency file such as `dependencies.py`.
+- Do NOT use a dedicated dependency file such as `dependencies.py`.
 - Keep dependency wiring close to the router or service where it is used.
 
 # Refactoring
@@ -56,4 +56,3 @@
   - Methods: `test_<behavior>`
 - In test methods, use `given/when/then` structure with a blank line between each section.
 - For integration tests, use FastAPI app-level tests (`TestClient` or `httpx.AsyncClient`) with an embedded/in-memory database.
-- When generating test data, make sure there is no conflict with data loaded from `data.sql`.
