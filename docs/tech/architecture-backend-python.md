@@ -41,6 +41,7 @@
 # Service
 - for write operations, transactions should use @atomic in the service layer
 - service functions should return objects mapped with pydantic schema
+- there should be no HttpException raised in the service layer. Service layer should raise business exception, which are then transformed into HttpExceptions in the routers layer
 
 # Routers (Controllers)
 - Use URLs such as `/api/v1/<entity>` (example: `/api/v1/pet`).
