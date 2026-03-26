@@ -4,14 +4,23 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from tortoise import Tortoise
 
+from src.models.pet import Pet
+from src.routers.pet_router import router as pet_router
+
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     await Tortoise.init(
         db_url="sqlite://:memory:",
-        modules={"models": []},
+        modules={"models": ["src.models.pet"]},
         _enable_global_fallback=True,
     )
+    await Tortoise.generate_schemas()
+
+    await Pet.create(name="Buddy", owner_name="Alice")
+    await Pet.create(name="Whiskers", owner_name="Bob")
+    await Pet.create(name="Max", owner_name="Alice")
+
     yield
     await Tortoise.close_connections()
 
@@ -30,6 +39,9 @@ app.add_middleware(
 @app.get("/health")
 async def health_check():
     return {"status": "ok"}
+
+
+app.include_router(pet_router)
 
 
 if __name__ == "__main__":

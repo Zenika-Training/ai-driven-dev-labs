@@ -6,5 +6,6 @@
         "greenfield-frontend/": false,
         "brownfield-backend/": false,
         "brownfield-frontend/": false
-    }
+    },
+    "workbench.browser.enableChatTools": true
 }

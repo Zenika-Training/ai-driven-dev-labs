@@ -1,0 +1,39 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Start Brownfield Backend",
+      "type": "shell",
+      "command": "mvn clean spring-boot:run",
+      "options": {
+        "cwd": "${workspaceFolder}/brownfield-backend"
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "group": "brownfield-services"
+      }
+    },
+    {
+      "label": "Start Brownfield Frontend",
+      "type": "shell",
+      "command": "npm run dev",
+      "options": {
+        "cwd": "${workspaceFolder}/brownfield-frontend"
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "group": "brownfield-services"
+      }
+    },
+    {
+      "label": "Start Brownfield Stack",
+      "dependsOn": [
+        "Start Brownfield Backend",
+        "Start Brownfield Frontend"
+      ],
+      "dependsOrder": "parallel"
+    }
+  ]
+}
