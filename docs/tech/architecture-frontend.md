@@ -1,6 +1,6 @@
 # Frontend Architecture Rules
 
-## Naming Conventions
+## Typescript/React Naming Conventions
 - for React components, use PascalCase (eg: PetList.tsx, not petList.tsx)
 - for React services, use camelCase with a suffix 'Service' (eg: petService.ts, not PetService.ts)
 - use camelCase for utility functions and hooks (eg: formatDate.ts, useAuth.ts)
@@ -11,17 +11,12 @@
 - use TypeScript strict mode
 - avoid 'any' types - be explicit with types
 - document complex logic with comments
-- remove console.log statements before committing
 
 ## Testing
 - write component tests focusing on user interactions
 - no need to test API services unless they have some business logic
 - use data-testid attributes for test selectors
 - add "import React from "react";" when creating test file for components
-
-# Refactoring
-- When refactoring code, don't forget to refactor the unit tests
-- When refactoring code, remember to add tests for the new code
 
 ## Component Structure
 - keep components small and focused on a single responsibility

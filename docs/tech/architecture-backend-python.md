@@ -12,7 +12,6 @@
   - `src/schemas/pet_response.py`
 
 # Backend Coding Practices
-- As much as possible, functions should have a single responsibility. If a function is doing more than one thing, split it into several functions.
 - For repository/service/router methods, use action words such as `find`, `save`, and `delete`. Do not use `create` or `remove` in method names.
 - Keep routers thin: validate request data, call service methods, return response models.
 - Keep business rules in service layer, not in router or repository.
@@ -24,16 +23,13 @@
 - Do NOT use a dedicated dependency file such as `dependencies.py`.
 - Keep dependency wiring close to the router or service where it is used.
 
-# Refactoring
-- When refactoring code, you MUST update existing pytest tests so they pass and reflect the changes.
-- Never leave tests in a broken state.
-- If the refactoring introduces new behavior, you MUST add new tests to cover it.
 
 # Database
 - By default, application should use an in-memory database with aiosqlite. Create test data accordingly
 - Always populate data in the right order so not-null and foreign key constraints are respected.
 
 # Repository
+- Application uses TortoiseORM 1.x. Be mindful of the breaking changes which happened in 1.0.
 - Repository methods should focus on persistence concerns only.
 - Keep repository methods small and explicit (`find_*`, `save_*`, `delete_*`).
 - Do not place business validations in repository methods.
