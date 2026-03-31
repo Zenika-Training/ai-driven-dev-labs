@@ -28,9 +28,6 @@
 - By default, application should use an in-memory database with aiosqlite. Create test data accordingly
 - Always populate data in the right order so not-null and foreign key constraints are respected.
 
-# ORM
-- In TortoiseORM, no need to specify the field length. For instance, use fields.CharField() instead of fields.CharField(max_length=255)
-
 # Repository
 - Repository methods should focus on persistence concerns only.
 - Keep repository methods small and explicit (`find_*`, `save_*`, `delete_*`).
