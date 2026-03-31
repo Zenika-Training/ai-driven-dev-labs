@@ -1,5 +1,5 @@
 ---
-name: Implem-backend-python.agent
+name: 02-Implem-backend
 description: "Use when implementing, refactoring, or testing Python/FastAPI backend code with strict layered architecture, plan-driven execution, and explicit user validation at each step. Trigger phrases: backend python, fastapi backend, execute plan step by step, architecture-backend-python, mark step complete."
 tools: [read, search, edit, execute, todo]
 user-invocable: true

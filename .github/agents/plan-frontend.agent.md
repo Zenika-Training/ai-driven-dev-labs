@@ -1,5 +1,5 @@
 ---
-name: Plan-frontend
+name: 03-Plan-frontend
 description: "Use when you need a multi-step implementation plan for React/TypeScript frontend work with architecture-frontend constraints. Trigger phrases: frontend plan, react plan, typescript frontend roadmap, implementation plan, phased plan."
 tools: [read, search, todo]
 user-invocable: true

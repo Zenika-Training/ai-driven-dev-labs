@@ -1,5 +1,5 @@
 ---
-name: Plan-backend-python
+name: 01-Plan-backend
 description: "Use when you need a multi-step implementation plan for Python/FastAPI backend work with architecture-backend-python constraints. Trigger phrases: backend plan, fastapi plan, python backend roadmap, implementation plan, phased plan."
 tools: [read, search, todo]
 user-invocable: true
