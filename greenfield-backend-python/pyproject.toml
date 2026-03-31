@@ -6,7 +6,7 @@ requires-python = ">=3.11"
 dependencies = [
     "fastapi>=0.135.0",
     "uvicorn[standard]>=0.42.0",
-    "tortoise-orm>=1.1.7",
+    "tortoise-orm>=0.25.4",
     "aiosqlite>=0.22.1",
 ]
 
