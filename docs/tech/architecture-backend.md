@@ -28,16 +28,24 @@
 - Whenever possible, use @OneToMany rather than @ManyToOne
 - Annotations such as @OneToMany should be minimalistic. Do not use mappedBy, cascade etc unless explicitly stated.
 
-## For Repository
+## For Service classes
+- Never implement a Service class without a JUnit Test
+
+## For Repository classes
 - When using Spring Data JPA, there is no need for @Repository annotation as it is not mandatory
 
-## For Controllers
+## For Controller classes
 - use URL such as /api/v1/ENTITY (eg: /api/v1/pet)
 - avoid using ResponseEntity unless really needed
 
-## JUnit tests
-- Use AssertJ for assertions in tests
+## JUnit tests - what to test
+- We should have good coverage of JUnit tests at the service layer. If business rules are simple, do an Integration test (all the way down to in-memory database)
+- All complex business rules should be tested with a pure Unit Test (with Mock)
+- Only test Repository and Controller if there is something interesting to test
+
+## JUnit tests - Implementation
 - All JUnit tests should follow the convention `<ClassName>Test.java`. For instance, the test for VetService should be named `VetServiceTest.java`
+- method names: should use `should` and `shouldNot`. Example: shouldFindPetByName
 - inside test methods, use the `given/when/then` structure with a blank line between each section
 - When asked to generate a JUnit Integration test, you should create a @SpringBootTest with JUnit 5, using an embedded database (H2). 
 - when generating test data, make sure there is no conflict with the test data inside data.sql
