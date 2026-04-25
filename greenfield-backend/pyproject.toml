@@ -1,0 +1,26 @@
+[project]
+name = "greenfield-backend-python"
+version = "0.1.0"
+description = "Petclinic greenfield backend (Python/FastAPI/SQLAlchemy)"
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi>=0.135.0",
+    "uvicorn[standard]>=0.42.0",
+    "sqlalchemy[asyncio]>=2.0.0",
+    "aiosqlite>=0.22.1",
+    "greenlet>=3.0.0",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=9.0.2",
+    "pytest-asyncio>=1.3.0",
+    "httpx>=0.28.1",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src"]

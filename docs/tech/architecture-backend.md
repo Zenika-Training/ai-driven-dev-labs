@@ -1,43 +1,52 @@
-# Backend Architecture Rules
+# Backend Architecture Rules (Python/FastAPI)
 
-# Packages 
-    - should be split by domain, not layer (we use DDD style)
-    - Inside folder 'greenfield-backend' or 'brownfield-backend', always use a subfolder of `com.petclinic` package for new Java classes
+# Packages
+- Source code must live under `src`.
+- Split code by domain (see below).
+- Keep clear naming so each feature has matching files across layers when needed.
+- Example structure:
+  - `src/pet/pet_repository.py`
+  - `src/pet/pet_service.py`
+  - `src/pet/pet_router.py`
+  - `src/pet/pet.py` (model file)
 
-# Backend Coding practices
-    - as much as possible, functions should be single responsibility. If a function is doing more than one thing, split it into several functions
-    - for Repository/Service/Controller, use method action words such as `find`, `save`, `delete`. Do not use 'create' or `remove`
+# Backend Coding Practices
+- For repository/service/router methods, use action words such as `find`, `save`, and `delete`. Do not use `create` or `remove` in method names.
+- Keep routers thin: validate request data, call service methods, return response models.
+- Keep business rules in service layer, not in router or repository.
+- Keep data access in repository layer only.
+- Use snake_case for file names, functions, variables, and module-level constants.
 
-# Refactoring
-- When refactoring code, you **MUST** update the existing JUnit tests to ensure they pass and reflect the changes. Never leave tests in a broken state.
-- If the refactoring introduces any new behavior, you **MUST** add new tests to cover it.
+# Dependency Management
+- Configure dependencies directly inside files with FastAPI `Depends` where needed.
+- Do NOT use a dedicated dependency file such as `dependencies.py`.
+- Keep dependency wiring close to the router or service where it is used.
 
 
-## Database
-- schema should be defined in data.sql
-- when having a data creation script inside data.sql, always make sure that data is populated in the right order, so we do not assign null values into columns which are "not null".
-- as of now, only use HSQL (test environment is enough)
+# Database
+- By default, application should use an in-memory database with aiosqlite. Create test data accordingly
+- Always populate data in the right order so not-null and foreign key constraints are respected.
 
-## For JPA entities
-- there should be no setters by default 
-- there should be 3 constructors: an empty one, one with all parameters, one with all parameters except the id
-- Avoid using @Column and @Table unless really necessary
-- When mapping relationships, please do not state explicit attributes unless really needed
-- Do not use bidirectional relationships unless really needed
-- imports should be jakarta.persistence.* (not javax.persistence.*)
-- Whenever possible, use @OneToMany rather than @ManyToOne
-- Annotations such as @OneToMany should be minimalistic. Do not use mappedBy, cascade etc unless explicitly stated.
+# Repository
+- Repository methods should focus on persistence concerns only.
+- Keep repository methods small and explicit (`find_*`, `save_*`, `delete_*`).
+- Do not place business validations in repository methods.
 
-## For Repository
-- When using Spring Data JPA, there is no need for @Repository annotation as it is not mandatory
+# Service
+- for write operations, transactions should use `async with session.begin()` in the service layer
+- service functions should return objects mapped with pydantic schema
+- there should be no HttpException raised in the service layer. Service layer should raise business exception, which are then transformed into HttpExceptions in the routers layer
 
-## For Controllers
-- use URL such as /api/v1/ENTITY (eg: /api/v1/pet)
-- avoid using ResponseEntity unless really needed
+# Routers (Controllers)
+- Use URLs such as `/api/v1/<entity>` (example: `/api/v1/pet`).
+- Prefer FastAPI `response_model` declarations over manual response shaping.
+- Avoid adding extra response wrappers unless needed by a specific requirement.
 
-## JUnit tests
-- Use AssertJ for assertions in tests
-- All JUnit tests should follow the convention `<ClassName>Test.java`. For instance, the test for VetService should be named `VetServiceTest.java`
-- inside test methods, use the `given/when/then` structure with a blank line between each section
-- When asked to generate a JUnit Integration test, you should create a @SpringBootTest with JUnit 5, using an embedded database (H2). 
-- when generating test data, make sure there is no conflict with the test data inside data.sql
+# Tests (Pytest)
+- Use pytest for unit and integration tests.
+- Test naming conventions:
+  - Files: `test_<module>.py`
+  - Classes: `Test<Feature>`
+  - Methods: `test_<behavior>`
+- In test methods, use `given/when/then` structure with a blank line between each section.
+- For integration tests, use FastAPI app-level tests (`TestClient` or `httpx.AsyncClient`) with an embedded/in-memory database.

@@ -1,3 +1,10 @@
+### Python ###
+__pycache__/
+**/__pycache__/
+*.pyc
+*.pyo
+.venv/
+
 HELP.md
 target/
 .mvn/wrapper/maven-wrapper.jar
