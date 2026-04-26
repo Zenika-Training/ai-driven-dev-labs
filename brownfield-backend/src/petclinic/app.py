@@ -1,8 +1,8 @@
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from .database import engine, Base, async_session_factory
-from .data_init import seed_data
+from src.petclinic.database import engine, Base, async_session_factory
+from src.petclinic.data_init import seed_data
 from .vet.vet_router import router as vet_router
 from .pet.pet_router import router as pet_router
 from .visit.visit_router import router as visit_router
@@ -39,7 +39,10 @@ async def health_check():
     return {"status": "ok"}
 
 
-if __name__ == "__main__":
+def start():
     import uvicorn
+    uvicorn.run("src.petclinic.app:app", host="0.0.0.0", port=8080, reload=True)
 
-    uvicorn.run(app, host="0.0.0.0", port=8080)
+
+if __name__ == "__main__":
+    start()
