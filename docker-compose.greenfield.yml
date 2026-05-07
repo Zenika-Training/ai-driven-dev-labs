@@ -1,0 +1,29 @@
+services:
+  greenfield-backend:
+    image: ghcr.io/astral-sh/uv:python3.11-bookworm-slim
+    working_dir: /app
+    volumes:
+      - ./greenfield-backend:/app:z
+      - uv-cache:/root/.cache/uv:z
+    command: ["/bin/sh", "-c", "uv sync && uv run start"]
+    ports:
+      - "8080:8080"
+
+  greenfield-frontend:
+    image: node:22
+    working_dir: /app
+    volumes:
+      - ./greenfield-frontend:/app:z
+      - /app/node_modules
+    command: ["/bin/sh", "-c", "npm install && npm run dev -- --host 0.0.0.0"]
+    ports:
+      - "5173:5173"
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+
+volumes:
+  uv-cache:
+
+networks:
+  default:
+    driver: bridge
