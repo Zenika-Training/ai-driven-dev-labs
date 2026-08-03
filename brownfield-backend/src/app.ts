@@ -10,7 +10,14 @@ import { visitRouter } from "./visit/visitRouter";
 import { invoiceRouter } from "./invoice/invoiceRouter";
 
 export const app = express();
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["*"],
+    credentials: true,
+  }),
+);
 app.use(express.json());
 
 const swaggerOptions: swaggerJsdoc.Options = {
