@@ -1,6 +1,6 @@
 import type { Visit } from '../visit/visitService';
 
-const API_BASE_URL = 'http://localhost:8080/api/v1/invoices';
+const API_BASE_URL = 'http://localhost:8000/api/v1/invoices';
 
 export interface Invoice {
   id: number;

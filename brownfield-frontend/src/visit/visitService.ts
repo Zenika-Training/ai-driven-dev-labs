@@ -1,4 +1,4 @@
-const API_BASE_URL = 'http://localhost:8080/api/v1/visit';
+const API_BASE_URL = 'http://localhost:8000/api/v1/visit';
 
 export interface Pet {
   id: number;

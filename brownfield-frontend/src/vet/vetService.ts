@@ -1,4 +1,4 @@
-const API_BASE_URL = 'http://localhost:8080/api/v1/vet';
+const API_BASE_URL = 'http://localhost:8000/api/v1/vet';
 
 export interface Vet {
   id?: number;
