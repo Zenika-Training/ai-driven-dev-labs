@@ -1,0 +1,4 @@
+com/petclinic/vet/VetServiceTest.class
+com/petclinic/pet/PetServiceTest.class
+com/petclinic/invoice/InvoiceServiceTest.class
+com/petclinic/visit/VisitServiceTest.class
