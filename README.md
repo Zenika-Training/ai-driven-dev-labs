@@ -7,9 +7,10 @@
 1. **Install development tools:**
    - Install VSCode
    - Install Java 21 and Node.js v22
-   - Install an AI coding assistant of your choice (Copilot, Claude Code, Cursor…)
+   - Install an AI coding assistant of your choice (Copilot, Claude Code, Gemini, Cursor…)
       > If you are using [GitHub Copilot](.github/copilot-instructions.md), instructions are inside `.github/copilot-instructions.md`  
-       > If you are using Claude Code, instructions are inside [Claude.md](Claude.md)
+       > If you are using Claude Code, instructions are inside [CLAUDE.md](CLAUDE.md)  
+       > If you are using Gemini, instructions are inside [GEMINI.md](GEMINI.md)
 
 ### Running with Docker
 If you don't have Java or Node, but you have docker, you can run the applications within docker as well. 
