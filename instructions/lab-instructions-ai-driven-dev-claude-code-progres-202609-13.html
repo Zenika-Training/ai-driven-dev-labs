@@ -1469,7 +1469,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <li><a href="#_opening_claude_code_in_the_example_repository">1. Opening Claude Code in the example repository</a></li>
 <li><a href="#_generating_a_greenfield_application">2. Generating a greenfield application</a></li>
 <li><a href="#_refactoring_an_existing_application">3. Refactoring an existing application</a></li>
-<li><a href="#_third_party_integrations_playwright">4. Third-party integrations: Playwright</a></li>
+<li><a href="#_third_party_integrations">4. Third-party integrations: GitLab MCP</a></li>
 <li><a href="#_spec_driven_development">5. Spec Driven Development</a></li>
 </ul>
 </div>
@@ -1694,42 +1694,178 @@ code, pre {
 </div>
 </div>
 <div class="sect1">
-<h2 id="_third_party_integrations_playwright">4. Third-party integrations: Playwright</h2>
+<h2 id="_third_party_integrations">4. Third-party integrations: GitLab MCP</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Our goal is to allow Claude to use Playwright. A basic way to add MCP servers to Claude is by running <code>claude mcp add --transport http &lt;name&gt; &lt;url&gt;</code>. For more advanced configurations, refer to Claude&#8217;s documentation.</p>
+<p>The <strong>Model Context Protocol (MCP)</strong> allows Claude Code to securely connect to external platforms and tools. A basic way to add MCP servers to Claude is by running <code>claude mcp add &lt;name&gt; &lt;command&gt;</code> or with HTTP transport <code>claude mcp add --transport http &lt;name&gt; &lt;url&gt;</code>. For more advanced configurations, refer to Claude&#8217;s documentation. In this lab, we will connect Claude Code to <strong>GitLab</strong> using the official GitLab MCP server (<code>@modelcontextprotocol/server-gitlab</code>) to search projects, inspect files, list and manage issues, and create merge requests directly from your chat session.</p>
 </div>
 <div class="sect2">
-<h3 id="_using_playwright_to_test_our_brownfield_application">4.1. Using Playwright to test our Brownfield application</h3>
+<h3 id="_configuring_the_gitlab_mcp_server">4.1. Configuring the GitLab MCP server</h3>
 <div class="ulist">
 <ul>
 <li>
-<p>Configure your Claude with <code>Playwright</code> MCP server by running <code>claude mcp add playwright npx @playwright/mcp@latest</code>.</p>
+<p><strong>Create a Personal Access Token (PAT)</strong> on GitLab:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Navigate to your GitLab profile: <strong>Preferences</strong> (or User Settings) &gt; <strong>Access Tokens</strong> (or visit <code>https://gitlab.com/-/user_settings/personal_access_tokens</code>).</p>
 </li>
 <li>
-<p>Make sure that your <code>brownfield-backend</code> and <code>brownfield-frontend</code> applications are still running. Opening Claude, ask it to run some exploratory testing on <a href="http://localhost:5173/" class="bare" target="_blank" rel="noopener">http://localhost:5173/</a> using Playwright. It should open a web browser and browse through your frontend application. You will need Chrome installed.</p>
+<p>Create a new token with a descriptive name (e.g. <code>claude-code-mcp</code>) and select the <code>api</code> scope (or <code>read_api</code>, <code>read_repository</code>, <code>write_repository</code>).</p>
 </li>
 <li>
-<p>Once done, ask it to generate a Playwright script and run it locally using <code>npx playwright test</code>.</p>
+<p>Copy the generated token securely.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Add the GitLab MCP server to Claude Code</strong>:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>For <strong>GitLab SaaS (gitlab.com)</strong>, run the following command in your terminal:</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="exampleblock">
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="bash">claude mcp add gitlab <span class="nt">-e</span> <span class="nv">GITLAB_PERSONAL_ACCESS_TOKEN</span><span class="o">=</span>&lt;your-personal-access-token&gt; <span class="nt">--</span> npx <span class="nt">-y</span> @modelcontextprotocol/server-gitlab</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>For a <strong>self-hosted GitLab instance</strong>, specify your instance API URL with the <code>GITLAB_API_URL</code> environment variable:</p>
+</li>
+</ul>
+</div>
+<div class="exampleblock">
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="bash">claude mcp add gitlab <span class="nt">-e</span> <span class="nv">GITLAB_PERSONAL_ACCESS_TOKEN</span><span class="o">=</span>&lt;your-personal-access-token&gt; <span class="nt">-e</span> <span class="nv">GITLAB_API_URL</span><span class="o">=</span>https://&lt;your-gitlab-host&gt;/api/v4 <span class="nt">--</span> npx <span class="nt">-y</span> @modelcontextprotocol/server-gitlab</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+You can verify that the server is properly registered and see all active MCP servers by running <code>claude mcp list</code>. To remove an MCP server at any time, use <code>claude mcp remove gitlab</code>.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_listing_and_inspecting_issues">4.2. Exploring and listing project issues</h3>
+<div class="paragraph">
+<p>Once the GitLab MCP server is configured, open Claude Code. Claude can now query your GitLab projects directly using natural language.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Ask Claude to list the issues for your project (replace <code>&lt;group/project_name&gt;</code> with your GitLab project path or project ID):</p>
+</li>
+</ul>
+</div>
+<div class="exampleblock">
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="text">Can you list the open issues for project &lt;group/project_name&gt;? Please display their ID, title, author, and labels in a summary table.</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>You can also ask Claude to inspect the details and discussion of a specific issue:</p>
+</li>
+</ul>
+</div>
+<div class="exampleblock">
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="text">Show me the description and comments for issue #&lt;issue_id&gt; in project &lt;group/project_name&gt;.</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_creating_an_issue_ticket">4.3. Creating a new ticket (issue)</h3>
+<div class="paragraph">
+<p>Claude can also create issues on GitLab. For instance, after reviewing code or identifying missing features, you can prompt Claude to file a new issue directly.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Prompt Claude to create a new ticket:</p>
+</li>
+</ul>
+</div>
+<div class="exampleblock">
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="text">Create a new issue in project &lt;group/project_name&gt; with:
+- Title: "Refactor Pet validation in backend"
+- Description: "Add validation for pet name and type fields in PetController, along with comprehensive unit tests."
+- Labels: "backend", "enhancement"</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Claude will call the GitLab MCP tool <code>create_issue</code> and return the created issue URL and ID. Open your GitLab web UI to confirm the issue was created.</p>
 </li>
 </ul>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_updating_the_user_guide">4.2. Updating the User Guide</h3>
+<h3 id="_creating_a_merge_request">4.4. Creating a Merge Request (MR)</h3>
 <div class="paragraph">
-<p>In the previous lab, we had created a User Guide. We are now going to use Playwright to take <strong>screenshots</strong> of all the pages inside our applications and include them into the User Guide.</p>
+<p>Once you have pushed changes to a branch, Claude can automate the creation of a Merge Request with a clean title and description summarizing your commits.</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Update the Documentation skill so that it now has access to the Playwright MCP endpoints.</p>
+<p>Ask Claude to create the Merge Request:</p>
 </li>
+</ul>
+</div>
+<div class="exampleblock">
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="text">Create a merge request in project &lt;group/project_name&gt; from branch "feat/pet-validation" into "main" (or "master") with:
+- Title: "feat: Add input validation for pet types"
+- Description: "This MR adds input validation to the Pet entity and controller. Closes #&lt;issue_id&gt;."</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="ulist">
+<ul>
 <li>
-<p>Ask the agent to update the documentation based on our webpage <code>http://localhost:5173/</code> and ask it to include screenshots inside the User Guide.</p>
-</li>
-<li>
-<p>Once the markdown file has been populated, you can review it.</p>
+<p>Claude will call the <code>create_merge_request</code> tool and provide the link to your new MR. Open the link to review and merge your changes!</p>
 </li>
 <li>
 <p>Once done, you have completed this lab, congratulations!</p>
