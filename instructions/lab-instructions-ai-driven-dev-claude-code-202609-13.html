@@ -2338,6 +2338,87 @@ You can verify that the server is properly registered and see all active MCP ser
 <li>
 <p>Claude will call the <code>create_merge_request</code> tool and provide the link to your new MR. Open the link to review and merge your changes!</p>
 </li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_using_cli_tools_instead_of_mcp">4.3.5. Using CLI tools instead of MCP (Playwright &amp; GitLab CLI)</h4>
+<div class="paragraph">
+<p>While <strong>MCP servers</strong> are very convenient, they come with a significant <strong>token cost</strong>: every registered MCP tool injects its JSON schema into Claude&#8217;s context window, and MCP tool responses (such as full accessibility snapshots from Playwright or verbose JSON payloads from GitLab) can quickly consume thousands of tokens. Because Claude Code runs directly in your terminal, asking it to use dedicated <strong>CLI tools</strong> (<code>npx playwright</code> and <code>glab</code>) is often much more token-efficient and faster.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Observe the MCP token impact</strong>:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>In Claude Code, run <code>/context</code> (or <code>/cost</code>) to inspect the current context usage and see how many tokens are taken by the <code>playwright</code> and <code>gitlab</code> MCP servers.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Use the GitLab CLI (<code>glab</code>) instead of the GitLab MCP</strong>:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Make sure <a href="https://gitlab.com/gitlab-org/cli" target="_blank" rel="noopener">GitLab CLI (<code>glab</code>)</a> is installed (e.g. <code>brew install glab</code>) and authenticated (<code>glab auth login</code> or by exporting <code>GITLAB_TOKEN=&lt;your-personal-access-token&gt;</code>).</p>
+</li>
+<li>
+<p>Prompt Claude to explicitly use the <code>glab</code> CLI rather than the MCP tools to query your repository:</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="exampleblock">
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="text">Without using MCP tools, use the `glab` CLI to list the open issues for project &lt;group/project_name&gt; and view the details of issue #&lt;issue_id&gt;.</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Use the Playwright CLI instead of the Playwright MCP</strong>:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Instead of browsing interactively through the Playwright MCP (which sends the page accessibility tree back to the LLM on every action), ask Claude to use the Playwright CLI to capture screenshots or run headless checks:</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="exampleblock">
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="text">Without using the Playwright MCP server, use the `npx playwright` CLI to take a screenshot of http://localhost:5173/ and run our end-to-end tests with a concise reporter (`npx playwright test --reporter=list`).</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+<strong>When to prefer CLI over MCP?</strong> When a well-designed CLI exists (<code>glab</code>, <code>gh</code>, <code>npx playwright</code>, <code>kubectl</code>, etc.), Claude Code already knows its flags and can pipe or filter the output (<code>--json</code>, <code>grep</code>, <code>jq</code>), avoiding both the permanent schema overhead of MCP tools and large unfiltered responses. You can disable unused MCP servers at any time with <code>claude mcp remove &lt;name&gt;</code>.
+</td>
+</tr>
+</table>
+</div>
+<div class="ulist">
+<ul>
 <li>
 <p>Once done, you have completed this lab, congratulations!</p>
 </li>
