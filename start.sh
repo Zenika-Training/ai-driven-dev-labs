@@ -92,17 +92,18 @@ start() {
     fi
   done
 
-  (cd brownfield-backend && nohup ./mvnw spring-boot:run >"$RUN/backend.log" 2>&1 & echo $! >"$RUN/backend.pid")
+  if [ ! -d brownfield-frontend/node_modules ] || [ brownfield-frontend/package-lock.json -nt brownfield-frontend/node_modules/.package-lock.json ]; then
+    echo "Installing frontend dependencies (npm ci)..."
+    (cd brownfield-frontend && npm ci >"$RUN/frontend-install.log" 2>&1) \
+      || { echo "npm ci failed, see .run/frontend-install.log" >&2; exit 1; }
+  fi
 
-  (
-    cd brownfield-frontend || exit 1
-    if [ ! -d node_modules ] || [ package-lock.json -nt node_modules/.package-lock.json ]; then
-      echo "Installing frontend dependencies (npm ci)..."
-      npm ci >"$RUN/frontend-install.log" 2>&1 || { echo "npm ci failed, see .run/frontend-install.log" >&2; exit 1; }
-    fi
-    nohup npm run dev >"$RUN/frontend.log" 2>&1 &
-    echo $! >"$RUN/frontend.pid"
-  ) || { stop_all; exit 1; }
+  # exec + redirect inside the subshell: the recorded PID is the real process and
+  # nothing keeps the caller's stdout open (so `./start.sh --bg | tail` returns).
+  (cd brownfield-backend && exec nohup ./mvnw spring-boot:run >"$RUN/backend.log" 2>&1 </dev/null) &
+  echo $! >"$RUN/backend.pid"
+  (cd brownfield-frontend && exec nohup npm run dev >"$RUN/frontend.log" 2>&1 </dev/null) &
+  echo $! >"$RUN/frontend.pid"
 
   echo "Waiting for both apps (up to ${TIMEOUT}s)..."
   local waited=0
