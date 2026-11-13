@@ -2168,37 +2168,14 @@ As a first step, it will not include any screenshots. We will add screenshots in
 <div class="sect2">
 <h3 id="_using_the_gitlab_mcp_server">4.3. Using the GitLab MCP server</h3>
 <div class="paragraph">
-<p>The <strong>Model Context Protocol (MCP)</strong> allows Claude Code to securely connect to external platforms and tools. In this exercise, we will connect Claude Code to <strong>GitLab</strong> using the official GitLab MCP server (<code>@modelcontextprotocol/server-gitlab</code>). This integration allows Claude to search projects, inspect files, list and manage issues, and create merge requests directly from your chat session.</p>
+<p>The <strong>Model Context Protocol (MCP)</strong> allows Claude Code to securely connect to external platforms and tools. In this exercise, we will connect Claude Code to <strong>GitLab</strong> using the GitLab MCP server built into your GitLab instance (HTTP endpoint <code>/api/v4/mcp</code>). This integration allows Claude to search projects, inspect files, list and manage issues, and create merge requests directly from your chat session.</p>
 </div>
 <div class="sect3">
 <h4 id="_configuring_the_gitlab_mcp_server">4.3.1. Configuring the GitLab MCP server</h4>
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Create a Personal Access Token (PAT)</strong> on GitLab:</p>
-<div class="ulist">
-<ul>
-<li>
-<p>Navigate to your GitLab profile: <strong>Preferences</strong> (or User Settings) &gt; <strong>Access Tokens</strong> (or visit <code>https://gitlab.com/-/user_settings/personal_access_tokens</code>).</p>
-</li>
-<li>
-<p>Create a new token with a descriptive name (e.g. <code>claude-code-mcp</code>) and select the <code>api</code> scope (or <code>read_api</code>, <code>read_repository</code>, <code>write_repository</code>).</p>
-</li>
-<li>
-<p>Copy the generated token securely.</p>
-</li>
-</ul>
-</div>
-</li>
-<li>
-<p><strong>Add the GitLab MCP server to Claude Code</strong>:</p>
-<div class="ulist">
-<ul>
-<li>
-<p>For <strong>GitLab SaaS (gitlab.com)</strong>, run the following command in your terminal:</p>
-</li>
-</ul>
-</div>
+<p><strong>Add the GitLab MCP server to Claude Code</strong> by running the following command in your terminal, replacing the host with the URL of your GitLab instance (e.g. <code>gitlab.com</code>):</p>
 </li>
 </ul>
 </div>
@@ -2206,7 +2183,7 @@ As a first step, it will not include any screenshots. We will add screenshots in
 <div class="content">
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="bash">claude mcp add gitlab <span class="nt">-e</span> <span class="nv">GITLAB_PERSONAL_ACCESS_TOKEN</span><span class="o">=</span>&lt;your-personal-access-token&gt; <span class="nt">--</span> npx <span class="nt">-y</span> @modelcontextprotocol/server-gitlab</code></pre>
+<pre class="rouge highlight"><code data-lang="bash">claude mcp add <span class="nt">--transport</span> http gitlab https://&lt;your-gitlab-instance-url&gt;/api/v4/mcp</code></pre>
 </div>
 </div>
 </div>
@@ -2214,18 +2191,9 @@ As a first step, it will not include any screenshots. We will add screenshots in
 <div class="ulist">
 <ul>
 <li>
-<p>For a <strong>self-hosted GitLab instance</strong>, specify your instance API URL with the <code>GITLAB_API_URL</code> environment variable:</p>
+<p><strong>Authenticate</strong>: start Claude Code, run the <code>/mcp</code> command, select the <code>gitlab</code> server and follow the OAuth flow in your browser.</p>
 </li>
 </ul>
-</div>
-<div class="exampleblock">
-<div class="content">
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="bash">claude mcp add gitlab <span class="nt">-e</span> <span class="nv">GITLAB_PERSONAL_ACCESS_TOKEN</span><span class="o">=</span>&lt;your-personal-access-token&gt; <span class="nt">-e</span> <span class="nv">GITLAB_API_URL</span><span class="o">=</span>https://&lt;your-gitlab-host&gt;/api/v4 <span class="nt">--</span> npx <span class="nt">-y</span> @modelcontextprotocol/server-gitlab</code></pre>
-</div>
-</div>
-</div>
 </div>
 <div class="admonitionblock note">
 <table>
