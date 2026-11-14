@@ -26,4 +26,7 @@ A link to a design file, or a screenshot. Omit this section when there is no UI 
 - [ ] The changes are documented
 
 ## Notes
-Anything else that matters and has no other section. Optional.
+Optional. Keep these three apart:
+- **Decisions from the requester:** each decision, in their words.
+- **Exists today:** facts about the app, with the file named.
+- **This story adds:** what is new.
