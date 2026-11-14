@@ -1,0 +1,19 @@
+{
+  "schema_version": "1.0",
+  "extensions": {
+    "ui-wireframe": {
+      "version": "0.1.0",
+      "source": "local",
+      "manifest_hash": "sha256:b4d99186b549e59bcdfff60b6624d4e27cb1ec568b5c0aef36ef0a2f9bb60f88",
+      "enabled": true,
+      "priority": 10,
+      "registered_commands": {
+        "claude": [
+          "speckit.ui-wireframe.generate"
+        ]
+      },
+      "registered_skills": [],
+      "installed_at": "2026-11-14T09:14:15.610820+00:00"
+    }
+  }
+}

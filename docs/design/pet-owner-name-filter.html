@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Wireframe: Filter the pet list by owner name</title>
+<style>
+  body { font-family: system-ui, sans-serif; background: #f4f4f4; color: #333; max-width: 760px; margin: 24px auto; padding: 0 16px; }
+  h1 { font-size: 22px; margin-bottom: 4px; }
+  .source { color: #777; font-size: 13px; margin-top: 0; }
+  .panel { background: #fff; border: 2px solid #999; border-radius: 4px; padding: 12px 16px; margin: 20px 0; }
+  .panel h2 { font-size: 16px; margin: 0 0 2px; }
+  .criterion { font-size: 12px; color: #777; margin: 0 0 10px; }
+  .box { background: #e4e4e4; border: 1px solid #aaa; padding: 6px 10px; margin: 6px 0; }
+  .q { background: #fff; border: 2px dashed #b36b00; color: #8a5200; padding: 6px 10px; margin: 6px 0; font-size: 13px; }
+  .input { background: #fff; border: 1px solid #888; padding: 6px 10px; min-width: 200px; display: inline-block; }
+  table { border-collapse: collapse; width: 100%; margin: 6px 0; }
+  th, td { border: 1px solid #aaa; padding: 6px 10px; text-align: left; background: #ececec; }
+  th { background: #d6d6d6; }
+  td.idc { color: #aaa; }
+  .msg { border: 1px solid #aaa; background: #ececec; padding: 12px; text-align: center; }
+  #open-questions li { margin-bottom: 6px; }
+  .tag { font-size: 12px; color: #777; }
+</style>
+</head>
+<body>
+<h1>Filter the pet list by owner name</h1>
+<p class="source">Source: docs/stories/pet-owner-name-filter.md</p>
+
+<section class="panel" id="state-initial">
+  <h2>Initial: all pets shown</h2>
+  <p class="criterion">Criteria 1 and 5 (Given the pet list shows all pets)</p>
+  <div class="q">? 1. Filter control: type, position, label, placeholder, confirm action</div>
+  <table>
+    <tr><th>ID</th><th>Name</th><th>Owner Name</th></tr>
+    <tr><td class="idc">?</td><td>Max</td><td>John Smith</td></tr>
+    <tr><td class="idc">?</td><td>Charlie</td><td>John Smith</td></tr>
+    <tr><td class="idc">?</td><td>Bella</td><td>Sarah Johnson</td></tr>
+    <tr><td class="idc">?</td><td>Luna</td><td>Emily Davis</td></tr>
+    <tr><td class="idc">?</td><td>Rocky</td><td>Michael Brown</td></tr>
+  </table>
+  <div class="q">? 6. Row order of the list</div>
+  <p class="tag">Rows are the seed pets named in the story notes; IDs are not given.</p>
+</section>
+
+<section class="panel" id="state-filtered-lowercase">
+  <h2>Filtered by "smith"</h2>
+  <p class="criterion">Criterion 1: only pets whose owner is John Smith: Max, Charlie</p>
+  <div class="box">Owner name filter: <span class="input">smith</span></div>
+  <div class="q">? 1. Filter control (same as above)</div>
+  <div class="q">? 3. When the list updates: while typing, or after a confirm action</div>
+  <table>
+    <tr><th>ID</th><th>Name</th><th>Owner Name</th></tr>
+    <tr><td class="idc">?</td><td>Max</td><td>John Smith</td></tr>
+    <tr><td class="idc">?</td><td>Charlie</td><td>John Smith</td></tr>
+  </table>
+  <div class="q">? 6. Order of the filtered pets</div>
+</section>
+
+<section class="panel" id="state-filtered-uppercase">
+  <h2>Filtered by "SMITH" (capitalisation ignored)</h2>
+  <p class="criterion">Criterion 2: the list shows the same pets: Max, Charlie</p>
+  <div class="box">Owner name filter: <span class="input">SMITH</span></div>
+  <table>
+    <tr><th>ID</th><th>Name</th><th>Owner Name</th></tr>
+    <tr><td class="idc">?</td><td>Max</td><td>John Smith</td></tr>
+    <tr><td class="idc">?</td><td>Charlie</td><td>John Smith</td></tr>
+  </table>
+</section>
+
+<section class="panel" id="state-empty-filter">
+  <h2>Empty owner name: full list</h2>
+  <p class="criterion">Criterion 3: the full pet list is shown</p>
+  <div class="box">Owner name filter: <span class="input">&nbsp;</span></div>
+  <div class="q">? 3. When the list updates (e.g. does clearing the text update it, or is a confirm needed)</div>
+  <table>
+    <tr><th>ID</th><th>Name</th><th>Owner Name</th></tr>
+    <tr><td class="idc">?</td><td>Max</td><td>John Smith</td></tr>
+    <tr><td class="idc">?</td><td>Charlie</td><td>John Smith</td></tr>
+    <tr><td class="idc">?</td><td>Bella</td><td>Sarah Johnson</td></tr>
+    <tr><td class="idc">?</td><td>Luna</td><td>Emily Davis</td></tr>
+    <tr><td class="idc">?</td><td>Rocky</td><td>Michael Brown</td></tr>
+  </table>
+</section>
+
+<section class="panel" id="state-spaces-only">
+  <h2>Owner name with only spaces: full list</h2>
+  <p class="criterion">Criterion 4: the full pet list is shown</p>
+  <div class="box">Owner name filter: <span class="input">&nbsp;&nbsp;&nbsp;</span></div>
+  <table>
+    <tr><th>ID</th><th>Name</th><th>Owner Name</th></tr>
+    <tr><td class="idc">?</td><td>Max</td><td>John Smith</td></tr>
+    <tr><td class="idc">?</td><td>Charlie</td><td>John Smith</td></tr>
+    <tr><td class="idc">?</td><td>Bella</td><td>Sarah Johnson</td></tr>
+    <tr><td class="idc">?</td><td>Luna</td><td>Emily Davis</td></tr>
+    <tr><td class="idc">?</td><td>Rocky</td><td>Michael Brown</td></tr>
+  </table>
+  <div class="q">? 2. Spaces around other text (is " smith " the same as "smith")? Not shown here, only the spaces-only case is decided</div>
+</section>
+
+<section class="panel" id="state-no-match">
+  <h2>No match: "xyz"</h2>
+  <p class="criterion">Criterion 5: the page shows the message "No pets found."</p>
+  <div class="box">Owner name filter: <span class="input">xyz</span></div>
+  <div class="msg">No pets found.</div>
+  <div class="q">? 7. Is the filter control still visible in this state, so it can be cleared? (not decided)</div>
+</section>
+
+<section id="open-questions">
+  <h2>Open questions</h2>
+  <ol>
+    <li>Filter control: type, position, label, placeholder, and whether there is a confirm or clear action. Not decided by the story. Affects: Initial, Filtered by "smith", and the other filter panels.</li>
+    <li>Are spaces around other text ignored (is " smith " the same as "smith")? Affects: Owner name with only spaces (the only decided case).</li>
+    <li>Does the list update while the receptionist types, or only after a confirm action? Affects: Filtered by "smith", Empty owner name.</li>
+    <li>Does the filter keep its text after the receptionist opens a pet and comes back to the list? Affects: no panel drawn (the pet detail and return are not described as a state); applies to all filtered panels.</li>
+    <li>Is clinic receptionist the right role for clinic staff? Affects: the story as a whole, no panel.</li>
+    <li>In which order are the filtered pets shown? Affects: Initial, Filtered by "smith".</li>
+    <li>Is the filter control still visible when "No pets found." is shown? Not in the source; the drawing needs it. Affects: No match.</li>
+  </ol>
+</section>
+</body>
+</html>

@@ -1,0 +1,14 @@
+installed:
+- ui-wireframe
+settings:
+  auto_execute_hooks: true
+hooks:
+  after_specify:
+  - extension: ui-wireframe
+    command: speckit.ui-wireframe.generate
+    enabled: true
+    optional: false
+    priority: 10
+    prompt: Execute speckit.ui-wireframe.generate?
+    description: Draw the wireframe for the spec that was just written
+    condition: null
