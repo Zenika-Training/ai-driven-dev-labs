@@ -1,7 +1,9 @@
 package com.petclinic.visit;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -15,8 +17,10 @@ public class VisitController {
     }
 
     @GetMapping
-    public List<Visit> findAll() {
-        return visitService.findAll();
+    public List<Visit> findAll(
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate from,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate to) {
+        return visitService.findByDateRange(from, to);
     }
 
     @GetMapping("/{id}")

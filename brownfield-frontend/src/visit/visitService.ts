@@ -22,8 +22,15 @@ export interface Visit {
 }
 
 export const visitService = {
-  async findAll(): Promise<Visit[]> {
-    const response = await fetch(API_BASE_URL);
+  async findAll(from?: string, to?: string): Promise<Visit[]> {
+    const params = new URLSearchParams();
+    if (from) params.set('from', from);
+    if (to) params.set('to', to);
+    const query = params.toString();
+    const response = await fetch(query ? `${API_BASE_URL}?${query}` : API_BASE_URL);
+    if (response.status === 400) {
+      throw new Error('Invalid date range: the "From" date must not be after the "To" date');
+    }
     if (!response.ok) {
       throw new Error('Failed to fetch visits');
     }

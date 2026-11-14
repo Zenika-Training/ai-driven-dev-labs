@@ -12,22 +12,28 @@ const VisitList: React.FC<VisitListProps> = ({ onPetSelect: _onPetSelect, onVisi
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    loadVisits();
-  }, []);
+  const [from, setFrom] = useState<string>('');
+  const [to, setTo] = useState<string>('');
 
-  const loadVisits = async () => {
-    try {
-      setLoading(true);
-      setError(null);
-      const data = await visitService.findAll();
-      setVisits(data);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to load visits');
-    } finally {
-      setLoading(false);
-    }
-  };
+  useEffect(() => {
+    let cancelled = false;
+    const loadVisits = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+        const data = await visitService.findAll(from, to);
+        if (!cancelled) setVisits(data);
+      } catch (err) {
+        if (!cancelled) setError(err instanceof Error ? err.message : 'Failed to load visits');
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    };
+    loadVisits();
+    return () => {
+      cancelled = true;
+    };
+  }, [from, to]);
 
   const formatDateTime = (dateTime: string) => {
     const date = new Date(dateTime);
@@ -40,22 +46,41 @@ const VisitList: React.FC<VisitListProps> = ({ onPetSelect: _onPetSelect, onVisi
     });
   };
 
-  if (loading) {
-    return <div className="text-center py-8">Loading visits...</div>;
-  }
-
-  if (error) {
-    return <div className="text-center py-8">Error: {error}</div>;
-  }
-
   return (
     <div className="container mx-auto px-6 py-8">
       <div className="mb-6">
         <h2 className="text-3xl font-bold mb-2">All Visits</h2>
         <p>View all veterinary visits across all pets</p>
       </div>
-      
-      {visits.length === 0 ? (
+
+      <div className="mb-6 flex gap-4">
+        <label className="flex flex-col text-sm">
+          From
+          <input
+            type="date"
+            className="border rounded px-2 py-1"
+            data-testid="visit-date-from"
+            value={from}
+            onChange={(e) => setFrom(e.target.value)}
+          />
+        </label>
+        <label className="flex flex-col text-sm">
+          To
+          <input
+            type="date"
+            className="border rounded px-2 py-1"
+            data-testid="visit-date-to"
+            value={to}
+            onChange={(e) => setTo(e.target.value)}
+          />
+        </label>
+      </div>
+
+      {loading ? (
+        <div className="text-center py-8">Loading visits...</div>
+      ) : error ? (
+        <div className="text-center py-8">Error: {error}</div>
+      ) : visits.length === 0 ? (
         <p>No visits found.</p>
       ) : (
         <div className="border rounded-lg overflow-hidden">
