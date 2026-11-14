@@ -1,0 +1,65 @@
+# Source: docs/stories/pet-owner-name-filter.md
+# Date: 2026-11-14
+# Generated from http://localhost:8080/v3/api-docs
+#
+# Reuse: GET /api/v1/pet (operationId findAll) already returns the pet list.
+# The change is expressed as one optional query parameter, so no new path is
+# added. Existing callers (no parameter) keep working; the response schema is
+# unchanged ($ref Pet, array).
+openapi: 3.1.0
+info:
+  title: Pet owner name filter (fragment)
+  version: v0
+paths:
+  /api/v1/pet:
+    get:
+      tags:
+        - pet-controller
+      operationId: findAll
+      parameters:
+        - name: ownerName
+          in: query
+          required: false
+          description: |
+            Filters the pet list by owner name. The name `ownerName` reuses the
+            existing Pet field name; the story does not name the parameter (see
+            x-open-questions).
+            Rules, from the story:
+            - Partial match: "'smith' finds 'John Smith': the filter matches any
+              part of the owner name, not only the full name." (Decisions;
+              acceptance criterion 1: "smith" returns only Max, Charlie.)
+            - Case does not matter: "'SMITH' and 'smith' give the same result."
+              (Decisions; acceptance criterion 2.)
+            - Empty or spaces only: "An empty filter, or one holding only spaces,
+              shows the full pet list." (Decisions; acceptance criteria 3 and 4.)
+              When the parameter is absent, empty or blank, the response is the
+              same as today: all pets.
+          schema:
+            type: string
+      responses:
+        "200":
+          description: |
+            OK. Array of pets whose owner name matches the filter, or all pets
+            when no filter applies. Schema unchanged from today.
+            No match: the story's "No pets found." (acceptance criterion 5) is a
+            message the page shows when the loaded list is empty; what the API
+            returns for no match is not decided by the story (see x-open-questions).
+          content:
+            "*/*":
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Pet"
+x-open-questions:
+  - affects: GET /api/v1/pet, parameter ownerName
+    question: What is the query parameter called? "ownerName" is used here only because it matches the Pet field.
+  - affects: GET /api/v1/pet, parameter ownerName
+    question: Are spaces around other text ignored (is " smith " the same as "smith")? (Story open question.)
+  - affects: GET /api/v1/pet, response 200
+    question: When nothing matches, does the API return 200 with an empty array? The story only fixes the page message "No pets found.".
+  - affects: GET /api/v1/pet, response 200
+    question: In which order are the filtered pets returned? (Story open question.)
+  - affects: GET /api/v1/pet, parameter ownerName
+    question: Is filtering done by the API (this contract) or in the page on the full list? The story does not say; it also leaves open whether the list updates while typing, which affects how often the API would be called.
+  - affects: GET /api/v1/pet, parameter ownerName
+    question: Maximum length of the filter, and the error for invalid input, are not given by the story.

@@ -1,0 +1,1 @@
+../../../.specify/extensions/api-contract/.specify-dev/agent-commands/claude/speckit-api-contract-design/SKILL.md
