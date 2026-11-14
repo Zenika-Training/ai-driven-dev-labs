@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { vetService, type Vet } from './vetService';
 
+const ALL_SPECIALTIES = '';
+
 const VetList: React.FC = () => {
   const [vets, setVets] = useState<Vet[]>([]);
+  const [specialties, setSpecialties] = useState<string[]>([]);
+  const [selectedSpecialty, setSelectedSpecialty] = useState(ALL_SPECIALTIES);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -10,8 +14,11 @@ const VetList: React.FC = () => {
     const fetchVets = async () => {
       try {
         setLoading(true);
-        const data = await vetService.findAll();
+        const data = await vetService.findAll(selectedSpecialty || undefined);
         setVets(data);
+        if (selectedSpecialty === ALL_SPECIALTIES) {
+          setSpecialties([...new Set(data.map((vet) => vet.specialty))].sort());
+        }
         setError(null);
       } catch (err) {
         setError('Failed to load vets. Please try again later.');
@@ -22,38 +29,22 @@ const VetList: React.FC = () => {
     };
 
     fetchVets();
-  }, []);
+  }, [selectedSpecialty]);
 
-  if (loading) {
+  const renderContent = () => {
+    if (loading) {
+      return <div className="text-center">Loading vets...</div>;
+    }
+
+    if (error) {
+      return <div className="border px-4 py-3 rounded">{error}</div>;
+    }
+
+    if (vets.length === 0) {
+      return <div className="text-center">No vets found.</div>;
+    }
+
     return (
-      <div className="container mx-auto px-6 py-8">
-        <div className="text-center">Loading vets...</div>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="container mx-auto px-6 py-8">
-        <div className="border px-4 py-3 rounded">
-          {error}
-        </div>
-      </div>
-    );
-  }
-
-  if (vets.length === 0) {
-    return (
-      <div className="container mx-auto px-6 py-8">
-        <div className="text-center">No vets found.</div>
-      </div>
-    );
-  }
-
-  return (
-    <div className="container mx-auto px-6 py-8">
-      <h2 className="text-3xl font-bold mb-6">Our Veterinarians</h2>
-      
       <div className="border rounded-lg overflow-hidden">
         <table className="min-w-full divide-y">
           <thead>
@@ -88,6 +79,34 @@ const VetList: React.FC = () => {
           </tbody>
         </table>
       </div>
+    );
+  };
+
+  return (
+    <div className="container mx-auto px-6 py-8">
+      <h2 className="text-3xl font-bold mb-6">Our Veterinarians</h2>
+
+      <div className="mb-4">
+        <label htmlFor="specialty-filter" className="mr-2 text-sm font-medium">
+          Specialty
+        </label>
+        <select
+          id="specialty-filter"
+          data-testid="specialty-filter"
+          className="border rounded px-2 py-1"
+          value={selectedSpecialty}
+          onChange={(e) => setSelectedSpecialty(e.target.value)}
+        >
+          <option value={ALL_SPECIALTIES}>All specialties</option>
+          {specialties.map((specialty) => (
+            <option key={specialty} value={specialty}>
+              {specialty}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      {renderContent()}
     </div>
   );
 };

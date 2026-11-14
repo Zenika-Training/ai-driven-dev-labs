@@ -7,8 +7,11 @@ export interface Vet {
 }
 
 export const vetService = {
-  async findAll(): Promise<Vet[]> {
-    const response = await fetch(API_BASE_URL);
+  async findAll(specialty?: string): Promise<Vet[]> {
+    const url = specialty
+      ? `${API_BASE_URL}?specialty=${encodeURIComponent(specialty)}`
+      : API_BASE_URL;
+    const response = await fetch(url);
     if (!response.ok) {
       throw new Error('Failed to fetch vets');
     }

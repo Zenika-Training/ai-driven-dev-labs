@@ -17,6 +17,13 @@ public class VetService {
         return vetRepository.findAll();
     }
     
+    public List<Vet> findAll(String specialty) {
+        if (specialty == null || specialty.isBlank()) {
+            return findAll();
+        }
+        return vetRepository.findBySpecialty(specialty);
+    }
+
     public Vet findById(Long id) {
         return vetRepository.findById(id).orElse(null);
     }
