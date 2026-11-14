@@ -1,0 +1,25 @@
+schema_version: "1.0"
+
+extension:
+  id: "doc-tracker"
+  name: "Doc Tracker"
+  version: "1.0.0"
+  description: "Drafts a commit message from the staged changes and shows it for review. Never runs git commit."
+  author: "Course participant"
+  license: "MIT"
+
+requires:
+  speckit_version: ">=0.1.0"
+  tools:
+    - name: "git"
+      required: true
+
+provides:
+  commands:
+    - name: "speckit.doc-tracker.commit"
+      file: "commands/commit.md"
+      description: "Read the staged changes, draft a commit message and show it (never commits)"
+
+tags:
+  - "git"
+  - "commit-message"

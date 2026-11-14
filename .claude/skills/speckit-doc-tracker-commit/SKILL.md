@@ -1,0 +1,1 @@
+../../../.specify/extensions/doc-tracker/.specify-dev/agent-commands/claude/speckit-doc-tracker-commit/SKILL.md

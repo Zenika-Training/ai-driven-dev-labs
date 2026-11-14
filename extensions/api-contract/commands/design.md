@@ -20,7 +20,7 @@ Fetch `http://localhost:8080/v3/api-docs` (for example `curl -s -m 5 <url>`).
 
 ## 3. Name the contract
 
-Output file: `docs/contracts/<name>.yaml`, where `<name>` is the source file name without its extension (`pet-owner-name-filter.md` gives `pet-owner-name-filter.yaml`). For a spec, use the feature directory name. For plain text, use a short kebab-case slug of the story title. Create `docs/contracts/` if it is missing.
+Output file: `docs/contracts/<name>.yaml`, where `<name>` is the source file name without its extension (`pet-owner-name-filter.md` gives `pet-owner-name-filter.yaml`). For a spec (`specs/NNN-name/spec.md`, including when run as a hook), check whether it names a story in `docs/stories/` (a path or file name that exists there). If it does, `<name>` is that story's file name without its extension, not the feature directory name. Only if the spec names no story, use the feature directory name. For plain text, use a short kebab-case slug of the story title. Create `docs/contracts/` if it is missing.
 
 ## 4. Decide what the feature changes
 
@@ -39,7 +39,7 @@ End the file with an `x-open-questions` list: every point the story does not dec
 
 ## 6. If the contract already exists
 
-**Never overwrite or edit an existing contract.** Do not write to it, not even to update it.
+**Never overwrite or edit an existing contract.** Do not write to it, not even to update it. Never create a second file for the same story (no copy under the spec folder name or any other name): when `docs/contracts/<name>.yaml` exists, report the differences and stop. Only create the file when none exists for the story.
 
 1. Build the new fragment in memory only.
 2. Compare it with the existing file: paths, parameters, schemas, rules, open questions.
