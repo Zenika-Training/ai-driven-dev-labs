@@ -1,0 +1,30 @@
+schema_version: "1.0"
+
+extension:
+  id: "ui-wireframe"
+  name: "UI Wireframe"
+  version: "0.1.0"
+  description: "Draws a low-fidelity HTML wireframe, one panel per story state, with unknowns listed as open questions"
+  author: "Zenika"
+  repository: "https://github.com/Zenika-Training/ai-driven-dev-labs"
+  license: "MIT"
+
+requires:
+  speckit_version: ">=1.4.0"
+
+provides:
+  commands:
+    - name: "speckit.ui-wireframe.generate"
+      file: "commands/generate.md"
+      description: "Generate or update the wireframe page in docs/design/ for a story or the current feature spec"
+
+hooks:
+  after_specify:
+    command: "speckit.ui-wireframe.generate"
+    optional: false
+    description: "Draw the wireframe for the spec that was just written"
+
+tags:
+  - "design"
+  - "wireframe"
+  - "ui"

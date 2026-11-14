@@ -1,0 +1,1 @@
+../../../.specify/extensions/ui-wireframe/.specify-dev/agent-commands/claude/speckit-ui-wireframe-generate/SKILL.md
