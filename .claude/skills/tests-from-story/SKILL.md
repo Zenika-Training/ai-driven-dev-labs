@@ -17,3 +17,16 @@ Input: the path of a story file. Follow these steps in order. The browser rules 
    - an **intended change** (the app changed on purpose and the test is out of date),
    - a **test defect** (the test is wrong).
    **Do not apply the fix.** I decide. Never change the story to make a test pass.
+
+## API mode
+
+If the second argument is `api` (for example `/tests-from-story docs/stories/pet-owner-name-filter.md api`), work in API mode instead of the browser steps above. The API rules are in [references/api-tests.md](references/api-tests.md). Do not read the browser rules in this mode.
+
+1. **Read** the story's acceptance criteria and the rules in `references/api-tests.md`.
+2. **Read the API description.** Fetch http://localhost:8080/v3/api-docs instead of opening the page, and base every request on the operations, parameters and fields it lists.
+3. **Write** one test per acceptance criterion with Playwright's `request` fixture in `e2e/tests/api/`, in a file named after the story.
+4. **Show me the tests, then stop and wait for my explicit OK.** Do not run anything before I say OK.
+5. **Run** them with `npx playwright test tests/api` from `e2e/`, only after my OK.
+6. **When a test fails**, first find out what changed since the tests last passed (read-only `git status` and `git diff`). Then report the request you sent (method, URL, parameters) and the response you got (status and body). Copy the request from the test file or the failure output, never from memory, and read every failing test's output, not only the last one. Say whether it is a product regression, an intended change or a test defect, why, and which fix you suggest. **Do not apply the fix.**
+
+Browser mode is unchanged: without the `api` argument, follow the browser steps above and `references/browser-tests.md`.
