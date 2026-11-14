@@ -4,4 +4,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface VetRepository extends JpaRepository<Vet, Long> {
     Vet findByName(String name);
+    java.util.List<Vet> findBySpecialty(String specialty);
 }

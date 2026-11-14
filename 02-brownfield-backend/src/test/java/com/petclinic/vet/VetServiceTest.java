@@ -87,6 +87,35 @@ class VetServiceTest {
     }
 
     @Test
+    void shouldFindOnlyVetsOfGivenSpecialty() {
+        // when
+        List<Vet> vets = vetService.findAll("Surgery");
+
+        // then
+        assertThat(vets).extracting(Vet::getName).containsExactly("Dr. Sarah Martinez");
+    }
+
+    @Test
+    void shouldFindAllVetsWhenNoSpecialtyGiven() {
+        // when
+        List<Vet> withNull = vetService.findAll(null);
+        List<Vet> withBlank = vetService.findAll(" ");
+
+        // then
+        assertThat(withNull).hasSameSizeAs(vetService.findAll());
+        assertThat(withBlank).hasSameSizeAs(vetService.findAll());
+    }
+
+    @Test
+    void shouldFindNoVetWhenSpecialtyHasNoVet() {
+        // when
+        List<Vet> vets = vetService.findAll("Dermatology");
+
+        // then
+        assertThat(vets).isEmpty();
+    }
+
+    @Test
     void shouldFindVetsWithDifferentSpecialties() {
         // when
         Vet surgeryVet = vetService.findByName("Dr. Sarah Martinez");

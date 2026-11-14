@@ -3,6 +3,7 @@ package com.petclinic.vet;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -18,8 +19,8 @@ public class VetController {
     }
     
     @GetMapping
-    public List<Vet> findAll() {
-        return vetService.findAll();
+    public List<Vet> findAll(@RequestParam(required = false) String specialty) {
+        return vetService.findAll(specialty);
     }
     
     @GetMapping("/{id}")
