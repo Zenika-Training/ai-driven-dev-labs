@@ -15,8 +15,8 @@ public class PetController {
     }
 
     @GetMapping
-    public List<Pet> findAll() {
-        return petService.findAll();
+    public List<Pet> findAll(@RequestParam(required = false) String ownerName) {
+        return petService.findByOwnerName(ownerName);
     }
 
     @GetMapping("/{id}")

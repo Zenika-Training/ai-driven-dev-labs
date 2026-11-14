@@ -91,6 +91,88 @@ class PetServiceTest {
     }
 
     @Test
+    void shouldFindPetsByPartialOwnerName() {
+        // given
+        petService.save(new Pet("Pip", "Zelda Quimby"));
+        petService.save(new Pet("Pop", "Zelda Quimby"));
+        petService.save(new Pet("Pep", "Other Person"));
+
+        // when
+        var pets = petService.findByOwnerName("quimb");
+
+        // then
+        assertThat(pets).extracting(Pet::getName).containsExactlyInAnyOrder("Pip", "Pop");
+    }
+
+    @Test
+    void shouldFindPetsByOwnerNameIgnoringCase() {
+        // given
+        petService.save(new Pet("Pip", "Zelda Quimby"));
+
+        // when
+        var pets = petService.findByOwnerName("QUIMBY");
+
+        // then
+        assertThat(pets).extracting(Pet::getName).containsExactly("Pip");
+    }
+
+    @Test
+    void shouldFindPetsByOwnerNameTrimmingSpaces() {
+        // given
+        petService.save(new Pet("Pip", "Zelda Quimby"));
+
+        // when
+        var pets = petService.findByOwnerName("  quimby  ");
+
+        // then
+        assertThat(pets).extracting(Pet::getName).containsExactly("Pip");
+    }
+
+    @Test
+    void shouldMatchPercentAndUnderscoreLiterally() {
+        // given
+        petService.save(new Pet("Pip", "Zelda Quimby"));
+        petService.save(new Pet("Pop", "Zed_100%"));
+
+        // when
+        var percent = petService.findByOwnerName("%");
+        var underscore = petService.findByOwnerName("_");
+
+        // then
+        assertThat(percent).extracting(Pet::getName).containsExactly("Pop");
+        assertThat(underscore).extracting(Pet::getName).containsExactly("Pop");
+    }
+
+    @Test
+    void shouldFindAllPetsWhenOwnerNameIsNullEmptyOrBlank() {
+        // given
+        petService.save(new Pet("Pip", "Zelda Quimby"));
+        int total = petService.findAll().size();
+
+        // when
+        var forNull = petService.findByOwnerName(null);
+        var forEmpty = petService.findByOwnerName("");
+        var forBlank = petService.findByOwnerName("   ");
+
+        // then
+        assertThat(forNull).hasSize(total);
+        assertThat(forEmpty).hasSize(total);
+        assertThat(forBlank).hasSize(total);
+    }
+
+    @Test
+    void shouldReturnEmptyListWhenNoOwnerNameMatches() {
+        // given
+        petService.save(new Pet("Pip", "Zelda Quimby"));
+
+        // when
+        var pets = petService.findByOwnerName("xyz");
+
+        // then
+        assertThat(pets).isNotNull().isEmpty();
+    }
+
+    @Test
     void shouldFindPetById() {
         // given
         Pet pet = new Pet("Oscar", "Helen");

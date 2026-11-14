@@ -7,8 +7,11 @@ export interface Pet {
 }
 
 export const petService = {
-  async findAll(): Promise<Pet[]> {
-    const response = await fetch(API_BASE_URL);
+  async findAll(ownerName?: string): Promise<Pet[]> {
+    const url = ownerName
+      ? `${API_BASE_URL}?${new URLSearchParams({ ownerName })}`
+      : API_BASE_URL;
+    const response = await fetch(url);
     if (!response.ok) {
       throw new Error('Failed to fetch pets');
     }

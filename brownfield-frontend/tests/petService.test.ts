@@ -29,6 +29,39 @@ describe('petService', () => {
       expect(result).toEqual(mockPets);
     });
 
+    it('should fetch pets filtered by owner name', async () => {
+      (global.fetch as ReturnType<typeof vi.fn>).mockResolvedValueOnce({
+        ok: true,
+        json: async () => [],
+      });
+
+      await petService.findAll('smith');
+
+      expect(global.fetch).toHaveBeenCalledWith('http://localhost:8080/api/v1/pet?ownerName=smith');
+    });
+
+    it('should URL-encode special characters in the owner name filter', async () => {
+      (global.fetch as ReturnType<typeof vi.fn>).mockResolvedValueOnce({
+        ok: true,
+        json: async () => [],
+      });
+
+      await petService.findAll('a b&c');
+
+      expect(global.fetch).toHaveBeenCalledWith('http://localhost:8080/api/v1/pet?ownerName=a+b%26c');
+    });
+
+    it('should fetch the bare URL when no owner name is given', async () => {
+      (global.fetch as ReturnType<typeof vi.fn>).mockResolvedValueOnce({
+        ok: true,
+        json: async () => [],
+      });
+
+      await petService.findAll();
+
+      expect(global.fetch).toHaveBeenCalledWith('http://localhost:8080/api/v1/pet');
+    });
+
     it('should throw error when fetch fails', async () => {
       (global.fetch as ReturnType<typeof vi.fn>).mockResolvedValueOnce({
         ok: false,
