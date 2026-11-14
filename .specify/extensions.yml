@@ -1,4 +1,5 @@
 installed:
+- api-contract
 - ui-wireframe
 settings:
   auto_execute_hooks: true
@@ -11,4 +12,12 @@ hooks:
     priority: 10
     prompt: Execute speckit.ui-wireframe.generate?
     description: Draw the wireframe for the spec that was just written
+    condition: null
+  - extension: api-contract
+    command: speckit.api-contract.design
+    enabled: true
+    optional: false
+    priority: 10
+    prompt: Execute speckit.api-contract.design?
+    description: Design the API contract for the spec that was just written
     condition: null

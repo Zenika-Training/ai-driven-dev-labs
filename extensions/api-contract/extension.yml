@@ -1,0 +1,30 @@
+schema_version: "1.0"
+
+extension:
+  id: "api-contract"
+  name: "API Contract"
+  version: "0.1.0"
+  description: "Designs the OpenAPI fragment a story changes, reusing the live API, with unknowns listed as open questions"
+  author: "Zenika"
+  repository: "https://github.com/Zenika-Training/ai-driven-dev-labs"
+  license: "MIT"
+
+requires:
+  speckit_version: ">=1.4.0"
+
+provides:
+  commands:
+    - name: "speckit.api-contract.design"
+      file: "commands/design.md"
+      description: "Write or compare the OpenAPI fragment in docs/contracts/ for a story or the current feature spec"
+
+hooks:
+  after_specify:
+    command: "speckit.api-contract.design"
+    optional: false
+    description: "Design the API contract for the spec that was just written"
+
+tags:
+  - "design"
+  - "api"
+  - "openapi"
