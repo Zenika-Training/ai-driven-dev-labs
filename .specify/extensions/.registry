@@ -13,7 +13,7 @@
         ]
       },
       "registered_skills": [],
-      "installed_at": "2026-11-14T09:14:15.610820+00:00"
+      "installed_at": "2026-11-14T09:22:13.109970+00:00"
     },
     "api-contract": {
       "version": "0.1.0",
@@ -27,7 +27,21 @@
         ]
       },
       "registered_skills": [],
-      "installed_at": "2026-11-14T09:17:43.463696+00:00"
+      "installed_at": "2026-11-14T09:22:13.522631+00:00"
+    },
+    "doc-tracker": {
+      "version": "1.0.0",
+      "source": "local",
+      "manifest_hash": "sha256:094f1de887fd22ea7a266861f58fd0c903aec35d3a9728562d2bbd6008baf146",
+      "enabled": true,
+      "priority": 10,
+      "registered_commands": {
+        "claude": [
+          "speckit.doc-tracker.commit"
+        ]
+      },
+      "registered_skills": [],
+      "installed_at": "2026-11-14T21:51:51.581014+00:00"
     }
   }
 }

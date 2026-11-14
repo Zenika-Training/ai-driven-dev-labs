@@ -15,7 +15,7 @@ Read only the source. Do not read the code to fill gaps: a gap is an open questi
 
 ## 2. Name the page
 
-Output file: `docs/design/<name>.html`, where `<name>` is the source file name without its extension (`pet-owner-name-filter.md` gives `pet-owner-name-filter.html`). For a spec, use the feature directory name (for example `003-owner-filter`). For plain text, use a short kebab-case slug of the story title. Create `docs/design/` if it is missing.
+Output file: `docs/design/<name>.html`, where `<name>` is the source file name without its extension (`pet-owner-name-filter.md` gives `pet-owner-name-filter.html`). For a spec (`specs/NNN-name/spec.md`, including when run as a hook), check whether it names a story in `docs/stories/` (a path or file name that exists there). If it does, `<name>` is that story's file name without its extension, not the feature directory name. Only if the spec names no story, use the feature directory name (for example `003-owner-filter`). For plain text, use a short kebab-case slug of the story title. Create `docs/design/` if it is missing.
 
 ## 3. Collect states and open questions
 
@@ -35,7 +35,9 @@ Structure:
 
 ## 5. If the page already exists
 
-Do not start from scratch.
+**Spec naming a story (including hook runs):** if `docs/design/<story-name>.html` exists, never create a second file (no copy under the spec folder name or any other name) and never redraw, rewrite or edit the existing page, not even to mark changes. Read the existing page and compare it with the spec: list each difference (a state, rule or field that differs), one line each, marked `ADDED`, `CHANGED` or `REMOVED` with the state or element, then stop. If there are none, say the page is up to date. Only create the page when no file exists for the story. The rest of this section applies only to runs that are not on a spec naming a story.
+
+Otherwise, do not start from scratch.
 
 1. Read the existing page. Keep every panel and open question that is still valid, unchanged.
 2. Compare with the source: add panels for new states, edit panels whose source text changed, remove panels whose state was dropped, move questions the source now answers out of the open list and into the panel.
@@ -45,4 +47,4 @@ Do not start from scratch.
 
 ## 6. Report
 
-Print: the path written, the states drawn, the number of open questions, and (for an update) what changed. Do not claim visual verification: the page has not been opened in a browser.
+If the page existed for a spec naming a story, print the differences found instead and say nothing was written. Otherwise print: the path written, the states drawn, the number of open questions, and (for an update) what changed. Do not claim visual verification: the page has not been opened in a browser.
