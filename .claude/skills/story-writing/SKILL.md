@@ -1,11 +1,20 @@
 ---
 name: story-writing
-description: Use when writing, reviewing or refining a user story, ticket or acceptance criteria for the pet clinic. Produces a story that follows the team's template and passes the team's checklist.
+description: Use when asked to write, review or refine a user story, a ticket or acceptance criteria for the pet clinic (for example "write a story for ...", "turn this idea into a ticket", "review this story"). Produces a story that follows the team's template and passes the team's checklist.
 ---
 
 # Story writing
 
 Write every user story with the template in [assets/story-template.md](assets/story-template.md). Use only the rules below.
+
+## Where things are
+- **Input:** a one-line idea, a ticket, or an existing story to review. "The requester" is the person who gave you the request: take their decisions from it, and list anything they did not decide under Open questions instead of choosing.
+- **Output:** answer in the chat: the story first, then a `## Checklist` section with one line per item (1 to 15): yes or no, and the words from the story that prove it. Save a file only when asked, as `docs/stories/<kebab-case-title>.md`. If that file already exists, never overwrite it: list the differences and ask.
+- **Boundaries:** this skill only writes or reviews the text of a story. It does not implement, design or test the story. If the request is not about the pet clinic app, say so and stop.
+- **The app** is the brownfield pet clinic (`brownfield-backend`, `brownfield-frontend`). The greenfield folders are a skeleton: do not use them for facts.
+- **Seed data** (real pets, owners, vets, visits): `brownfield-backend/src/main/resources/data.sql`.
+- **Designs** live in `docs/design/`, contracts in `docs/contracts/`.
+- **Size:** "Medium or less" (item 15) means it can be finished within one sprint; see `docs/product-management/writing-guides/story-writing-guide.md`.
 
 Facts about the app: every statement about the existing app must come from the code or from `docs/`, with the file named. Anything you cannot find goes in the story under **Open questions**. Never guess.
 
@@ -19,8 +28,8 @@ Before you answer, check the story against every item below, one by one, and quo
 
 ## Acceptance criteria
 5. Is every criterion written as "Given [context], When [action], Then [result]"?
-6. Does every Given, When and Then hold exactly one statement, with no "and" and no "or"? To answer, read each Given, When and Then on its own and look for the words "and" and "or". If you find one, split the criterion into two.
-7. Are there at most 5 criteria (never more than 8)?
+6. Does every Given, When and Then hold exactly one statement, with no "and" and no "or"? To answer, read each Given, When and Then on its own and look for the words "and" and "or". If you find one, split the criterion into two. Exception: an "and" or "or" that is part of a name or a fixed term (for example "first and last name") is not a second statement; keep it, or rephrase the term.
+7. Are there 5 criteria or fewer? (5 is the target; 8 is the hard limit. With more than 5, the story is probably too big: say so.)
 8. Does at least one criterion use a concrete example with real data from the app (real pet and owner names from the seed data)?
 9. Is every criterion free of design (no endpoint, database table, class, library, parameter name)? Saying what the person sees, such as a message or a list, is fine.
 10. Are non-functional requirements (performance, security, accessibility) left out, unless the story is about them?
