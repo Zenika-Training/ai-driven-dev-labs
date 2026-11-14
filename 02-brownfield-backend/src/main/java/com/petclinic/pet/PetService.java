@@ -18,6 +18,13 @@ public class PetService {
         return petRepository.findAll();
     }
 
+    public List<Pet> findByOwnerName(String ownerName) {
+        if (ownerName == null || ownerName.isBlank()) {
+            return findAll();
+        }
+        return petRepository.findByOwnerNameContainingIgnoreCase(ownerName.trim());
+    }
+
     public Pet findById(Long id) {
         return petRepository.findById(id).orElse(null);
     }

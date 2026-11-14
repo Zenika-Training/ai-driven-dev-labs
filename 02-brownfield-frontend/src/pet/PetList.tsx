@@ -1,6 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { petService } from './index';
 import type { Pet } from './index';
+
+const FILTER_DEBOUNCE_MS = 300;
 
 interface PetListProps {
   onPetSelect: (pet: Pet) => void;
@@ -8,32 +10,42 @@ interface PetListProps {
 
 const PetList: React.FC<PetListProps> = ({ onPetSelect }) => {
   const [pets, setPets] = useState<Pet[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [initialLoading, setInitialLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const [ownerName, setOwnerName] = useState<string>('');
+  const isFirstLoad = useRef(true);
 
   useEffect(() => {
-    loadPets();
-  }, []);
+    let cancelled = false;
+    const delay = isFirstLoad.current ? 0 : FILTER_DEBOUNCE_MS;
 
-  const loadPets = async () => {
-    try {
-      setLoading(true);
-      setError(null);
-      const data = await petService.findAll();
-      setPets(data);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to load pets');
-    } finally {
-      setLoading(false);
-    }
-  };
+    const timer = setTimeout(async () => {
+      try {
+        setError(null);
+        const data = await petService.findAll(ownerName);
+        if (!cancelled) {
+          setPets(data);
+        }
+      } catch (err) {
+        if (!cancelled) {
+          setError(err instanceof Error ? err.message : 'Failed to load pets');
+        }
+      } finally {
+        if (!cancelled) {
+          isFirstLoad.current = false;
+          setInitialLoading(false);
+        }
+      }
+    }, delay);
 
-  if (loading) {
+    return () => {
+      cancelled = true;
+      clearTimeout(timer);
+    };
+  }, [ownerName]);
+
+  if (initialLoading) {
     return <div className="text-center py-8">Loading pets...</div>;
-  }
-
-  if (error) {
-    return <div className="text-center py-8">Error: {error}</div>;
   }
 
   return (
@@ -42,8 +54,25 @@ const PetList: React.FC<PetListProps> = ({ onPetSelect }) => {
         <h2 className="text-3xl font-bold mb-2">All Pets</h2>
         <p>Manage and view all pets in the directory</p>
       </div>
-      
-      {pets.length === 0 ? (
+
+      <div className="mb-6">
+        <label htmlFor="owner-name-filter" className="block text-sm font-semibold mb-1">
+          Filter by owner name
+        </label>
+        <input
+          id="owner-name-filter"
+          data-testid="owner-name-filter"
+          type="text"
+          className="border rounded px-3 py-2 w-full max-w-sm"
+          placeholder="Owner name"
+          value={ownerName}
+          onChange={(e) => setOwnerName(e.target.value)}
+        />
+      </div>
+
+      {error ? (
+        <p data-testid="pet-list-error">Error: {error}</p>
+      ) : pets.length === 0 ? (
         <p>No pets found.</p>
       ) : (
         <div className="border rounded-lg overflow-hidden">
@@ -57,8 +86,8 @@ const PetList: React.FC<PetListProps> = ({ onPetSelect }) => {
             </thead>
             <tbody className="divide-y">
               {pets.map((pet) => (
-                <tr 
-                  key={pet.id} 
+                <tr
+                  key={pet.id}
                   className="cursor-pointer hover:bg-gray-50"
                   onClick={() => onPetSelect(pet)}
                 >
