@@ -1,9 +1,9 @@
 services:
-  brownfield-backend:
+  02-brownfield-backend:
     image: maven:3.9-eclipse-temurin-21
     working_dir: /app
     volumes:
-      - ./brownfield-backend:/app:z
+      - ./02-brownfield-backend:/app:z
       - maven-cache:/root/.m2:z
     command: mvn spring-boot:run
     ports:
@@ -11,11 +11,11 @@ services:
     environment:
       - SPRING_PROFILES_ACTIVE=docker
 
-  brownfield-frontend:
+  02-brownfield-frontend:
     image: node:22
     working_dir: /app
     volumes:
-      - ./brownfield-frontend:/app:z
+      - ./02-brownfield-frontend:/app:z
       - /app/node_modules
     command: ["/bin/sh", "-c", "npm install && npm run dev -- --host 0.0.0.0"]
     ports:
