@@ -15,6 +15,7 @@ const PetDetail: React.FC<PetDetailProps> = ({ pet, onBack }) => {
 
   useEffect(() => {
     loadVisits();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pet.id]);
 
   const loadVisits = async () => {

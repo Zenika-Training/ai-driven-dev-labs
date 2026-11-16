@@ -7,7 +7,7 @@ interface VisitListProps {
   onVisitClick?: (visit: Visit) => void;
 }
 
-const VisitList: React.FC<VisitListProps> = ({ onPetSelect: _onPetSelect, onVisitClick }) => {
+const VisitList: React.FC<VisitListProps> = ({ onVisitClick }) => {
   const [visits, setVisits] = useState<Visit[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
