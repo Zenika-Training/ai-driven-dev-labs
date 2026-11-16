@@ -49,7 +49,7 @@ function App() {
     setSelectedVisit(null);
   };
 
-  const handlePetSelectFromVisit = (_petId: number) => {
+  const handlePetSelectFromVisit = () => {
     // This would require fetching the pet by ID, for now we just navigate to pet list
     setCurrentView('petList');
   };
