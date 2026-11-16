@@ -7,7 +7,7 @@ This file provides guidance to Gemini (Gemini Code Assist / Google Antigravity) 
 ### Backend (Maven, Java 21)
 
 ```bash
-cd greenfield-backend  # or brownfield-backend
+cd 01-greenfield-backend  # or 02-brownfield-backend
 mvn spring-boot:run    # Start on port 8080
 mvn test               # Run all tests
 mvn test -Dtest=ClassName  # Run a single test class
@@ -18,7 +18,7 @@ Swagger UI: `http://localhost:8080/swagger-ui.html`
 ### Frontend (Node 22, npm)
 
 ```bash
-cd greenfield-frontend  # or brownfield-frontend
+cd 01-greenfield-frontend  # or 02-brownfield-frontend
 npm run dev    # Start Vite dev server on port 5173
 npm test       # Run Vitest (non-watch)
 npm run lint   # ESLint check
