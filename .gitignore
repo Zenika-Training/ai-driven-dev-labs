@@ -1,2 +1,34 @@
 .VSCodeCounter/
 .DS_Store
+
+# Python
+**/__pycache__/
+*.py[cod]
+**/.pytest_cache/
+**/.ruff_cache/
+**/.mypy_cache/
+**/.venv/
+**/venv/
+.coverage
+.coverage.*
+**/htmlcov/
+**/*.egg-info/
+**/build/
+**/dist/
+**/target/
+
+# Node.js and Vite
+**/node_modules/
+**/.vite/
+**/dist-ssr/
+**/coverage/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Local environment files
+.env
+.env.*
+!.env.example
