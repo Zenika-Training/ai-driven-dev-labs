@@ -6,8 +6,8 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="greenfield-backend" />
-        <module name="brownfield-backend" />
+        <module name="01-greenfield-backend" />
+        <module name="02-brownfield-backend" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -17,8 +17,8 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="brownfield-backend" options="-parameters" />
-      <module name="greenfield-backend" options="-parameters" />
+      <module name="02-brownfield-backend" options="-parameters" />
+      <module name="01-greenfield-backend" options="-parameters" />
       <module name="petclinic" options="-parameters" />
       <module name="spring-petclinic" options="-parameters" />
     </option>

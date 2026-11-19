@@ -33,17 +33,17 @@ With the containers running, use `docker compose exec` to run tests inside each 
 **Greenfield:**
 ```bash
 # Backend
-docker compose -f docker-compose.greenfield.yml exec greenfield-backend mvn test
+docker compose -f docker-compose.greenfield.yml exec 01-greenfield-backend mvn test
 
 # Frontend
-docker compose -f docker-compose.greenfield.yml exec greenfield-frontend npm test
+docker compose -f docker-compose.greenfield.yml exec 01-greenfield-frontend npm test
 ```
 
 **Brownfield:**
 ```bash
 # Backend
-docker compose -f docker-compose.brownfield.yml exec brownfield-backend mvn test
+docker compose -f docker-compose.brownfield.yml exec 02-brownfield-backend mvn test
 
 # Frontend
-docker compose -f docker-compose.brownfield.yml exec brownfield-frontend npm test
+docker compose -f docker-compose.brownfield.yml exec 02-brownfield-frontend npm test
 ```

@@ -1,9 +1,9 @@
 services:
-  greenfield-backend:
+  01-greenfield-backend:
     image: maven:3.9-eclipse-temurin-21
     working_dir: /app
     volumes:
-      - ./greenfield-backend:/app:z
+      - ./01-greenfield-backend:/app:z
       - maven-cache:/root/.m2:z
     command: mvn spring-boot:run
     ports:
@@ -11,11 +11,11 @@ services:
     environment:
       - SPRING_PROFILES_ACTIVE=docker
 
-  greenfield-frontend:
+  01-greenfield-frontend:
     image: node:22
     working_dir: /app
     volumes:
-      - ./greenfield-frontend:/app:z
+      - ./01-greenfield-frontend:/app:z
       - /app/node_modules
     command: ["/bin/sh", "-c", "npm install && npm run dev -- --host 0.0.0.0"]
     ports:

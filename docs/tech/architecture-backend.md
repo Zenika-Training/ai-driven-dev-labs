@@ -10,7 +10,7 @@
 
 # Packages
 - should be split by domain, not layer (we use DDD style)
-- inside folder `greenfield-backend` or `brownfield-backend`, use a `src/petclinic/<domain>/` layout for new Python modules (e.g. `src/petclinic/pet/`, `src/petclinic/vet/`)
+- inside folder `01-greenfield-backend` or `02-brownfield-backend`, use a `src/petclinic/<domain>/` layout for new Python modules (e.g. `src/petclinic/pet/`, `src/petclinic/vet/`)
 - each domain package contains its own `models.py` (SQLAlchemy models), `schemas.py` (Pydantic request/response models), `repository.py`, `service.py` and `router.py`
 
 # Backend Coding practices
