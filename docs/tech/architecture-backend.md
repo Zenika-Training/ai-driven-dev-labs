@@ -1,51 +1,51 @@
 # Backend Architecture Rules
 
-# Packages 
+Stack: NestJS (TypeScript), Prisma ORM, SQLite, Vitest
+
+# Modules
     - should be split by domain, not layer (we use DDD style)
-    - Inside folder 'greenfield-backend' or 'brownfield-backend', always use a subfolder of `com.petclinic` package for new Java classes
+    - Inside folder '01-greenfield-backend' or '02-brownfield-backend', always create new code inside a domain subfolder under `src/` (eg: `src/pet`, `src/invoice`), following Nest's module structure: `<domain>.module.ts`, `<domain>.controller.ts`, `<domain>.service.ts`, `<domain>.repository.ts`
 
 # Backend Coding practices
     - as much as possible, functions should be single responsibility. If a function is doing more than one thing, split it into several functions
     - for Repository/Service/Controller, use method action words such as `find`, `save`, `delete`. Do not use 'create' or `remove`
 
 # Refactoring
-- When refactoring code, you **MUST** update the existing JUnit tests to ensure they pass and reflect the changes. Never leave tests in a broken state.
+- When refactoring code, you **MUST** update the existing Vitest tests to ensure they pass and reflect the changes. Never leave tests in a broken state.
 - If the refactoring introduces any new behavior, you **MUST** add new tests to cover it.
 
 
 ## Database
-- schema should be defined in data.sql
-- when having a data creation script inside data.sql, always make sure that data is populated in the right order, so we do not assign null values into columns which are "not null".
-- as of now, only use HSQL (test environment is enough)
+- schema should be defined in `prisma/schema.prisma`
+- seed data should be defined in `prisma/seed.ts` (run via `npx prisma db seed`)
+- when writing seed data, always make sure records are inserted in the right order, so we do not violate required (non-nullable) fields or foreign key constraints
+- as of now, only use SQLite (`provider = "sqlite"`) - a file-based or in-memory database is enough for local dev and tests
 
-## For JPA entities
-- there should be no setters by default 
-- there should be 3 constructors: an empty one, one with all parameters, one with all parameters except the id
-- Avoid using @Column and @Table unless really necessary
-- When mapping relationships, please do not state explicit attributes unless really needed
-- Do not use bidirectional relationships unless really needed
-- imports should be jakarta.persistence.* (not javax.persistence.*)
-- Whenever possible, use @OneToMany rather than @ManyToOne
-- Annotations such as @OneToMany should be minimalistic. Do not use mappedBy, cascade etc unless explicitly stated.
+## For Prisma models
+- Prisma models are schema declarations only; do not hand-write parallel entity classes with constructors - let the generated Prisma Client types represent persisted data
+- Avoid `@map` / `@@map` unless the column/table name must really differ from the field/model name
+- When declaring relations, do not add explicit attributes (`@relation` name, `fields`, `references`, `onDelete`, `onUpdate`) unless really needed
+- Do not use bidirectional relations unless really needed
+- For request/response validation, use dedicated DTO classes (eg: `CreatePetDto`, `UpdatePetDto`) with `class-validator` decorators, kept separate from the Prisma model; prefer `readonly` properties over setters
 
 ## For Service classes
-- Never implement a Service class without a JUnit Test
+- Never implement a Service (`@Injectable()`) class without a Vitest unit test
 
 ## For Repository classes
-- When using Spring Data JPA, there is no need for @Repository annotation as it is not mandatory
+- Repository classes are plain `@Injectable()` TypeScript classes that wrap `PrismaService` calls; no special decorator is required (unlike Spring Data's `@Repository`)
 
 ## For Controller classes
 - use URL such as /api/v1/ENTITY (eg: /api/v1/pet)
-- avoid using ResponseEntity unless really needed
+- avoid manipulating the raw response via `@Res()`; return plain objects/DTOs from handler methods and let Nest's built-in serialization and exception filters set the status code, unless you really need custom headers/status
 
-## JUnit tests - what to test
-- We should have good coverage of JUnit tests at the service layer. If business rules are simple, do an Integration test (all the way down to in-memory database)
-- All complex business rules should be tested with a pure Unit Test (with Mock)
+## Vitest tests - what to test
+- We should have good coverage of Vitest tests at the service layer. If business rules are simple, do an Integration test (all the way down to an in-memory/test SQLite database)
+- All complex business rules should be tested with a pure Unit Test (with mocked dependencies, eg: via `vi.fn()` / `vi.mock()`)
 - Only test Repository and Controller if there is something interesting to test
 
-## JUnit tests - Implementation
-- All JUnit tests should follow the convention `<ClassName>Test.java`. For instance, the test for VetService should be named `VetServiceTest.java`
-- method names: should use `should` and `shouldNot`. Example: shouldFindPetByName
-- inside test methods, use the `given/when/then` structure with a blank line between each section
-- When asked to generate a JUnit Integration test, you should create a @SpringBootTest with JUnit 5, using an embedded database (H2). 
-- when generating test data, make sure there is no conflict with the test data inside data.sql
+## Vitest tests - Implementation
+- All Vitest tests should follow the convention `<fileName>.spec.ts`. For instance, the test for `vet.service.ts` should be named `vet.service.spec.ts`
+- test names: should use `should` and `should not`. Example: `it('should find pet by name', ...)`
+- inside test bodies, use the `given/when/then` structure with a blank line between each section
+- When asked to generate a Vitest Integration test, bootstrap the real module with `Test.createTestingModule()` from `@nestjs/testing`, backed by an in-memory/test SQLite database via Prisma
+- when generating test data, make sure there is no conflict with the seed data inside `prisma/seed.ts`

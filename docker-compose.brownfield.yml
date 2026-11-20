@@ -1,31 +1,52 @@
-services:
-  brownfield-backend:
-    image: maven:3.9-eclipse-temurin-21
-    working_dir: /app
-    volumes:
-      - ./brownfield-backend:/app:z
-      - maven-cache:/root/.m2:z
-    command: mvn spring-boot:run
-    ports:
-      - "8080:8080"
-    environment:
-      - SPRING_PROFILES_ACTIVE=docker
+name: brownfield
 
-  brownfield-frontend:
+services:
+  02-brownfield-backend:
     image: node:22
     working_dir: /app
     volumes:
-      - ./brownfield-frontend:/app:z
-      - /app/node_modules
-    command: ["/bin/sh", "-c", "npm install && npm run dev -- --host 0.0.0.0"]
+      - ./02-brownfield-backend:/app:z
+      - 02-brownfield-backend-node-modules:/app/node_modules
+    command: ["/bin/sh", "-c", "if [ ! -x node_modules/.bin/prisma ]; then npm ci --prefer-offline --no-audit --fund=false; fi && if [ ! -f prisma/dev.db ]; then npx prisma migrate deploy && npx prisma db seed; else npx prisma migrate deploy; fi && npm run dev"]
+    ports:
+      - "8080:8080"
+    environment:
+      DATABASE_URL: file:./dev.db
+      NPM_CONFIG_FETCH_RETRIES: "5"
+      NPM_CONFIG_FETCH_RETRY_MINTIMEOUT: "20000"
+      NPM_CONFIG_FETCH_RETRY_MAXTIMEOUT: "120000"
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:8080/api/v1/pet').then(r => process.exit(r.ok ? 0 : 1)).catch(() => process.exit(1))"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 30s
+
+  02-brownfield-frontend:
+    image: node:22
+    working_dir: /app
+    volumes:
+      - ./02-brownfield-frontend:/app:z
+      - 02-brownfield-frontend-node-modules:/app/node_modules
+    command: ["/bin/sh", "-c", "if [ ! -x node_modules/.bin/vite ]; then npm ci --prefer-offline --no-audit --fund=false; fi && npm run dev -- --host 0.0.0.0"]
     ports:
       - "5173:5173"
     environment:
-      - CHOKIDAR_USEPOLLING=true
-
-volumes:
-  maven-cache:
+      CHOKIDAR_USEPOLLING: "true"
+      NPM_CONFIG_FETCH_RETRIES: "5"
+      NPM_CONFIG_FETCH_RETRY_MINTIMEOUT: "20000"
+      NPM_CONFIG_FETCH_RETRY_MAXTIMEOUT: "120000"
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:5173/').then(r => process.exit(r.ok ? 0 : 1)).catch(() => process.exit(1))"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 10s
 
 networks:
   default:
     driver: bridge
+
+volumes:
+  02-brownfield-backend-node-modules:
+  02-brownfield-frontend-node-modules:

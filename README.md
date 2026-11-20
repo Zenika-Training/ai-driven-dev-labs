@@ -6,13 +6,14 @@
 
 1. **Install development tools:**
    - Install VSCode
-   - Install Java 21 and Node.js v22
-   - Install an AI coding assistant of your choice (Copilot, Claude Code, Cursor…)
+   - Install Node.js v22 (both backends and both frontends are now Node-based)
+   - Install an AI coding assistant of your choice (Copilot, Claude Code, Gemini, Cursor…)
       > If you are using [GitHub Copilot](.github/copilot-instructions.md), instructions are inside `.github/copilot-instructions.md`  
-       > If you are using Claude Code, instructions are inside [Claude.md](Claude.md)
+       > If you are using Claude Code, instructions are inside [CLAUDE.md](CLAUDE.md)  
+       > If you are using Gemini, instructions are inside [GEMINI.md](GEMINI.md)
 
 ### Running with Docker
-If you don't have Java or Node, but you have docker, you can run the applications within docker as well. 
+If you don't have Node, but you have docker, you can run the applications within docker as well. 
 
 Each application (greenfield and brownfield) has its own Docker Compose file. They cannot be run at the same time as they share the same ports.
 
@@ -33,17 +34,17 @@ With the containers running, use `docker compose exec` to run tests inside each 
 **Greenfield:**
 ```bash
 # Backend
-docker compose -f docker-compose.greenfield.yml exec greenfield-backend mvn test
+docker compose -f docker-compose.greenfield.yml exec 01-greenfield-backend npm test
 
 # Frontend
-docker compose -f docker-compose.greenfield.yml exec greenfield-frontend npm test
+docker compose -f docker-compose.greenfield.yml exec 01-greenfield-frontend npm test
 ```
 
 **Brownfield:**
 ```bash
 # Backend
-docker compose -f docker-compose.brownfield.yml exec brownfield-backend mvn test
+docker compose -f docker-compose.brownfield.yml exec 02-brownfield-backend npm test
 
 # Frontend
-docker compose -f docker-compose.brownfield.yml exec brownfield-frontend npm test
+docker compose -f docker-compose.brownfield.yml exec 02-brownfield-frontend npm test
 ```
