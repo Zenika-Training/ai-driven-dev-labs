@@ -10,7 +10,7 @@ export class InvoiceController {
 
   @Get()
   @ApiOkResponse({ type: InvoiceDto, isArray: true })
-  findAll(): Promise<InvoiceDto[]> {
+  findAll(): InvoiceDto[] {
     return this.invoiceService.findAll();
   }
 

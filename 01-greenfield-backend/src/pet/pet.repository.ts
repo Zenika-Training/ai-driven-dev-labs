@@ -1,16 +1,26 @@
 import { Injectable } from '@nestjs/common';
-import { Pet } from '@prisma/client';
-import { PrismaService } from '../prisma/prisma.service';
+import { DatabaseService } from '../database/database.service';
+import { Pet } from './pet.model';
 
 @Injectable()
 export class PetRepository {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly database: DatabaseService) {}
 
-  findById(id: number): Promise<Pet | null> {
-    return this.prisma.pet.findUnique({ where: { id } });
+  findById(id: number): Pet | null {
+    const pet = this.database.connection
+      .prepare<[number], Pet>(
+        'SELECT id, name, ownerName FROM pet WHERE id = ?',
+      )
+      .get(id);
+
+    return pet ?? null;
   }
 
-  findByName(name: string): Promise<Pet[]> {
-    return this.prisma.pet.findMany({ where: { name } });
+  findByName(name: string): Pet[] {
+    return this.database.connection
+      .prepare<[string], Pet>(
+        'SELECT id, name, ownerName FROM pet WHERE name = ? ORDER BY id',
+      )
+      .all(name);
   }
 }

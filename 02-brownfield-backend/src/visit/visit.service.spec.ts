@@ -30,7 +30,7 @@ describe('VisitService', () => {
       },
     ];
     const visitRepository = mockRepository({
-      findAll: vi.fn().mockResolvedValue(visits),
+      findAll: vi.fn().mockReturnValue(visits),
     });
     const visitService = new VisitService(visitRepository);
 
@@ -54,7 +54,7 @@ describe('VisitService', () => {
       vet,
     };
     const visitRepository = mockRepository({
-      findById: vi.fn().mockResolvedValue(visit),
+      findById: vi.fn().mockReturnValue(visit),
     });
     const visitService = new VisitService(visitRepository);
 
@@ -68,7 +68,7 @@ describe('VisitService', () => {
   it('should not find a visit when the id does not exist', async () => {
     // given
     const visitRepository = mockRepository({
-      findById: vi.fn().mockResolvedValue(null),
+      findById: vi.fn().mockReturnValue(null),
     });
     const visitService = new VisitService(visitRepository);
 
@@ -94,7 +94,7 @@ describe('VisitService', () => {
       },
     ];
     const visitRepository = mockRepository({
-      findByPetId: vi.fn().mockResolvedValue(visits),
+      findByPetId: vi.fn().mockReturnValue(visits),
     });
     const visitService = new VisitService(visitRepository);
 
@@ -109,7 +109,7 @@ describe('VisitService', () => {
   it('should return an empty list when there are no visits for a pet', async () => {
     // given
     const visitRepository = mockRepository({
-      findByPetId: vi.fn().mockResolvedValue([]),
+      findByPetId: vi.fn().mockReturnValue([]),
     });
     const visitService = new VisitService(visitRepository);
 

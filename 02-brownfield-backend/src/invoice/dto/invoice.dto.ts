@@ -1,5 +1,4 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Prisma } from '@prisma/client';
 import { VisitDto } from '../../visit/dto/visit.dto';
 
 export class InvoiceDto {
@@ -13,7 +12,7 @@ export class InvoiceDto {
   readonly invoiceDate: Date;
 
   @ApiProperty({ type: String })
-  readonly amount: Prisma.Decimal;
+  readonly amount: string;
 
   @ApiProperty({ type: VisitDto })
   readonly visit: VisitDto;

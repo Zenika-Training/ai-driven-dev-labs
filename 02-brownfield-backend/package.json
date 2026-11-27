@@ -9,22 +9,16 @@
     "start": "nest start",
     "dev": "nest start --watch",
     "start:prod": "node dist/main.js",
-    "lint": "eslint \"{src,prisma}/**/*.ts\"",
+    "lint": "eslint \"src/**/*.ts\"",
     "test": "vitest run",
-    "test:watch": "vitest",
-    "prisma:generate": "prisma generate",
-    "prisma:migrate": "prisma migrate dev",
-    "prisma:seed": "prisma db seed"
-  },
-  "prisma": {
-    "seed": "ts-node prisma/seed.ts"
+    "test:watch": "vitest"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",
     "@nestjs/core": "^11.0.1",
     "@nestjs/platform-express": "^11.0.1",
     "@nestjs/swagger": "^11.4.8",
-    "@prisma/client": "^6.19.3",
+    "better-sqlite3": "^13.2.0",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.1",
     "pdfkit": "^0.15.1",
@@ -32,22 +26,19 @@
     "rxjs": "^7.8.1"
   },
   "devDependencies": {
-    "@nestjs/cli": "^11.0.0",
+    "@eslint/js": "^9.39.5",
+    "@nestjs/cli": "^12.0.15",
     "@nestjs/testing": "^11.0.1",
+    "@types/better-sqlite3": "^9.6.0",
     "@types/express": "^5.0.0",
     "@types/node": "^22.10.5",
     "@types/pdfkit": "^0.13.4",
     "@types/supertest": "^6.0.2",
     "eslint": "^9.33.0",
-    "prisma": "^6.19.3",
+    "globals": "^17.14.0",
     "supertest": "^7.0.0",
-    "ts-node": "^10.9.2",
     "typescript": "~5.9.2",
-    "vitest": "^2.1.8"
-  },
-  "allowScripts": {
-    "@prisma/client@6.19.3": true,
-    "prisma@6.19.3": true,
-    "@prisma/engines@6.19.3": true
+    "typescript-eslint": "^8.74.0",
+    "vitest": "^5.1.2"
   }
 }

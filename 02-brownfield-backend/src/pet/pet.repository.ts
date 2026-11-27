@@ -1,32 +1,60 @@
 import { Injectable } from '@nestjs/common';
-import { Pet } from '@prisma/client';
-import { PrismaService } from '../prisma/prisma.service';
+import { DatabaseService } from '../database/database.service';
+import { Pet } from './pet.model';
 
 @Injectable()
 export class PetRepository {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly databaseService: DatabaseService) {}
 
-  findAll(): Promise<Pet[]> {
-    return this.prisma.pet.findMany();
+  findAll(): Pet[] {
+    return this.databaseService.connection
+      .prepare('SELECT id, name, ownerName FROM pet ORDER BY id')
+      .all() as Pet[];
   }
 
-  findById(id: number): Promise<Pet | null> {
-    return this.prisma.pet.findUnique({ where: { id } });
+  findById(id: number): Pet | null {
+    return (
+      (this.databaseService.connection
+        .prepare('SELECT id, name, ownerName FROM pet WHERE id = ?')
+        .get(id) as Pet | undefined) ?? null
+    );
   }
 
-  findByName(name: string): Promise<Pet | null> {
-    return this.prisma.pet.findFirst({ where: { name } });
+  findByName(name: string): Pet | null {
+    return (
+      (this.databaseService.connection
+        .prepare(
+          'SELECT id, name, ownerName FROM pet WHERE name = ? ORDER BY id LIMIT 1',
+        )
+        .get(name) as Pet | undefined) ?? null
+    );
   }
 
-  findByNameAndOwnerName(name: string, ownerName: string): Promise<Pet | null> {
-    return this.prisma.pet.findFirst({ where: { name, ownerName } });
+  findByNameAndOwnerName(name: string, ownerName: string): Pet | null {
+    return (
+      (this.databaseService.connection
+        .prepare(
+          'SELECT id, name, ownerName FROM pet WHERE name = ? AND ownerName = ? LIMIT 1',
+        )
+        .get(name, ownerName) as Pet | undefined) ?? null
+    );
   }
 
-  save(data: { name: string; ownerName: string }): Promise<Pet> {
-    return this.prisma.pet.create({ data });
+  save(data: { name: string; ownerName: string }): Pet {
+    const result = this.databaseService.connection
+      .prepare('INSERT INTO pet (name, ownerName) VALUES (?, ?)')
+      .run(data.name, data.ownerName);
+
+    return this.findById(Number(result.lastInsertRowid)) as Pet;
   }
 
-  delete(id: number): Promise<void> {
-    return this.prisma.pet.delete({ where: { id } }).then(() => undefined);
+  delete(id: number): void {
+    const result = this.databaseService.connection
+      .prepare('DELETE FROM pet WHERE id = ?')
+      .run(id);
+
+    if (result.changes === 0) {
+      throw new Error(`Pet with id ${id} not found`);
+    }
   }
 }

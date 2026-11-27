@@ -2,10 +2,8 @@ node_modules/
 dist/
 coverage/
 
-# Prisma local dev database and env
+# Local environment
 .env
-prisma/dev.db
-prisma/dev.db-journal
 
 ### macOS ###
 .DS_Store

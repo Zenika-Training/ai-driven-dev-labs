@@ -19,8 +19,8 @@ describe('PetService', () => {
     // given
     const savedPet = { id: 1, name: 'Buddy', ownerName: 'Alice' };
     const petRepository = mockRepository({
-      findByNameAndOwnerName: vi.fn().mockResolvedValue(null),
-      save: vi.fn().mockResolvedValue(savedPet),
+      findByNameAndOwnerName: vi.fn().mockReturnValue(null),
+      save: vi.fn().mockReturnValue(savedPet),
     });
     const petService = new PetService(petRepository);
 
@@ -31,28 +31,28 @@ describe('PetService', () => {
     expect(pet).toEqual(savedPet);
   });
 
-  it('should throw an exception when owner has a duplicate pet name', async () => {
+  it('should throw an exception when owner has a duplicate pet name', () => {
     // given
     const existingPet = { id: 1, name: 'Max', ownerName: 'Bob' };
     const petRepository = mockRepository({
-      findByNameAndOwnerName: vi.fn().mockResolvedValue(existingPet),
+      findByNameAndOwnerName: vi.fn().mockReturnValue(existingPet),
     });
     const petService = new PetService(petRepository);
 
     // when & then
-    await expect(
-      petService.save({ name: 'Max', ownerName: 'Bob' }),
-    ).rejects.toThrow('Owner Bob already has a pet named Max');
+    expect(() => petService.save({ name: 'Max', ownerName: 'Bob' })).toThrow(
+      'Owner Bob already has a pet named Max',
+    );
   });
 
   it('should allow different owners to have pets with the same name', async () => {
     // given
     const petRepository = mockRepository({
-      findByNameAndOwnerName: vi.fn().mockResolvedValue(null),
+      findByNameAndOwnerName: vi.fn().mockReturnValue(null),
       save: vi
         .fn()
-        .mockResolvedValueOnce({ id: 1, name: 'Charlie', ownerName: 'Carol' })
-        .mockResolvedValueOnce({ id: 2, name: 'Charlie', ownerName: 'Dave' }),
+        .mockReturnValueOnce({ id: 1, name: 'Charlie', ownerName: 'Carol' })
+        .mockReturnValueOnce({ id: 2, name: 'Charlie', ownerName: 'Dave' }),
     });
     const petService = new PetService(petRepository);
 
@@ -71,7 +71,7 @@ describe('PetService', () => {
       { id: 2, name: 'Bella', ownerName: 'Grace' },
     ];
     const petRepository = mockRepository({
-      findAll: vi.fn().mockResolvedValue(pets),
+      findAll: vi.fn().mockReturnValue(pets),
     });
     const petService = new PetService(petRepository);
 
@@ -86,7 +86,7 @@ describe('PetService', () => {
     // given
     const pet = { id: 1, name: 'Oscar', ownerName: 'Helen' };
     const petRepository = mockRepository({
-      findById: vi.fn().mockResolvedValue(pet),
+      findById: vi.fn().mockReturnValue(pet),
     });
     const petService = new PetService(petRepository);
 
@@ -100,7 +100,7 @@ describe('PetService', () => {
   it('should not find a pet when the id does not exist', async () => {
     // given
     const petRepository = mockRepository({
-      findById: vi.fn().mockResolvedValue(null),
+      findById: vi.fn().mockReturnValue(null),
     });
     const petService = new PetService(petRepository);
 
@@ -115,7 +115,7 @@ describe('PetService', () => {
     // given
     const pet = { id: 1, name: 'Daisy', ownerName: 'Ivan' };
     const petRepository = mockRepository({
-      findByName: vi.fn().mockResolvedValue(pet),
+      findByName: vi.fn().mockReturnValue(pet),
     });
     const petService = new PetService(petRepository);
 
@@ -129,7 +129,7 @@ describe('PetService', () => {
   it('should delete a pet', async () => {
     // given
     const petRepository = mockRepository({
-      delete: vi.fn().mockResolvedValue(undefined),
+      delete: vi.fn().mockReturnValue(undefined),
     });
     const petService = new PetService(petRepository);
 

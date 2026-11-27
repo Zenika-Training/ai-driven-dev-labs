@@ -9,13 +9,13 @@ export class PetController {
 
   @Get(':id')
   @ApiOkResponse({ type: PetDto })
-  findById(@Param('id', ParseIntPipe) id: number): Promise<PetDto | null> {
+  findById(@Param('id', ParseIntPipe) id: number): PetDto | null {
     return this.petService.findById(id);
   }
 
   @Get()
   @ApiOkResponse({ type: PetDto, isArray: true })
-  findByName(@Query('name') name: string): Promise<PetDto[]> {
+  findByName(@Query('name') name: string): PetDto[] {
     return this.petService.findByName(name);
   }
 }

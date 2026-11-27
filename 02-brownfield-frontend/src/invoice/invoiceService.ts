@@ -10,8 +10,8 @@ export interface Invoice {
   visit: Visit;
 }
 
-// The backend serializes Prisma's Decimal `amount` field as a string in JSON,
-// so raw responses must be normalized to numbers before being used as `Invoice[]`.
+// The backend may serialize decimal `amount` values as strings in JSON, so raw
+// responses must be normalized to numbers before being used as `Invoice[]`.
 interface RawInvoice extends Omit<Invoice, 'amount'> {
   amount: number | string;
 }

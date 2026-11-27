@@ -1,6 +1,8 @@
 # Backend Architecture Rules
 
-Stack: NestJS (TypeScript), Prisma ORM, SQLite, Vitest
+Stack: NestJS (TypeScript), SQLite, Vitest
+
+Both backends (`01-greenfield-backend` and `02-brownfield-backend`) use `better-sqlite3` directly with in-memory SQLite databases.
 
 # Modules
     - should be split by domain, not layer (we use DDD style)
@@ -16,23 +18,19 @@ Stack: NestJS (TypeScript), Prisma ORM, SQLite, Vitest
 
 
 ## Database
-- schema should be defined in `prisma/schema.prisma`
-- seed data should be defined in `prisma/seed.ts` (run via `npx prisma db seed`)
+- `01-greenfield-backend` and `02-brownfield-backend`: define schema SQL in `src/database/schema.ts`, seed data in `src/database/seed.ts`, and initialize both through `DatabaseService` during application startup
 - when writing seed data, always make sure records are inserted in the right order, so we do not violate required (non-nullable) fields or foreign key constraints
-- as of now, only use SQLite (`provider = "sqlite"`) - a file-based or in-memory database is enough for local dev and tests
+- both databases are ephemeral and reset whenever the corresponding process restarts
 
-## For Prisma models
-- Prisma models are schema declarations only; do not hand-write parallel entity classes with constructors - let the generated Prisma Client types represent persisted data
-- Avoid `@map` / `@@map` unless the column/table name must really differ from the field/model name
-- When declaring relations, do not add explicit attributes (`@relation` name, `fields`, `references`, `onDelete`, `onUpdate`) unless really needed
-- Do not use bidirectional relations unless really needed
-- For request/response validation, use dedicated DTO classes (eg: `CreatePetDto`, `UpdatePetDto`) with `class-validator` decorators, kept separate from the Prisma model; prefer `readonly` properties over setters
+## For application-owned models
+- Keep persisted entity and nested relation types in domain model files; do not use ORM-generated types
+- For request/response validation, use dedicated DTO classes (eg: `CreatePetDto`, `UpdatePetDto`) with `class-validator` decorators, kept separate from the domain model; prefer `readonly` properties over setters
 
 ## For Service classes
 - Never implement a Service (`@Injectable()`) class without a Vitest unit test
 
 ## For Repository classes
-- Repository classes are plain `@Injectable()` TypeScript classes that wrap `PrismaService` calls; no special decorator is required (unlike Spring Data's `@Repository`)
+- Repository classes are plain `@Injectable()` TypeScript classes that wrap `DatabaseService`; no special decorator is required (unlike Spring Data's `@Repository`)
 
 ## For Controller classes
 - use URL such as /api/v1/ENTITY (eg: /api/v1/pet)
@@ -47,5 +45,5 @@ Stack: NestJS (TypeScript), Prisma ORM, SQLite, Vitest
 - All Vitest tests should follow the convention `<fileName>.spec.ts`. For instance, the test for `vet.service.ts` should be named `vet.service.spec.ts`
 - test names: should use `should` and `should not`. Example: `it('should find pet by name', ...)`
 - inside test bodies, use the `given/when/then` structure with a blank line between each section
-- When asked to generate a Vitest Integration test, bootstrap the real module with `Test.createTestingModule()` from `@nestjs/testing`, backed by an in-memory/test SQLite database via Prisma
-- when generating test data, make sure there is no conflict with the seed data inside `prisma/seed.ts`
+- when generating a Vitest Integration test for either backend, use an isolated in-memory SQLite database through `better-sqlite3`
+- when generating test data, make sure there is no conflict with the seed data for the target backend

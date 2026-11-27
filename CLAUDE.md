@@ -4,26 +4,23 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Commands
 
-### Greenfield Backend (NestJS, TypeScript, Prisma, Node 22)
+### Greenfield Backend (NestJS, TypeScript, better-sqlite3, Node 22)
 
 ```bash
 cd 01-greenfield-backend
 npm install
-npx prisma migrate dev   # Apply migrations (creates/updates dev.db)
-npx prisma db seed       # Seed the SQLite database
 npm run dev        # Start on port 8080 (watch mode)
 npm test                 # Run all Vitest tests
 ```
 
 Swagger UI: `http://localhost:8080/swagger-ui.html`
 
-### Brownfield Backend (NestJS, TypeScript, Prisma, Node 22)
+### Brownfield Backend (NestJS, TypeScript, better-sqlite3, Node 22)
 
 ```bash
 cd 02-brownfield-backend
 npm install
-npx prisma migrate dev   # Apply migrations (creates/updates dev.db)
-npx prisma db seed       # Seed the SQLite database
+# Schema and seed data are initialized automatically at startup
 npm run dev        # Start on port 8080 (watch mode)
 npm test                 # Run all Vitest tests
 ```
@@ -44,7 +41,7 @@ npm run build  # TypeScript compile + Vite build
 
 Always consult the architecture documents before making changes:
 
-- **Backend**: See [architecture-backend](docs/tech/architecture-backend.md) for module structure, DDD organization, backend coding practices, Prisma/database conventions, controller patterns, and Vitest testing standards (NestJS/TypeScript stack, used by both `01-greenfield-backend` and `02-brownfield-backend`).
+- **Backend**: See [architecture-backend](docs/tech/architecture-backend.md) for module structure, DDD organization, backend coding practices, database conventions, controller patterns, and Vitest testing standards (NestJS/TypeScript stack, used by both `01-greenfield-backend` and `02-brownfield-backend`). Both backends use direct `better-sqlite3` with ephemeral in-memory databases.
 
 - **Frontend**: See [architecture-frontend](docs/tech/architecture-frontend.md) for naming conventions, component structure, API integration patterns, testing guidelines, and code quality standards.
 

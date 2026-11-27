@@ -1,20 +1,32 @@
 import { Injectable } from '@nestjs/common';
-import { Vet } from '@prisma/client';
-import { PrismaService } from '../prisma/prisma.service';
+import { DatabaseService } from '../database/database.service';
+import { Vet } from './vet.model';
 
 @Injectable()
 export class VetRepository {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly databaseService: DatabaseService) {}
 
-  findAll(): Promise<Vet[]> {
-    return this.prisma.vet.findMany();
+  findAll(): Vet[] {
+    return this.databaseService.connection
+      .prepare('SELECT id, name, specialty FROM vet ORDER BY id')
+      .all() as Vet[];
   }
 
-  findById(id: number): Promise<Vet | null> {
-    return this.prisma.vet.findUnique({ where: { id } });
+  findById(id: number): Vet | null {
+    return (
+      (this.databaseService.connection
+        .prepare('SELECT id, name, specialty FROM vet WHERE id = ?')
+        .get(id) as Vet | undefined) ?? null
+    );
   }
 
-  findByName(name: string): Promise<Vet | null> {
-    return this.prisma.vet.findFirst({ where: { name } });
+  findByName(name: string): Vet | null {
+    return (
+      (this.databaseService.connection
+        .prepare(
+          'SELECT id, name, specialty FROM vet WHERE name = ? ORDER BY id LIMIT 1',
+        )
+        .get(name) as Vet | undefined) ?? null
+    );
   }
 }

@@ -9,19 +9,19 @@ export class VetController {
 
   @Get()
   @ApiOkResponse({ type: VetDto, isArray: true })
-  findAll(): Promise<VetDto[]> {
+  findAll(): VetDto[] {
     return this.vetService.findAll();
   }
 
   @Get(':id')
   @ApiOkResponse({ type: VetDto })
-  findById(@Param('id', ParseIntPipe) id: number): Promise<VetDto | null> {
+  findById(@Param('id', ParseIntPipe) id: number): VetDto | null {
     return this.vetService.findById(id);
   }
 
   @Get('name/:name')
   @ApiOkResponse({ type: VetDto })
-  findByName(@Param('name') name: string): Promise<VetDto | null> {
+  findByName(@Param('name') name: string): VetDto | null {
     return this.vetService.findByName(name);
   }
 }

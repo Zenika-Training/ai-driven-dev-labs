@@ -1,0 +1,7 @@
+export const CREATE_SCHEMA_SQL = `
+  CREATE TABLE IF NOT EXISTS pet (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    ownerName TEXT NOT NULL
+  );
+`;

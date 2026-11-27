@@ -1,5 +1,4 @@
 import { describe, expect, it, vi } from 'vitest';
-import { Prisma } from '@prisma/client';
 import { InvoiceService } from './invoice.service';
 import { InvoiceRepository } from './invoice.repository';
 
@@ -18,7 +17,7 @@ describe('InvoiceService', () => {
       id: 1,
       invoiceNumber: 'INV-001',
       invoiceDate: new Date('2025-11-15T09:30:00Z'),
-      amount: new Prisma.Decimal('100.00'),
+      amount: '100.00',
       visitId: 1,
       visit: {
         id: 1,
@@ -32,7 +31,7 @@ describe('InvoiceService', () => {
       },
     };
     const invoiceRepository = mockRepository({
-      findById: vi.fn().mockResolvedValue(invoice),
+      findById: vi.fn().mockReturnValue(invoice),
     });
     const invoiceService = new InvoiceService(invoiceRepository);
 
@@ -47,7 +46,7 @@ describe('InvoiceService', () => {
   it('should not generate a pdf when the invoice does not exist', async () => {
     // given
     const invoiceRepository = mockRepository({
-      findById: vi.fn().mockResolvedValue(null),
+      findById: vi.fn().mockReturnValue(null),
     });
     const invoiceService = new InvoiceService(invoiceRepository);
 

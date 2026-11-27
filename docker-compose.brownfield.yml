@@ -7,11 +7,10 @@ services:
     volumes:
       - ./02-brownfield-backend:/app:z
       - 02-brownfield-backend-node-modules:/app/node_modules
-    command: ["/bin/sh", "-c", "if [ ! -x node_modules/.bin/prisma ]; then npm ci --prefer-offline --no-audit --fund=false; fi && if [ ! -f prisma/dev.db ]; then npx prisma migrate deploy && npx prisma db seed; else npx prisma migrate deploy; fi && npm run dev"]
+    command: ["/bin/sh", "-c", "if [ ! -d node_modules/better-sqlite3 ]; then npm ci --prefer-offline --no-audit --fund=false; fi && npm run dev"]
     ports:
       - "8080:8080"
     environment:
-      DATABASE_URL: file:./dev.db
       NPM_CONFIG_FETCH_RETRIES: "5"
       NPM_CONFIG_FETCH_RETRY_MINTIMEOUT: "20000"
       NPM_CONFIG_FETCH_RETRY_MAXTIMEOUT: "120000"

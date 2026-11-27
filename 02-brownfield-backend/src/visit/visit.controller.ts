@@ -9,13 +9,13 @@ export class VisitController {
 
   @Get()
   @ApiOkResponse({ type: VisitDto, isArray: true })
-  findAll(): Promise<VisitDto[]> {
+  findAll(): VisitDto[] {
     return this.visitService.findAll();
   }
 
   @Get(':id')
   @ApiOkResponse({ type: VisitDto })
-  findById(@Param('id', ParseIntPipe) id: number): Promise<VisitDto | null> {
+  findById(@Param('id', ParseIntPipe) id: number): VisitDto | null {
     return this.visitService.findById(id);
   }
 
@@ -23,7 +23,7 @@ export class VisitController {
   @ApiOkResponse({ type: VisitDto, isArray: true })
   findByPetId(
     @Param('petId', ParseIntPipe) petId: number,
-  ): Promise<VisitDto[]> {
+  ): VisitDto[] {
     return this.visitService.findByPetId(petId);
   }
 }

@@ -19,7 +19,7 @@ describe('VetService', () => {
       { id: 2, name: 'Dr. James Chen', specialty: 'Dentistry' },
     ];
     const vetRepository = mockRepository({
-      findAll: vi.fn().mockResolvedValue(vets),
+      findAll: vi.fn().mockReturnValue(vets),
     });
     const vetService = new VetService(vetRepository);
 
@@ -34,7 +34,7 @@ describe('VetService', () => {
     // given
     const vet = { id: 1, name: 'Dr. Sarah Martinez', specialty: 'Surgery' };
     const vetRepository = mockRepository({
-      findById: vi.fn().mockResolvedValue(vet),
+      findById: vi.fn().mockReturnValue(vet),
     });
     const vetService = new VetService(vetRepository);
 
@@ -48,7 +48,7 @@ describe('VetService', () => {
   it('should not find a vet when the id does not exist', async () => {
     // given
     const vetRepository = mockRepository({
-      findById: vi.fn().mockResolvedValue(null),
+      findById: vi.fn().mockReturnValue(null),
     });
     const vetService = new VetService(vetRepository);
 
@@ -63,7 +63,7 @@ describe('VetService', () => {
     // given
     const vet = { id: 1, name: 'Dr. Sarah Martinez', specialty: 'Surgery' };
     const vetRepository = mockRepository({
-      findByName: vi.fn().mockResolvedValue(vet),
+      findByName: vi.fn().mockReturnValue(vet),
     });
     const vetService = new VetService(vetRepository);
 
@@ -77,7 +77,7 @@ describe('VetService', () => {
   it('should not find a vet when the name does not exist', async () => {
     // given
     const vetRepository = mockRepository({
-      findByName: vi.fn().mockResolvedValue(null),
+      findByName: vi.fn().mockReturnValue(null),
     });
     const vetService = new VetService(vetRepository);
 

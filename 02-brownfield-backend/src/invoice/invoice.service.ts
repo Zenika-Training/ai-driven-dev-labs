@@ -1,17 +1,18 @@
 import { Injectable } from '@nestjs/common';
 import PDFDocument from 'pdfkit';
-import { InvoiceRepository, InvoiceWithRelations } from './invoice.repository';
+import { InvoiceRepository } from './invoice.repository';
+import { Invoice } from './invoice.model';
 
 @Injectable()
 export class InvoiceService {
   constructor(private readonly invoiceRepository: InvoiceRepository) {}
 
-  findAll(): Promise<InvoiceWithRelations[]> {
+  findAll(): Invoice[] {
     return this.invoiceRepository.findAll();
   }
 
   async generatePdf(invoiceId: number): Promise<Buffer> {
-    const invoice = await this.invoiceRepository.findById(invoiceId);
+    const invoice = this.invoiceRepository.findById(invoiceId);
     if (!invoice) {
       throw new Error('Invoice not found');
     }
@@ -19,7 +20,7 @@ export class InvoiceService {
     return this.buildPdf(invoice);
   }
 
-  private buildPdf(invoice: InvoiceWithRelations): Promise<Buffer> {
+  private buildPdf(invoice: Invoice): Promise<Buffer> {
     return new Promise((resolve, reject) => {
       const doc = new PDFDocument();
       const chunks: Buffer[] = [];
